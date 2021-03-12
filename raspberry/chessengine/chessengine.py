@@ -51,6 +51,3 @@ def playExample():
                     cor = "Jogador das Brancas"
                 print(board)
                 break
-
-playExample()
-    
