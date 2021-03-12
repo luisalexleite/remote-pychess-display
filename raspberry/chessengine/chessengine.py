@@ -37,6 +37,17 @@ def playExample():
             elif repetition == True:
                 print("\nEmpate por Repetição")
             break
+        elif claim == True:
+            opcao = input("Quer empate? [S/N]")
+            if opcao == "s" or opcao == "S":
+                print("\nEmpate por Repetição")
+                break
+            elif opcao != "s" and opcao != "S" and opcao != "n" or opcao != "N":
+                while opcao != "s" and opcao != "S" and opcao != "n" or opcao != "N":
+                    opcao = input("Quer empate? [S/N]")
+                    if opcao == "s" or opcao == "S":
+                        print("\nEmpate por Repetição")
+                        break
         valid = False
         while valid == False:
             move = input("\n" + cor + ' mexa uma peça:')
