@@ -7,7 +7,7 @@ import tkinter
 def start_game(white, black, mode):
 
     #tempo de espera
-    time.sleep(2000)
+    time.sleep(120)
 
     #fechar o navegador
     pyautogui.hotkey('alt', 'fn', 'f4')
@@ -52,10 +52,10 @@ def start_game(white, black, mode):
     pyautogui.press('esc')
 
     #abrir configuracao do jogo
-    pyautogui.click(int(width)/2.291169451,int(height)/3.47266881)
+    pyautogui.hotkey('ctrl', 'n')
     if mode == 'blitz':
         #iniciar jogo em blitz
-        pyautogui.click(int(width)/2.167042889,int(height)/2.003710575)
+        pyautogui.click(int(width)/2.167042889,int(height)/2.03)
         pyautogui.press('enter')
     elif mode == 'rapid':
         #iniciar jogo em rapid
@@ -68,8 +68,8 @@ def start_game(white, black, mode):
         
     def end_game():
 
-    #fechar jogo
-    pyautogui.hotkey('ctrl', 'q')
+        #fechar jogo
+        pyautogui.hotkey('ctrl', 'q')
 
-    #abrir navegador
-    subprocess.Popen(['usr/bin/chromium --kiosk http://localhost'])
+        #abrir navegador
+        subprocess.call(['chromium', '--kiosk' , 'http://localhost'])
