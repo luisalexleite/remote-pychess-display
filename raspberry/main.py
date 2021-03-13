@@ -68,5 +68,5 @@ def start_game(white, black, mode):
         
 def end_game():
 
-        #fechar jogo
-        pyautogui.hotkey('ctrl', 'q')
+    #fechar jogo
+    pyautogui.hotkey('ctrl', 'q')
