@@ -10,7 +10,7 @@ def start_game(white, black, mode):
     time.sleep(120)
 
     #fechar o navegador
-    pyautogui.hotkey('alt', 'fn', 'f4')
+    pyautogui.hotkey('fn', 'f11')
 
     #informacoes de resolucao do ecra
     root = tkinter.Tk()
@@ -66,10 +66,7 @@ def start_game(white, black, mode):
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
         pyautogui.press('enter')
         
-    def end_game():
+def end_game():
 
         #fechar jogo
         pyautogui.hotkey('ctrl', 'q')
-
-        #abrir navegador
-        subprocess.call(['chromium', '--kiosk' , 'http://localhost'])
