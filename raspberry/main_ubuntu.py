@@ -5,6 +5,13 @@ import time
 import tkinter
 
 def start_game(white, black, mode):
+
+    #tempo de espera
+    time.sleep(2000)
+
+    #fechar o navegador
+    pyautogui.hotkey('alt', 'fn', 'f4')
+
     #informacoes de resolucao do ecra
     root = tkinter.Tk()
     width = root.winfo_screenwidth()
@@ -38,7 +45,7 @@ def start_game(white, black, mode):
     #mudar nome do jogador com as pretas
     pyautogui.press('down')
     pyautogui.hotkey('ctrl', 'a')
-    pyautogui.hotkey('backspace')
+    pyautogui.press('backspace')
     pyautogui.write(black)
 
     #fechar preferencias
@@ -58,3 +65,11 @@ def start_game(white, black, mode):
         #iniciar jogo em normal
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
         pyautogui.press('enter')
+        
+    def end_game():
+
+    #fechar jogo
+    pyautogui.hotkey('ctrl', 'q')
+
+    #abrir navegador
+    subprocess.Popen(['usr/bin/chromium --kiosk http://localhost'])
