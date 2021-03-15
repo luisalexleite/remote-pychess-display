@@ -9,9 +9,6 @@ def start_game(white, black, mode):
     #tempo de espera
     time.sleep(10)
 
-    #fechar o navegador
-    pyautogui.hotkey('fn', 'f11')
-
     #informacoes de resolucao do ecra
     root = tkinter.Tk()
     width = root.winfo_screenwidth()
