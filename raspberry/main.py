@@ -7,7 +7,7 @@ import tkinter
 def start_game(white, black, mode):
 
     #tempo de espera
-    time.sleep(120)
+    time.sleep(10)
 
     #fechar o navegador
     pyautogui.hotkey('fn', 'f11')
