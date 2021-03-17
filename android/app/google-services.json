@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "328789090053",
+    "project_id": "bbchess-720c1",
+    "storage_bucket": "bbchess-720c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328789090053:android:84e6559b23fbd3180ea16c",
+        "android_client_info": {
+          "package_name": "com.example.chess"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328789090053-10nq2eb9giflqtj8lf6umlpkt547mf6d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD896rprJ0BoaWCp7xtohRXLpuot4AF_es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328789090053-10nq2eb9giflqtj8lf6umlpkt547mf6d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

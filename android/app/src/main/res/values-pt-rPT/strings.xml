@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YourPet</string>
+
+    <!--Bottom Navigation-->
+    <string name="nav_home">Início</string>
+    <string name="nav_health">Saúde</string>
+    <string name="nav_map">Mapa</string>
+    <string name="nav_profile">Perfil</string>
+
+    <!--Home Fragment-->
+    <string name="tab_1">Meus Animais</string>
+    <string name="tab_2">Treinos</string>
+    <string name="tab_3">Dicas</string>
+
+    <!-- Dog Training Fragment -->
+    <string name="firstDogTrainingTitle">Como treinar o seu cão a sentar</string>
+    <string name="dogQuote">"O único amigo desinteressado que um homem pode ter neste mundo egoísta,
+        aquele que nunca o abandona, o único que nunca mostra ingratidão ou traição, é o seu cão" </string>
+
+    <string name="firstDogTraining">Este é o primeiro exercício de treino que deve tentar fazer.\n\n
+
+1 - Pegue num snack e mostre-o ao seu cão.\n\n
+2 - Quando o seu cão mostrar interesse no snack (e vai de certeza!), ele irá segui-lo com o nariz, tentando alcançá-lo.\n\n
+3 - Mantenha o snack acima da cabeça do seu cão, para que ele olhe para cima, e aproxime-o até ficar atrás do nariz para que ele tenha que mover a cabeça para trás. A única forma de o seu cão conseguir alcançar o snack é sentando-se.\n\n
+4 - No momento em que ele o fizer, clique e dê-lhe o snack com muitos elogios.\n\n
+5 - Ao fim de algumas tentativas, o seu cão saberá o que tem que fazer para merecer o seu clique e snack e a sua resposta ao “Senta” será muito mais rápida.\n\n
+6 - Quando ele compreender totalmente o que é esperado, diga “Senta” e ele irá sentar-se porque associou a palavra à ação.\n\n
+7 - Agora que o ensinou o comando “Senta”, com prática, será capaz de lhe pedir para se sentar sem ter que o colocar na posição utilizando o snack.
+    </string>
+    <string name="dog">cao</string>
+    <string name="foodDog">comida</string>
+
+    <!-- Dog Training Fragment 2 -->
+
+    <string name="firstDogTrainingTitle2">Como treinar o seu cão a dar a pata</string>
+    <string name="dogQuote2">"“Um cão é a única coisa na terra que te ama mais do que a si mesmo." – Josh Billings"</string>
+    <string name="dog2">cao</string>
+    <string name="firstDogTraining2">"Como começar.\n\n
+
+1 - Abasteça-se da guloseima favorita do seu cão e certifique-se de ter alguma por perto quando começar a ensiná-lo a sacudir a pata.\n\n
+2 - Escolha uma área em sua casa ou jardim para ensinar a seu cão esse novo truque e, para manter a consistência, use a mesma área toda vez que treinar seu cão. \n\n
+3 - Selecione um comando verbal simples que você usará toda vez que pedir a seu cão para lhe dar a pata.\n\n
+4 - Se o seu cão ainda não consegue sentar-se ao comando, ensiná-lo a fazer isso deve ser bastante simples. É muito mais fácil ensiná-los a dar a pata se eles já estiverem na posição sentada.\n\n
+5 - Certifique-se de ter uma guloseima em uma mão para induzi-los a entrar em ação. Quando seu cão estiver sentado, faça cócegas na parte de trás de uma das patas dianteiras. Seu cão vai reagir movendo a perna em sua direção. Recompense-os com uma recompensa quando fizerem isso.\n\n
+6 - Assim que eles entenderem o que você quer que eles façam, introduza o comando verbal escolhido e comece a usá-lo enquanto segura sua própria mão. Quando seu cão entender e responder ao comando, recompense-o com outra guloseima.\n\n
+7 - Você deve manter suas sessões de treinamento curtas e agradáveis, mas pratique diariamente por cerca de dez minutos até que seu cão possa dar a você a pata sob comando."
+    </string>
+
+
+
+
+    <!-- Cat Training Fragment -->
+    <string name="firstCatTrainingTitle">Como Treinar o seu Gato a sentar</string>
+    <string name="catQuote">“Disseram-me que o procedimento de treino com gatos era difícil. Não é. O meu me treinou em dois dias.” </string>
+    <string name="cat">cat</string>
+    <string name="foodCat">food</string>
+
+    <string name="firstCatTraining">"Como começar\n\n
+
+1 - Enfatize a ordem oral que utiliza para ensinar o seu gato o que quer que ele faça (tal como “senta”), falando de forma clara e confiante e reforçando com elogios de incentivo (por exemplo, “senta, boa, senta”)..\n\n
+2 - Utilize recompensas à base de comida como reforço positivo, durante o treino do seu gatinho. Afinal, não estaria mais disposto a trabalhar no duro se soubesse que receberia uma recompensa deliciosa?\n\n
+3 - Utilize um “clicker” ou um sino suave, quando der um snack ao seu gato para o ajudar a associar esse som a uma recompensa. Ele aprenderá a desempenhar uma tarefa quando ouvir aquele som no futuro.\n\n
+4 - Treine o seu gatinho ou gato antes das refeições, porque uma recompensa alimentar não será tão apelativa perante um estômago cheio. Ao mesmo tempo, não deixe o seu gato passar fome para tentar aprender; um gato com fome rapidamente perderá a paciência!\n\n
+5 - Tente eliminar qualquer ruído de fundo, como a distração de uma televisão ou rádio, para ajudar seu gato a manter o foco.\n\n
+6 - Mantenha as sessões curtas, terminando-as an-tes do seu gato ficar cansado ou aborrecido. Expe-rimente sessões de treino com no máximo 15 mi-nutos para manter o seu pupilo fresco.\n\n
+7 - Seja consistente com as sessões de treino, com o mesmo treinador (quer seja você ou um profissio-nal), as mesmas ordens, sinais e recompensas."
+    </string>
+
+    <!-- Cat Training Fragment 2 -->
+    <string name="firstCatTrainingTitle2">Como treinar o seu gato a dar a pata</string>
+    <string name="catQuote2">"“Disseram-me que o procedimento de treinamento com gatos era difícil. Não é. O meu me treinou em dois dias.”" </string>
+    <string name="cat2">gato</string>
+    <string name="firstCatTraining2">"Como Começar\n\n
+
+1 - Procure colocar-se em um lugar calmo e sem distrações para iniciar o treino.\n\n
+2 - Se eles já sabem sentar, dê essa ordem primeiro. Caso contrário, você sempre pode dar um pequeno toque, empurrando a parte inferior da coluna para baixo para sentar no chão.\n\n
+3 - Agora dê a ordem "alô", "pata", "dê-me a pata" ou a que você deseja usar, ao mesmo tempo em que oferece a mão ao seu gato com a palma para cima.\n\n
+4 - Espere que o seu animal coloque a pata em cima e, quando o fizer, dê-lhe um lanche como recompensa.\n\n
+5 - Se eles não colocarem a sua pata na palma da mão, pegue-a por alguns instantes e coloque-a na sua mão. Em seguida, dê ao seu gato uma guloseima para que ele comece a associar aquele gesto a um prêmio.\n\n
+6 - Repita esta operação algumas vezes, não mais do que 10 minutos por dia.\n\n
+7 - No início, o seu gato não vai entender o que você quer que ele faça, mas depois de algumas sessões de treinamento ele vai perceber que esse gesto leva a um deleite. "
+
+    </string>
+
+    <!-- PetSitter Fragment -->
+    <string name="testPetsitterName">Nome</string>
+    <string name="testPetsitterAge">Anos:</string>
+    <string name="testPetsitterDescription">Cuidador</string>
+    <string name="testPetsitterDescriptionImage">cuidador</string>
+    <string name="testPetsitterDescription2">"Descrição"</string>
+    <string name="testContactTitle">Contactos</string>
+    <string name="petsitter_phone">Telemóvel: </string>
+    <string name="petsitter_location">Localização: </string>
+    <string name="description">Descrição: </string>
+    <string name="hint_email">Email</string>
+    <string name="hint_phone">Telemóvel</string>
+    <string name="hint_location">Localização</string>
+
+    <!-- Training Fragment -->
+    <string name="trainingSnakeText">Cobra</string>
+    <string name="trainingBirdText">Pássaro</string>
+    <string name="trainingFishText">Peixe</string>
+    <string name="trainingHamsterText">Hamster</string>
+    <string name="trainingCatText">Gato</string>
+    <string name="trainingDogText">Cão</string>
+    <string name="contentImageDog">Cão</string>
+    <string name="contentImageCat">Gato</string>
+    <string name="contentImageHamster">Hamster</string>
+    <string name="contentImageFish">Peixe</string>
+    <string name="contentImageBird">Pássaro</string>
+    <string name="contentImageSnake">Cobra</string>
+    <string name="select_a_pet">Selecione um animal</string>
+
+    <string name="find_button">Search</string>
+
+    <!-- Tips Fragment -->
+    <string name="tips_title">Cuidados / deveres básicos para você ser como seu animal de estimação!</string>
+    <string name="tips_1">1. Proteção - É dever do proprietário proteger seu animal do sol e da chuva, além de impedir que os bichinhos fujam ou saiam sozinhos na rua. Assim, evitamos brigas, atropelamentos, envenenamentos e crias indesejáveis.</string>
+    <string name="tips_2">2. Alimentação - Oferecer sempre uma ração de boa qualidade, respeitando as características de cada animal e faixa etária (ração de filhote, adulto e idoso). E sempre disponibilizar água limpa e fresca.</string>
+    <string name="tips_3">3. Castração - A castração é sempre aconselhável quando não se quer um filhote. Com isso, evitamos superpopulação, abandonos, doenças uterinas, neoplasias (câncer), doenças prostáticas, agressividade e marcação de território</string>
+    <string name="tips_4">4. Passeios e brincadeiras - Animais também precisam de atenção e carinho. Por isso, é necessário passear regularmente com os cães e brincar com brinquedos. Desse modo, estimulamos tanto a parte física quanto a psicológica, ajudando a prevenir doenças causadas por estresse e obesidade.</string>
+    <string name="tips_5">5. Vacinação - Cães e gatos possuem um esquema vacinal de acordo com sua espécie e características individuais. Geralmente, a vacinação é anual e só pode ser realizada por um médico veterinário. As vacinas previnem doenças graves que podem levar o animal à morte, bem como doenças que podem ser transmitidas para os humanos (zoonoses).</string>
+    <string name="tips_6">6. Controle de parasitas - Os donos ainda devem ficar atentos com infestações de pulgas e carrapatos, que podem transmitir doenças graves para os animais e humanos.</string>
+    <string name="tips_7">7. Vermífugos - Assim como as vacinas, os vermífugos são muito importantes, pois os parasitas intestinais (vermes) podem comprometer a saúde dos animais, levando ao emagrecimento, à queda de pelos, anemias e zoonoses.</string>
+    <string name="tips_8">8. Higiene bucal - Cães e gatos também precisam escovar os dentes, mas com produtos veterinários específicos. Doenças periodontais, além de causar o desagradável mau hálito, prejudicam a alimentação, causam dor e as bactérias da boca podem se desprender e causar lesões em outros órgãos.</string>
+    <string name="tips_9">9. Banhos e escovação - Nos cães, o ideal é dar banho a cada 15 dias. Já nos gatos, este intervalo deve ser maior. Os banhos devem ser com produtos veterinários e com mínimo de estresse possível. Durante estes momentos, você observa melhor seu animal e, assim, pode notar algo diferente ou errado.</string>
+    <string name="tips_10">10. Visitas ao veterinário - É de grande importância realizar, pelo menos, uma vez ao ano uma consulta com o veterinário. Muitas doenças podem ser evitadas com a prevenção. Esteja sempre atento a qualquer mudança de comportamento ou hábito do seu animal, pois isso pode sinalizar doenças.</string>
+    <string name="dog_question">dog_?</string>
+
+    <!-- Dog Train List Fragment -->
+    <string name="back">trás</string>
+    <string name="dog_train_list_title">Lista de Treinos para Cães</string>
+    <string name="dog_train_1">Como Treinar o seu cão a sentar</string>
+    <string name="dog_train_2">Como Treinar o seu cão a dar a pata</string>
+    <string name="dog_train_3">Treino Cão 3</string>
+    <string name="dog_train_4">Treino Cão 4</string>
+    <string name="dog_train_5">Treino Cão 5</string>
+    <string name="dog_train_6">Treino Cão 6</string>
+
+
+    <!-- Cat Train List Fragment -->
+    <string name="cat_train_list_title">Lista de Treinos para Gatos</string>
+    <string name="pet_training">Treino Animal</string>
+    <string name="cat_train_1">Como Treinar o seu gato a sentar</string>
+    <string name="cat_train_2">Como Treinar o seu gato a dar a pata</string>
+    <string name="cat_train_3">Treino Gato 3</string>
+    <string name="cat_train_4">Treino Gato 4</string>
+    <string name="cat_train_5">Treino Gato 5</string>
+    <string name="cat_train_6">Treino Gato 6</string>
+    <string name="train_list">Lista de Treinos</string>
+
+    <!--Settings-->
+    <string name="settings">Definições</string>
+    <string name="settings_notifications">Notificações</string>
+    <string name="settings_appearance">Aparência</string>
+    <string name="settings_activateNotifications">Ativar Notificações</string>
+
+    <!--Pet Info-->
+    <string name="no_pets">Adiciona Animais!</string>
+
+    <!-- Map -->
+
+    <string name="int_map">Submete Endereço, Cidade ou Código</string>
+    <string name="maps_title">Mapa</string>
+    <string name="park1">"Parque, Jardim Da Mouta"</string>
+    <string name="park2">"Parque, Centro Cívico de Serzedo"</string>
+    <string name="park3">"Parque, Parque de Merendas"</string>
+    <string name="park4">"Parque, Parque de lazer de sermonde"</string>
+    <string name="vet1">"Veterinário, Mimos que Curam"</string>
+    <string name="vet2">"Veterinário, Apoio Veterinário"</string>
+    <string name="vet3">"Veterinário, Clínica Veterinária de Arcozelo"</string>
+    <string name="vet4">"Veterinário, Centro Veterinário de Mira"</string>
+    <string name="pet1">"Cuidadora, Luisa Matos, 913423453"</string>
+    <string name="pet2">"Cuidador, João Alberto, 911324459"</string>
+    <string name="pet3">"Cuidadora, Maria Leal, 963231223"</string>
+    <string name="pet4">"Cuidador, Eduardo Capela, 938768785"</string>
+    <string name="locatization">"Minha Localização"</string>
+
+
+    <!--Pet Lists -->
+    <string name="petCommingSoon">Treino em Breve!</string>
+    <string name="bird_train_list_title">Lista de Treinos para Pássaro</string>
+    <string name="bird_train_1">Pássaro Treino 1</string>
+    <string name="bird_train_2">Pássaro Treino 2</string>
+    <string name="bird_train_3">Pássaro Treino 3</string>
+    <string name="bird_train_4">Pássaro Treino 4</string>
+    <string name="bird_train_5">Pássaro Treino 5</string>
+    <string name="bird_train_6">Pássaro Treino 6</string>
+    <string name="fish_train_list_title">Lista de Treinos para Peixe</string>
+    <string name="fish_train_1">Peixe treino 1</string>
+    <string name="fish_train_2">Peixe treino 2</string>
+    <string name="fish_train_3">Peixe treino 3</string>
+    <string name="fish_train_4">Peixe treino 4</string>
+    <string name="fish_train_5">Peixe treino 5</string>
+    <string name="fish_train_6">Peixe treino 6</string>
+    <string name="ham_train_list_title">Lista de Treinos para Hamster</string>
+    <string name="ham_train_1">Hamster treino 1</string>
+    <string name="ham_train_2">Hamster treino 2</string>
+    <string name="ham_train_3">Hamster treino 3</string>
+    <string name="ham_train_4">Hamster treino 4</string>
+    <string name="ham_train_5">Hamster treino 5</string>
+    <string name="ham_train_6">Hamster treino 6</string>
+    <string name="snake_train_list_title">Lista de Treinos para Cobras</string>
+    <string name="snake_train_1">Cobra treino 1</string>
+    <string name="snake_train_2">Cobra treino 2</string>
+    <string name="snake_train_3">Cobra treino 3</string>
+    <string name="snake_train_4">Cobra treino 4</string>
+    <string name="snake_train_5">Cobra treino 5</string>
+    <string name="snake_train_6">Cobra treino 6</string>
+    <string name="pet_train_list">Lista de Treinos</string>
+
+    <!-- Health -->
+    <string name="medication">Medicação:</string>
+    <string name="your_animal_age">Idade do Animal</string>
+    <string name="veterinary">Veterenário:</string>
+    <string name="diseases">Doenças:</string>
+    <string name="vaccine_3">Vacina 3:</string>
+    <string name="vaccine_2">Vacina 2</string>
+    <string name="vaccine_1">Vacina 1:</string>
+    <string name="vaccines">Vacinas:</string>
+    <string name="meds_3">Remédio 3</string>
+    <string name="meds_2">Remédio 2:</string>
+    <string name="pills_1">Pastilhas 1:</string>
+
+    <!-- Pet Info -->
+    <string name="dog_img">dog_img</string>
+    <string name="pet_info_back">Info Animal</string>
+    <string name="pet_info_name">"Nome: "</string>
+    <string name="your_animal_name">Nome do Animal</string>
+    <string name="your_pet_breed">Raça do Animal</string>
+    <string name="pet_breed">"Raça: "</string>
+    <string name="pet_gender">"Género: "</string>
+    <string name="pet_male">Macho</string>
+    <string name="pet_female">Femea</string>
+    <string name="img_desc">img_desc</string>
+    <string name="age">"Idade: "</string>
+    <string name="pet_food">"Comida: "</string>
+    <string name="your_pet_s_age">Idade do Animal</string>
+    <string name="img_food">img_food</string>
+    <string name="pet_veterinary">"Veterinario: "</string>
+    <string name="pet_diseases">"Doenças: "</string>
+    <string name="pet_vaccines">"Vacinas: "</string>
+    <string name="pet_medication">"Medicação: "</string>
+    <string name="your_pet_info">Info Animal</string>
+    <string name="back_button">back_button</string>
+    <string name="your_animal_food">Comida do Animal</string>
+    <string name="your_pet_health">Saúde Animal</string>
+    <string name="delete">Apagar</string>
+    <string name="pet_age">"Idade: "</string>
+    <string name="med_info">Medicação</string>
+    <string name="edit_pet_food">Comida do Animal</string>
+    <string name="hint_vaccine">Vacina</string>
+    <string name="disease">Doença</string>
+    <string name="vet_clinic">Clínica Vet</string>
+    <string name="date_of_visit">Data visita</string>
+    <string name="vaccines_reg">"Vacina não registada"</string>
+    <string name="med_reg">"Medicação não registada"</string>
+    <string name="diseases_reg">"Doença não registada"</string>
+    <string name="vets_reg">"Visitas de veterinario não registadas"</string>
+    <string name="taken">": tomado"</string>
+    <string name="not_taken">": não tomado"</string>
+    <string name="years">"anos"</string>
+
+
+    <string name="img_upload">"Imagem Carregada."</string>
+    <string name="img_fail">"Erro ao Carregar Imagem."</string>
+    <string name="percentage">"Percentagem: "</string>
+    <string name="upload">"Carregando Imagem…"</string>
+    <string name="pet_register">"Novo animal Registado!"</string>
+    <string name="basic_fields">"Tens de preencher no mínimo o Nome, Raça, Idade"</string>
+    <string name="info_update">"Informação Atualizada"</string>
+
+
+    <!-- Login -->
+    <string name="email_req">"Email é Obrigatório."</string>
+    <string name="pass_req">"Password é Obrigatória."</string>
+    <string name="pass_longer">"A tua password é maior de 6!"</string>
+    <string name="log_success">"Login com Sucesso"</string>
+    <string name="email_sent">"Email enviado com sucesso!"</string>
+    <string name="acc_create">"Conta criada com sucesso"</string>
+    <string name="acc_fail">"Criação de conta falhada."</string>
+    <string name="login">Login</string>
+    <string name="sign_in_with_your_account">Entra com a tua conta!</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="don_t_have_acc">Ainda não tens conta? Clica aqui!</string>
+    <string name="reset_it_here">Esqueceste da password? Clica aqui!</string>
+    <string name="error">Erro!</string>
+    <string name="reset_password">Resetar Password</string>
+    <string name="recive_mail">Vais receber um email com o link de recuperação</string>
+    <string name="send_email">Enviar email</string>
+    <string name="registration">Registo</string>
+    <string name="create_your_account_with_your_email_and_a_password">Cria a Tua conta com o teu email e password!</string>
+    <string name="create_account">Criar Conta</string>
+    <string name="if_you_want_to_become_a_petsitter_create_a_profile">Se quiseres ser um cuidador cria o teu Perfil!</string>
+
+
+
+
+    <color name="white">#FFFFFF</color>
+
+</resources>
