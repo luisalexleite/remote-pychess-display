@@ -3,6 +3,8 @@ import pyautogui
 import subprocess
 import time
 import tkinter
+import chess
+from lib.chessengine import checkMove, playExample
 
 def start_game(white, black, mode):
 
@@ -62,8 +64,10 @@ def start_game(white, black, mode):
         #iniciar jogo em normal
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
         pyautogui.press('enter')
+
+def makeMove(board,move):
+    print("teste")
         
 def end_game():
-
     #fechar jogo
     pyautogui.hotkey('ctrl', 'q')
