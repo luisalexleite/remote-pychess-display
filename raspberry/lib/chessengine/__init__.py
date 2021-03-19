@@ -1,17 +1,18 @@
 import chess
 
 def checkMove(board, move):
+    board = chess.Board(board)
     try:
         board.push_san(move)
     except:
-        return False, False, False, False, False, False, board
+        return False, False, False, False, False, False, board.fen()
     checkmate = board.is_checkmate()
     stalemate = board.is_stalemate()
     nomaterial = board.is_insufficient_material()
     claim = board.can_claim_draw()
     repetition = board.is_fivefold_repetition()
     
-    return True, checkmate, stalemate, nomaterial, claim, repetition, board
+    return True, checkmate, stalemate, nomaterial, claim, repetition, board.fen()
 
 def playExample():
     checkmate = False
@@ -19,7 +20,7 @@ def playExample():
     nomaterial = False 
     claim = False 
     repetition = False
-    board = chess.Board()
+    board = chess.Board().fen()
 
     cor = "Jogador das Brancas"
     while checkmate == False or stalemate == False or nomaterial == False or repetition == False:
@@ -60,5 +61,5 @@ def playExample():
                     cor = "Jogador das Pretas"
                 else:
                     cor = "Jogador das Brancas"
-                print(board)
+                print(chess.Board(board))
                 break
