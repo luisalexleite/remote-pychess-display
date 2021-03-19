@@ -4,7 +4,7 @@ import subprocess
 import time
 import tkinter
 import chess
-from lib.chessengine import checkMove, playExample
+from lib.chessengine import checkMove
 
 def start_game(white, black, mode):
 
