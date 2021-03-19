@@ -1,6 +1,7 @@
 import chess
 
 def checkMove(board, move):
+    board = chess.Board(board)
     try:
         board.push_san(move)
     except:
@@ -52,7 +53,7 @@ def playExample():
         while valid == False:
             move = input("\n" + cor + ' mexa uma peça:')
             print("\n")
-            valid, checkmate, stalemate, nomaterial, claim, repetition, board = checkMove(chess.Board(board), move)
+            valid, checkmate, stalemate, nomaterial, claim, repetition, board = checkMove(board, move)
             if valid == False:
                 print("\nMovimento inválido\n")
             else:

@@ -66,7 +66,40 @@ def start_game(white, black, mode):
         pyautogui.press('enter')
 
 def makeMove(board,move,game):
-    print("teste")
+    valid, checkmate, stalemate, nomaterial, claim, repetition, board = checkMove(board, move)
+    if (valid == True):
+        if (checkmate == True):
+            print("checkmate")  
+            pyautogui.write(move)
+            pyautogui.press('enter')
+            print(move)
+        elif (stalemate == True):
+            print("stalemate")
+            pyautogui.write(move)
+            pyautogui.press('enter')
+            print(move)
+        elif (nomaterial == True):
+            print("Insufficent Material")
+            pyautogui.write(move)
+            pyautogui.press('enter')
+            print(move)
+        elif (repetition == True):
+            print("Repetition")
+            pyautogui.write(move)
+            pyautogui.press('enter')
+            print(move)
+        elif (claim == True):
+            print("Claim Draw")
+            pyautogui.write(move)
+            pyautogui.press('enter')
+            print(move)
+        else:
+            pyautogui.write(move)
+            pyautogui.press('enter')
+            print(move)
+            print('Movimento Válido')
+    else:
+        print('Movimento inválido')
         
 def end_game():
     #fechar jogo
