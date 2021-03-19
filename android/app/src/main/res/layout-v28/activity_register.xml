@@ -52,12 +52,18 @@
                 android:text="@string/create_your_account_with_your_email_and_a_password"
                 android:textColor="#FFFFFF" />
 
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="300dp"
+            android:layout_marginTop="25dp"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
                 android:text="@string/email"
                 android:textColor="#FFFFFF" />
 
@@ -76,7 +82,6 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
                 android:text="@string/password"
                 android:textColor="#FFFFFF" />
 
@@ -92,10 +97,14 @@
                 android:textColor="#FFFFFF"
                 tools:ignore="LabelFor" />
 
+            </LinearLayout>
+
             <Button
                 android:id="@+id/create"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:layout_height="wrap_content"
                 android:background="#de6262"
                 android:text="@string/create_account" />
