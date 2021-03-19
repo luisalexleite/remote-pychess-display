@@ -1,15 +1,18 @@
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   var firebaseConfig = {
-    apiKey: "AIzaSyBV9Nd5X1iF7jwiK72x9MIoUHf2Sn5NyZQ",
-    authDomain: "bbchess-720c1.firebaseapp.com",
-    databaseURL: "https://bbchess-720c1-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "bbchess-720c1",
-    storageBucket: "bbchess-720c1.appspot.com",
-    messagingSenderId: "328789090053",
-    appId: "1:328789090053:web:59b78044e274b74c0ea16c",
-    measurementId: "G-MRX1V5YS74"
+    apiKey: "AIzaSyBqUAS_fYtJDWXIaQdf2MR1yU_Ya808iJw",
+    authDomain: "remote-pychess.firebaseapp.com",
+    databaseURL: "https://remote-pychess-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "remote-pychess",
+    storageBucket: "remote-pychess.appspot.com",
+    messagingSenderId: "914254287981",
+    appId: "1:914254287981:web:5fc544c7daa4ec110a5b64",
+    measurementId: "G-TRD3REPTL0"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
 
   var ref = firebase.database().ref("games/1/");
   ref.once("value")
