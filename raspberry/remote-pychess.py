@@ -65,7 +65,7 @@ def start_game(white, black, mode):
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
         pyautogui.press('enter')
 
-def makeMove(board,move):
+def makeMove(board,move,game):
     print("teste")
         
 def end_game():
