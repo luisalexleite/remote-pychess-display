@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/launcher_ic"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AnimalMobileApp">
+        android:theme="@style/Theme.PyChessApp">
 
 
         <meta-data android:name="com.google.android.geo.API_KEY"
@@ -27,20 +27,13 @@
         <activity android:name=".login.LoginActivity"/>
         <activity android:name=".login.RegisterActivity"/>
         <activity android:name=".login.ActivityPasswordReset"/>
-        <activity android:name=".secondaryFragments.PetTrainListFragment"/>
-        <activity android:name=".pets.AddPetActivity"/>
-        <activity android:name=".pets.EditPetActivity"/>
-        <activity android:name=".mainFragments.MapFragment"
-            tools:ignore="Instantiatable"/>
-        <activity android:name=".map.MapActivity" android:exported="true"/>
-        <activity android:name=".pets.HealthActivity"/>
+
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".pets.PetInfoActivity"/>
     </application>
 
 </manifest>
