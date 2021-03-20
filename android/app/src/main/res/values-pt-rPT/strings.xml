@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">YourPet</string>
+    <string name="app_name">RPyChess</string>
 
     <!--Bottom Navigation-->
     <string name="nav_home">Início</string>

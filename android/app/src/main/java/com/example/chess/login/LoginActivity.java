@@ -1,14 +1,18 @@
 package com.example.chess.login;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.chess.MainActivity;
@@ -24,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText passIn;
     EditText emailIn;
     Button resetBtn;
+    ImageButton exitBtn;
     private FirebaseAuth mAuth;
 
     @Override
@@ -37,12 +42,35 @@ public class LoginActivity extends AppCompatActivity {
         passIn = findViewById(R.id.passin);
         emailIn = findViewById(R.id.emailin);
         resetBtn = findViewById(R.id.resetbtn);
+        exitBtn = findViewById(R.id.exitButton);
         //get Firebase authentication instance
         mAuth = FirebaseAuth.getInstance();
         //set input type to password
         passIn.setInputType( InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
         passIn.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
+
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                builder.setMessage("Tem a certeza?")
+                        .setTitle("Sair")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                finish();
+                                System.exit(0);
+
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        });
+                builder.create().show();
+            }
+        });
         //login button onClickListener
         btnIn.setOnClickListener(v -> {
             String email = emailIn.getText().toString().trim();
