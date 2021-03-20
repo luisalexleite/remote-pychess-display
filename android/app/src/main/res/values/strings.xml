@@ -32,6 +32,33 @@
     <string name="create_account">Create Account</string>
     <string name="if_you_want_to_become_a_petsitter_create_a_profile">If you want to become a petsitter, create a profile!</string>
 
+    <!-- Petsitter Fragment -->
+    <string name="testPetsitterName">Name</string>
+    <string name="testPetsitterAge">Age</string>
+    <string name="testPetsitterDescription">PetSitter</string>
+    <string name="testPetsitterDescriptionImage">petsitter</string>
+    <string name="testPetsitterDescription2">"Description"</string>
+    <string name="testContactTitle">Contacts</string>
+    <string name="petsitter_phone">Phone: </string>
+    <string name="petsitter_location">Location: </string>
+    <string name="petsitter_email" translatable="false">"Email: "</string>
+    <string name="editIcon" translatable="false">editIcon</string>
+    <string name="submit" translatable="false">Submit</string>
+    <string name="description">Description: </string>
+    <string name="hint_email">Email</string>
+    <string name="hint_phone">Phone</string>
+    <string name="hint_location">Location</string>
+
+    <string name="img_upload">"Image Uploaded."</string>
+    <string name="img_fail">"Failed to Upload."</string>
+    <string name="percentage">"Percentage: "</string>
+    <string name="upload">"Uploading image…"</string>
+    <string name="pet_register">"New pet has been registered"</string>
+    <string name="basic_fields">"You have to fill out the basic fields: Name, Breed, Age"</string>
+    <string name="info_update">"Info updated"</string>
+
+
     <color name="white">#FFFFFF</color>
     <string name="img_desc">img</string>
+    <string name="username">Username</string>
 </resources>
