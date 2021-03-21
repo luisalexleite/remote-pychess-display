@@ -1,4 +1,4 @@
-package com.example.chess;
+package com.example.chess.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.example.chess.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -35,6 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
+    ImageButton edit_button;
     //FireStore instance
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
         userName = findViewById(R.id.profile_name);
         email = findViewById(R.id.email_profile);
         rating = findViewById(R.id.rating);
+        edit_button = findViewById(R.id.editButton);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -61,7 +64,14 @@ public class ProfileActivity extends AppCompatActivity {
                         rating.setText(s);
                     }
                 });
+        //back button
+        ImageButton back = findViewById(R.id.backBtnProfile);
+        back.setOnClickListener(v -> onBackPressed());
 
+        edit_button.setOnClickListener(v -> {
+                Intent intent = new Intent(this, ProfileEditActivity.class);
+                startActivity(intent);
 
+        });
     }
 }

@@ -4,137 +4,255 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2d2f30"
-    tools:context=".ProfileActivity">
-
+    android:background="@color/colorPrimary"
+    tools:context=".profile.ProfileActivity">
 
     <LinearLayout
-        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#242526"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        android:padding="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal">
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal" >
 
-        <!--Pet Sitter Image-->
-            <ImageView
-                android:id="@+id/image_sitter"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:background="@drawable/border"
-                android:contentDescription="@string/testPetsitterDescriptionImage"
-                android:scaleType="centerCrop" />
+        <ImageButton
+            android:id="@+id/backBtnProfileEdit"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:contentDescription="@string/img_desc"
+            android:scaleType="fitXY"
+            android:layout_marginStart="3dp"
+            android:tint="@color/colorAccent"
+            android:padding="10dp"
+            app:srcCompat="@drawable/back_button" />
 
+        <TextView
+            android:id="@+id/profileTitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:paddingTop="6dp"
+            android:text="@string/profile_edit_title"
+            android:padding="4dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="26sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/profile_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:textSize="26sp"
-                        android:gravity="center"
-                        android:textColor="#ffffff"
-                        tools:ignore="NestedWeights" />
-
-
-                </LinearLayout>
-
+            <ImageButton
+                android:id="@+id/submitButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:contentDescription="@string/img_desc"
+                android:scaleType="fitXY"
+                android:layout_marginStart="3dp"
+                android:padding="8dp"
+                app:srcCompat="@drawable/ic_check" />
 
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
+    <LinearLayout
+        android:id="@+id/btnfoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:padding="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:textSize="12sp"
+            android:text="@string/profile_Image"
+            android:textAlignment="textStart"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            tools:ignore="NestedWeights,RtlCompat" />
+
+        <!--Pet Sitter Image-->
+            <ImageButton
+                android:id="@+id/image_profile"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/demo_player"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/img_desc" />
+
+
+    </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@drawable/border_bot">
+
+        </TextView>
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:padding="28dp"
             android:background="#2d2f30"
             android:layout_height="wrap_content">
 
-
-
-
-
             <!--Email-->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="20dp"
+                    android:text="@string/username"
+                    android:textAlignment="textStart"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    tools:ignore="RtlCompat" />
+
+                <EditText
+                    android:id="@+id/username_edit_profile"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColorHighlight="@color/white"
+                    android:textColorHint="#ffffff"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    android:autofillHints=""
+                    android:inputType="text"
+                    tools:ignore="LabelFor" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/border_bot">
+
+            </TextView>
+
+            <!--Phone-->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/petsitter_email"
-                    android:padding="10dp"
-                    android:text="@string/petsitter_email"
+                    android:gravity="center"
+                    android:padding="20dp"
+                    android:text="@string/first_name"
+                    android:textAlignment="textStart"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="12sp"
+                    tools:ignore="RtlCompat" />
+
+                <EditText
+                    android:id="@+id/first_name"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColorHint="#ffffff"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    android:autofillHints=""
+                    tools:ignore="LabelFor" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/border_bot">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/last_name"
+                    android:textAlignment="textStart"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:padding="20dp"
+                    android:textSize="12sp"
+                    tools:ignore="RtlCompat" />
 
                 <EditText
                     android:id="@+id/email_profile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="123@gmail.com"
-                    android:padding="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="15dp"
                     android:textColorHint="#ffffff"
-                    android:textSize="20sp" />
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    tools:ignore="LabelFor,TextFields"
+                    android:autofillHints="" />
             </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/border_bot">
 
+            </TextView>
+
+            <!--Phone-->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="Rating:"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:padding="20dp"
+                    android:textAlignment="textStart"
+                    android:gravity="center"
+                    android:text="@string/email"
+                    android:textSize="12sp"
+                    tools:ignore="RtlCompat" />
 
                 <EditText
                     android:id="@+id/rating"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="2000"
-                    android:padding="10dp"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:textColorHint="#ffffff"
-                    android:textSize="20sp" />
-
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    android:autofillHints=""
+                    android:inputType="textEmailAddress"
+                    tools:ignore="LabelFor" />
             </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/border_bot">
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Submit" />
-
-            <!--Phone-->
+            </TextView>
 
 
-        </LinearLayout>
-</ScrollView>
+    </LinearLayout>
+    </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

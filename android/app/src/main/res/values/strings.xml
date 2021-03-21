@@ -58,7 +58,16 @@
     <string name="info_update">"Info updated"</string>
 
 
+    <!-- Profile -->
+
     <color name="white">#FFFFFF</color>
     <string name="img_desc">img</string>
+    <string name="profile_edit_title">Edit Profile</string>
+    <string name="profile_Image">Profile Image</string>
+    <string name="rating">Rating:</string>
+    <string name="profile">Profile</string>
     <string name="username">Username</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="name">"Name: "</string>
 </resources>

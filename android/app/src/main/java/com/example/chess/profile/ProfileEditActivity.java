@@ -1,4 +1,4 @@
-package com.example.chess;
+package com.example.chess.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.chess.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -29,17 +31,9 @@ public class ProfileEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
 
-            Intent data = getIntent();
-            String username = data.getStringExtra("username");
-            String email = data.getStringExtra("email");
-            String rating = data.getStringExtra("rating");
-
-            Log.d(TAG, "onCreate: " + username + "" + email + "" + rating);
-
-            //get userID
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            assert user != null;
-            final String userID = user.getUid();
+        //back button
+        ImageButton back = findViewById(R.id.backBtnProfileEdit);
+        back.setOnClickListener(v -> onBackPressed());
 
 
     }
