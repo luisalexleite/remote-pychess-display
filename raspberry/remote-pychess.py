@@ -4,6 +4,7 @@ import subprocess
 import time
 import tkinter
 import chess
+import firebase_admin
 from lib.chessengine import checkMove
 
 def start_game(white, black, mode):
