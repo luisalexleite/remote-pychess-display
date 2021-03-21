@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2d2f30"
+    android:background="@color/colorPrimary"
     tools:context=".profile.ProfileActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +18,6 @@
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#242526"
         android:orientation="horizontal" >
 
         <ImageButton
@@ -26,7 +28,7 @@
             android:contentDescription="@string/img_desc"
             android:scaleType="fitXY"
             android:layout_marginStart="3dp"
-            android:tint="#de6262"
+            android:tint="@color/colorAccent"
             android:padding="10dp"
             app:srcCompat="@drawable/back_button" />
 
@@ -49,8 +51,6 @@
                 android:layout_height="50dp"
                 android:background="@null"
                 android:contentDescription="@string/img_desc"
-                android:scaleType="fitXY"
-                android:layout_marginStart="3dp"
                 android:padding="11dp"
                 app:srcCompat="@drawable/ic_edit" />
 
@@ -60,43 +60,38 @@
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#242526"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:background="@color/colorPrimaryDark"
         android:padding="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:orientation="horizontal">
 
         <!--Image-->
-            <ImageButton
-                android:id="@+id/image_sitter"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:background="@drawable/demo_player"
-                android:contentDescription="@string/testPetsitterDescriptionImage"
-                android:scaleType="centerCrop" />
+        <ImageView
+            android:id="@+id/image_profile"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:background="@drawable/demo_player"
+            android:contentDescription="@string/img_desc"
+            android:scaleType="centerCrop" />
 
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/profile_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="5dp"
-                        android:textSize="26sp"
-                        android:gravity="center"
-                        android:textColor="#ffffff"
-                        tools:ignore="NestedWeights" />
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:textSize="26sp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                tools:ignore="NestedWeights" />
 
 
-                </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
         <LinearLayout
@@ -104,7 +99,6 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:padding="28dp"
-            android:background="#2d2f30"
             android:layout_height="wrap_content">
 
 
@@ -117,7 +111,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/white"
                     android:padding="10dp"
                     android:text="@string/name"
                     android:textSize="20sp" />
@@ -142,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#ffffff"
                     android:padding="10dp"
-                    android:text="@string/petsitter_email"
+                    android:text="@string/email_profile"
                     android:textSize="20sp" />
 
                 <TextView
@@ -166,7 +160,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/white"
                     android:padding="10dp"
                     android:text="@string/rating"
                     android:textSize="20sp" />
@@ -185,7 +179,6 @@
 
     </LinearLayout>
     </LinearLayout>
-
-
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

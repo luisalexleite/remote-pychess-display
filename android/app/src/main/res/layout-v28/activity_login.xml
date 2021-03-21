@@ -99,11 +99,11 @@
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
-                android:textColorHint="#ffffff"
+                android:textColorHint="@color/white"
                 android:autofillHints="email"
-                android:backgroundTint="#FFFFFF"
+                android:backgroundTint="@color/white"
                 android:inputType="textEmailAddress"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 tools:ignore="LabelFor" />
         </LinearLayout>
 

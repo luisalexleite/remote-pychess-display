@@ -7,6 +7,10 @@
     android:background="@color/colorPrimary"
     tools:context=".profile.ProfileActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -49,7 +53,6 @@
                 android:layout_height="50dp"
                 android:background="@null"
                 android:contentDescription="@string/img_desc"
-                android:scaleType="fitXY"
                 android:layout_marginStart="3dp"
                 android:padding="8dp"
                 app:srcCompat="@drawable/ic_check" />
@@ -58,10 +61,9 @@
 
 
     <LinearLayout
-        android:id="@+id/btnfoto"
+        android:id="@+id/btnImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
         android:padding="15dp"
         android:orientation="horizontal">
 
@@ -75,12 +77,12 @@
             android:text="@string/profile_Image"
             android:textAlignment="textStart"
             android:gravity="center"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             tools:ignore="NestedWeights,RtlCompat" />
 
         <!--Pet Sitter Image-->
-            <ImageButton
-                android:id="@+id/image_profile"
+            <ImageView
+                android:id="@+id/image_profile_edit"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@drawable/demo_player"
@@ -99,7 +101,6 @@
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:background="#2d2f30"
             android:layout_height="wrap_content">
 
             <!--Email-->
@@ -115,7 +116,7 @@
                     android:padding="20dp"
                     android:text="@string/username"
                     android:textAlignment="textStart"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/white"
                     android:textSize="12sp"
                     tools:ignore="RtlCompat" />
 
@@ -124,10 +125,12 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textColorHighlight="@color/white"
-                    android:textColorHint="#ffffff"
+                    android:textColorHighlight="@color/colorPrimaryDark"
+                    android:textColorHint="@color/white"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="15dp"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:textColor="@color/white"
                     android:padding="10dp"
                     android:textSize="15sp"
                     android:autofillHints=""
@@ -164,7 +167,9 @@
                     android:layout_marginEnd="15dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textColorHint="#ffffff"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
                     android:inputType="text"
                     android:padding="10dp"
                     android:textSize="15sp"
@@ -188,18 +193,20 @@
                     android:text="@string/last_name"
                     android:textAlignment="textStart"
                     android:gravity="center"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/white"
                     android:padding="20dp"
                     android:textSize="12sp"
                     tools:ignore="RtlCompat" />
 
                 <EditText
-                    android:id="@+id/email_profile"
+                    android:id="@+id/lName_profile"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginEnd="15dp"
-                    android:textColorHint="#ffffff"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:textColorHint="@color/white"
                     android:inputType="text"
                     android:padding="10dp"
                     android:textSize="15sp"
@@ -221,7 +228,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/white"
                     android:padding="20dp"
                     android:textAlignment="textStart"
                     android:gravity="center"
@@ -230,12 +237,14 @@
                     tools:ignore="RtlCompat" />
 
                 <EditText
-                    android:id="@+id/rating"
+                    android:id="@+id/email_edit"
                     android:layout_width="0dp"
                     android:layout_marginEnd="15dp"
                     android:layout_height="match_parent"
+                    android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:textColorHint="#ffffff"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:textColorHint="@color/white"
                     android:padding="10dp"
                     android:textSize="15sp"
                     android:autofillHints=""
@@ -252,6 +261,7 @@
 
     </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 
 
 

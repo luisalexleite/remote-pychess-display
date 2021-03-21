@@ -31,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText usernameText;
     Button btn;
     private FirebaseAuth mAuth;
-    FirebaseFirestore fstore;
+    FirebaseFirestore fStore;
     String userID;
 
     @Override
@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         btn = findViewById(R.id.create);
         passText.setInputType( InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
         passText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        fstore = FirebaseFirestore.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         //back button
         ImageButton back = findViewById(R.id.backbtn1);
@@ -98,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, R.string.acc_create, Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             userID = mAuth.getCurrentUser().getUid();
-                            DocumentReference documentReference = fstore.collection("profile").document(userID);
+                            DocumentReference documentReference = fStore.collection("profile").document(userID);
                             Map<String, Object> profile = new HashMap<>();
                             profile.put("email", email);
                             profile.put("username", username);
