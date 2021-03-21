@@ -27,8 +27,8 @@
         <activity android:name=".login.LoginActivity"/>
         <activity android:name=".login.RegisterActivity"/>
         <activity android:name=".login.ActivityPasswordReset"/>
-        <activity android:name=".ProfileActivity"/>
-        <activity android:name=".ProfileEditActivity"/>
+        <activity android:name=".profile.ProfileActivity"/>
+        <activity android:name=".profile.ProfileEditActivity"/>
 
         <activity android:name=".SplashScreen">
             <intent-filter>
