@@ -1,1 +1,3 @@
 *.pyc
+web/vendor
+web/remote-pychess-f8ba9c6e343c.json
