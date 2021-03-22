@@ -58,20 +58,15 @@ public class ProfileActivity extends AppCompatActivity {
         edit_button = findViewById(R.id.editButton);
         profileImage = findViewById(R.id.image_profile);
 
-
-
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         fStorage = FirebaseStorage.getInstance().getReference();
-
         userID = fAuth.getCurrentUser().getUid();
 
         StorageReference profileRef = fStorage.child(userID + ".jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
+        profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
                 Picasso.get().load(uri).into(profileImage);
-            }
+
         });
 
 
@@ -79,19 +74,26 @@ public class ProfileActivity extends AppCompatActivity {
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                        userName.setText(documentSnapshot.getString("username"));
-                        email.setText(documentSnapshot.getString("email"));
                         String fName = documentSnapshot.getString("fName");
                         String lName = documentSnapshot.getString("lName");
                         String fullName = fName + " " + lName;
-                        if (!fName.equals("") && !lName.equals("")) {
+                        if(fName != null && lName != null) {
                             name.setText(fullName);
+                        }else if (fName != null) {
+                            name.setText(fName);
+                        }else if (lName != null) {
+                            name.setText(lName);
                         }
-                        long rating2 = documentSnapshot.getLong("rating");
-                        String s = String.valueOf(rating2);
-                        rating.setText(s);
+
+                            userName.setText(documentSnapshot.getString("username"));
+                            email.setText(documentSnapshot.getString("email"));
+                            long rating2 = documentSnapshot.getLong("rating");
+                            String s = String.valueOf(rating2);
+                            rating.setText(s);
+                        //}
                     }
                 });
+
         //back button
         ImageButton back = findViewById(R.id.backBtnProfile);
         back.setOnClickListener(v -> {

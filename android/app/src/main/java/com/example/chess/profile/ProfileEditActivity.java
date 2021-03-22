@@ -49,6 +49,8 @@ public class ProfileEditActivity extends AppCompatActivity {
     private final CollectionReference petsitterRef = db.collection("Petsitter");
     private String TAG = "ProfileEditActivity";
     private View view;
+    private Uri imageUri;
+    private String imageLink = "";
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -128,6 +130,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                     if(!lName.equals("")) {
                         profile.put("lName", lName);
                     }
+                    profile.put("image", imageLink);
                     documentReference.update(profile);
                 }
 
@@ -142,10 +145,9 @@ public class ProfileEditActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1000){
-            if(resultCode == Activity.RESULT_OK){
-                Uri imageUri = data.getData();
+            if(resultCode == Activity.RESULT_OK && data!=null && data.getData()!=null){
+                imageUri = data.getData();
                 profileImg.setImageURI(imageUri);
-
                 uploadImageToFirebase(imageUri);
 
             }
@@ -156,16 +158,11 @@ public class ProfileEditActivity extends AppCompatActivity {
         // upload image to firebase storage
         userID = fAuth.getCurrentUser().getUid();
         StorageReference fileRef = fStorage.child(userID + ".jpg");
-        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(profileImg);
-                    }
+        fileRef.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> {
+                fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    imageLink = uri.toString();
                 });
-            }
         });
     }
 }

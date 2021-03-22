@@ -1,6 +1,7 @@
 package com.example.chess.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,10 +34,13 @@ public class RegisterActivity extends AppCompatActivity {
     EditText passText;
     EditText emailText;
     EditText usernameText;
+    ImageView image_profile;
     Button btn;
     private FirebaseAuth mAuth;
     FirebaseFirestore fStore;
+    StorageReference fStorage;
     String userID;
+    private Object Uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         //get views
+        image_profile = findViewById(R.id.image_profile);
         passText = findViewById(R.id.passText);
         emailText = findViewById(R.id.emailText);
         usernameText = findViewById(R.id.userNameText);
@@ -47,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
         passText.setInputType( InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
         passText.setTransformationMethod(PasswordTransformationMethod.getInstance());
         fStore = FirebaseFirestore.getInstance();
+        fStorage = FirebaseStorage.getInstance().getReference();
 
         //back button
         ImageButton back = findViewById(R.id.backbtn1);
@@ -103,6 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                             profile.put("email", email);
                             profile.put("username", username);
                             profile.put("rating", 800);
+                            profile.put("imgUri", Uri);
                             profile.put("userUID", userID);
                             documentReference.set(profile).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
