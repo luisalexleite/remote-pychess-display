@@ -130,7 +130,9 @@ public class ProfileEditActivity extends AppCompatActivity {
                     if(!lName.equals("")) {
                         profile.put("lName", lName);
                     }
-                    profile.put("image", imageLink);
+                    if(!imageLink.equals("")) {
+                        profile.put("image", imageLink);
+                    }
                     documentReference.update(profile);
                 }
 
