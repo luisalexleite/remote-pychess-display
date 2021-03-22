@@ -40,7 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     StorageReference fStorage;
     String userID;
-    private Object Uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +112,6 @@ public class RegisterActivity extends AppCompatActivity {
                             profile.put("email", email);
                             profile.put("username", username);
                             profile.put("rating", 800);
-                            profile.put("imgUri", Uri);
                             profile.put("userUID", userID);
                             documentReference.set(profile).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
