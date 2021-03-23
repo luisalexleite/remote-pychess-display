@@ -30,7 +30,7 @@ def makeMove(game):
     #enquanto o jogo decorrer
     while state == 1:
         #se hover algum moviento disponível
-        if movimento_disponivel:
+        if movimento_disponivel == 0:
             #verificar se movimento é válido
             valid, checkmate, stalemate, nomaterial, claim, repetition, board = checkMove(board, 'move')
 
