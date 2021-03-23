@@ -22,14 +22,11 @@ def end_game():
     pyautogui.hotkey('ctrl', 'q')
 
 def makeMove(gameid):
-    """
-    logica da função feita falta ligar à bd - firestore e realtime database
-    """
     moveCount = 1
     board = chess.Board().fen()
     whites=False
     #enquanto o jogo decorrer
-    while db.reference(f'games/{gameid}/state').get() == 0:
+    while db.reference(f'games/{gameid}/state').get() == 0 or db.reference(f'games/{gameid}/state').get() == 3:
         #obter dados do ultimo movimento
         movement = db.reference(f'movements/{gameid}').order_by_key().equal_to(f'{moveCount}').get()
         #se hover algum moviento disponível
