@@ -1,4 +1,4 @@
 *.pyc
-/web/vendor/**
-/web/remote-pychess-f8ba9c6e343c.json
+vendor/**
+remote-pychess-f8ba9c6e343c.json
 /raspberry/cred/**
