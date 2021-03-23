@@ -16,7 +16,6 @@ cred = credentials.Certificate('raspberry/cred/remote-pychess-f8ba9c6e343c.json'
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://remote-pychess-default-rtdb.europe-west1.firebasedatabase.app/remote-pychess-default-rtdb/'
 })
-teste = db.reference(f'movements/-MWUB1mXE9rg8b7auYiJ').order_by_key().equal_to('1').get()
 
 def end_game():
     #fechar jogo
@@ -149,6 +148,6 @@ def start_game(gameid):
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
         pyautogui.press('enter')
     
-    #makeMove(gameid)
+    makeMove(gameid)
 
 #start_game('-MWUB1mXE9rg8b7auYiJ')
