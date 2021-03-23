@@ -27,9 +27,9 @@ def makeMove(gameid):
     """
     moveCount = 1
     board = chess.Board().fen()
+    whites=False
     #enquanto o jogo decorrer
     while db.reference(f'games/{gameid}/state').get() == 0:
-        whites=False
         #obter dados do ultimo movimento
         movement = db.reference(f'movements/{gameid}').order_by_key().equal_to(f'{moveCount}').get()
         #se hover algum moviento disponível
@@ -38,46 +38,45 @@ def makeMove(gameid):
             if movement [f'{moveCount}']['state'] == 0:
                 valid, checkmate, stalemate, nomaterial, claim, repetition, board = checkMove(board, movement [f'{moveCount}']['move'])
 
-            #verificar se há vitória, empate ou se continua o jogo
-            if (valid == True):
-                whites^=True
-                if (checkmate == True):
-                    if(whites == True) :
-                        result = 1
+                #verificar se há vitória, empate ou se continua o jogo
+                if (valid == True):
+                    whites^=True
+                    if (checkmate == True):
+                        if(whites == True):
+                            result = 1
+                        else:
+                            result = 3
+                        pyautogui.write(movement [f'{moveCount}']['move'])
+                        pyautogui.press('enter')
+                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
+                        db.reference(f'games/{gameid}').update({'state' : 1, 'method': 1, 'result': result})
+                    elif (stalemate == True):
+                        pyautogui.write(movement [f'{moveCount}']['move'])
+                        pyautogui.press('enter')
+                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
+                        db.reference(f'games/{gameid}').update({'state' : 1, 'method': 2, 'result': 2})
+                    elif (nomaterial == True):
+                        pyautogui.write(movement [f'{moveCount}']['move'])
+                        pyautogui.press('enter')
+                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
+                        db.reference(f'games/{gameid}').update({'state' : 1, 'method': 3, 'result': 2})
+                    elif (repetition == True):
+                        pyautogui.write(movement [f'{moveCount}']['move'])
+                        pyautogui.press('enter')
+                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
+                        db.reference(f'games/{gameid}').update({'state' : 1, 'method': 4, 'result': 2})
+                    elif (claim == True):
+                        pyautogui.write(movement [f'{moveCount}']['move'])
+                        pyautogui.press('enter')
+                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
+                        db.reference(f'games/{gameid}').update({'state' : 3})
                     else:
-                        result = 3
-                    pyautogui.write(movement [f'{moveCount}']['move'])
-                    pyautogui.press('enter')
-                    db.reference(f'movement/{gameid}/{moveCount}').update({'state' : 1})
-                    db.reference(f'games/{gameid}').update({'state' : 1, 'method': 1, 'result': result})
-                elif (stalemate == True):
-                    pyautogui.write(movement [f'{moveCount}']['move'])
-                    pyautogui.press('enter')
-                    db.reference(f'movement/{gameid}/{moveCount}').update({'state' : 1})
-                    db.reference(f'games/{gameid}').update({'state' : 1, 'method': 2, 'result': 2})
-                elif (nomaterial == True):
-                    pyautogui.write(movement [f'{moveCount}']['move'])
-                    pyautogui.press('enter')
-                    db.reference(f'movement/{gameid}/{moveCount}').update({'state' : 1})
-                    db.reference(f'games/{gameid}').update({'state' : 1, 'method': 3, 'result': 2})
-                elif (repetition == True):
-                    pyautogui.write(movement [f'{moveCount}']['move'])
-                    pyautogui.press('enter')
-                    db.reference(f'movement/{gameid}/{moveCount}').update({'state' : 1})
-                    db.reference(f'games/{gameid}').update({'state' : 1, 'method': 4, 'result': 2})
-                elif (claim == True):
-                    pyautogui.write(movement [f'{moveCount}']['move'])
-                    pyautogui.press('enter')
-                    db.reference(f'movement/{gameid}/{moveCount}').update({'state' : 1})
-                    db.reference(f'games/{gameid}').update({'state' : 3})
+                        pyautogui.write(movement [f'{moveCount}']['move'])
+                        pyautogui.press('enter')
+                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
                 else:
-                    pyautogui.write(movement [f'{moveCount}']['move'])
-                    pyautogui.press('enter')
-                    db.reference(f'movement/{gameid}/{moveCount}').update({'state' : 1})
-            else:
-                db.reference(f'movement/{gameid}/{moveCount}').update({'state' : 2})
-
-            movement +=1
+                    db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 2})
+            moveCount +=1
         except:
             continue
     else:
@@ -92,7 +91,7 @@ def start_game(gameid):
 
 
     #tempo de espera
-    #time.sleep(10)
+    time.sleep(5)
 
     #informacoes de resolucao do ecra
     root = tkinter.Tk()
@@ -148,6 +147,7 @@ def start_game(gameid):
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
         pyautogui.press('enter')
     
+    time.sleep(5)
     makeMove(gameid)
 
-#start_game('-MWUB1mXE9rg8b7auYiJ')
+start_game('-MWUB1mXE9rg8b7auYiJ')
