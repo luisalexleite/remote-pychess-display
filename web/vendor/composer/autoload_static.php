@@ -4,31 +4,32 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb22ffc314cece8702b5c509e434e5d41
+class ComposerStaticInit8033a22b2c11fc3b15824a5cb212f927
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '27592325262b385204a263c2ab632d6e' => __DIR__ . '/..' . '/kreait/clock/src/Clock.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'b067bc7112e384b61c701452d53a14a8' => __DIR__ . '/..' . '/mtdowling/jmespath.php/src/JmesPath.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'l' => 
-        array (
-            'libphonenumber\\' => 15,
-        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Polyfill\\Ctype\\' => 23,
         ),
         'R' => 
         array (
             'Rize\\' => 5,
             'Riverline\\MultiPartParser\\' => 26,
+            'Ramsey\\Uuid\\' => 12,
+            'Ramsey\\Collection\\' => 18,
         ),
         'P' => 
         array (
@@ -62,11 +63,20 @@ class ComposerStaticInitb22ffc314cece8702b5c509e434e5d41
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+            'Grpc\\Gcp\\' => 9,
+            'Grpc\\' => 5,
+            'Google\\Protobuf\\' => 16,
             'Google\\Cloud\\Storage\\' => 21,
+            'Google\\Cloud\\Firestore\\' => 23,
             'Google\\Cloud\\Core\\' => 18,
             'Google\\CRC32\\' => 13,
             'Google\\Auth\\' => 12,
-            'Giggsey\\Locale\\' => 15,
+            'Google\\ApiCore\\' => 15,
+            'Google\\' => 7,
+            'GPBMetadata\\Google\\Protobuf\\' => 28,
+            'GPBMetadata\\Google\\Firestore\\' => 29,
+            'GPBMetadata\\Google\\' => 19,
+            'GPBMetadata\\ApiCore\\' => 20,
         ),
         'F' => 
         array (
@@ -74,16 +84,20 @@ class ComposerStaticInitb22ffc314cece8702b5c509e434e5d41
             'Firebase\\Auth\\Token\\' => 20,
             'Fig\\Http\\Message\\' => 17,
         ),
+        'B' => 
+        array (
+            'Brick\\Math\\' => 11,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'libphonenumber\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src',
-        ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Polyfill\\Ctype\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
         'Rize\\' => 
         array (
@@ -92,6 +106,14 @@ class ComposerStaticInitb22ffc314cece8702b5c509e434e5d41
         'Riverline\\MultiPartParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/riverline/multipart-parser/src',
+        ),
+        'Ramsey\\Uuid\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ramsey/uuid/src',
+        ),
+        'Ramsey\\Collection\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ramsey/collection/src',
         ),
         'Psr\\SimpleCache\\' => 
         array (
@@ -153,9 +175,25 @@ class ComposerStaticInitb22ffc314cece8702b5c509e434e5d41
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'Grpc\\Gcp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/grpc-gcp/src',
+        ),
+        'Grpc\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/grpc/grpc/src/lib',
+        ),
+        'Google\\Protobuf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/protobuf/src/Google/Protobuf',
+        ),
         'Google\\Cloud\\Storage\\' => 
         array (
             0 => __DIR__ . '/..' . '/google/cloud-storage/src',
+        ),
+        'Google\\Cloud\\Firestore\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/cloud-firestore/src',
         ),
         'Google\\Cloud\\Core\\' => 
         array (
@@ -169,9 +207,29 @@ class ComposerStaticInitb22ffc314cece8702b5c509e434e5d41
         array (
             0 => __DIR__ . '/..' . '/google/auth/src',
         ),
-        'Giggsey\\Locale\\' => 
+        'Google\\ApiCore\\' => 
         array (
-            0 => __DIR__ . '/..' . '/giggsey/locale/src',
+            0 => __DIR__ . '/..' . '/google/gax/src',
+        ),
+        'Google\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/common-protos/src',
+        ),
+        'GPBMetadata\\Google\\Protobuf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/protobuf/src/GPBMetadata/Google/Protobuf',
+        ),
+        'GPBMetadata\\Google\\Firestore\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/cloud-firestore/metadata',
+        ),
+        'GPBMetadata\\Google\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/common-protos/metadata',
+        ),
+        'GPBMetadata\\ApiCore\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/gax/metadata/ApiCore',
         ),
         'Firebase\\JWT\\' => 
         array (
@@ -185,13 +243,27 @@ class ComposerStaticInitb22ffc314cece8702b5c509e434e5d41
         array (
             0 => __DIR__ . '/..' . '/fig/http-message-util/src',
         ),
+        'Brick\\Math\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/brick/math/src',
+        ),
+    );
+
+    public static $classMap = array (
+        'GPBMetadata\\GrpcGcp' => __DIR__ . '/..' . '/google/grpc-gcp/src/generated/GPBMetadata/GrpcGcp.php',
+        'Grpc\\Gcp\\AffinityConfig' => __DIR__ . '/..' . '/google/grpc-gcp/src/generated/Grpc/Gcp/AffinityConfig.php',
+        'Grpc\\Gcp\\AffinityConfig_Command' => __DIR__ . '/..' . '/google/grpc-gcp/src/generated/Grpc/Gcp/AffinityConfig_Command.php',
+        'Grpc\\Gcp\\ApiConfig' => __DIR__ . '/..' . '/google/grpc-gcp/src/generated/Grpc/Gcp/ApiConfig.php',
+        'Grpc\\Gcp\\ChannelPoolConfig' => __DIR__ . '/..' . '/google/grpc-gcp/src/generated/Grpc/Gcp/ChannelPoolConfig.php',
+        'Grpc\\Gcp\\MethodConfig' => __DIR__ . '/..' . '/google/grpc-gcp/src/generated/Grpc/Gcp/MethodConfig.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb22ffc314cece8702b5c509e434e5d41::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb22ffc314cece8702b5c509e434e5d41::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8033a22b2c11fc3b15824a5cb212f927::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8033a22b2c11fc3b15824a5cb212f927::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit8033a22b2c11fc3b15824a5cb212f927::$classMap;
 
         }, null, ClassLoader::class);
     }
