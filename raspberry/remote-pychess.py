@@ -8,27 +8,25 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 from firebase_admin import db
+from firebase_admin import auth
 from lib.chessengine import checkMove
 
 #requisitos do firebase
 cred = credentials.Certificate('raspberry/cred/remote-pychess-f8ba9c6e343c.json')
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://remote-pychess-default-rtdb.europe-west1.firebasedatabase.app/'
+    'databaseURL': 'https://remote-pychess-default-rtdb.europe-west1.firebasedatabase.app/remote-pychess-default-rtdb/'
 })
 
 def end_game():
     #fechar jogo
     pyautogui.hotkey('ctrl', 'q')
 
-ref = db.reference('/teste')
-print(ref.get())
-
-def makeMove(game):
+def makeMove(gameid):
     """
     logica da função feita falta ligar à bd - firestore e realtime database
     """
     #enquanto o jogo decorrer
-    while state == 1:
+    while db.reference(f'games/{gameid}/whites').get() == 0:
         #se hover algum moviento disponível
         if movimento_disponivel == 0:
             #verificar se movimento é válido
@@ -72,10 +70,15 @@ def makeMove(game):
             #terminar o jogo
             end_game()
 
-def start_game(white, black, mode):
+def start_game(gameid):
+
+    white = db.reference(f'games/{gameid}/whites').get()
+    black = db.reference(f'games/{gameid}/blacks').get()
+    mode = db.reference(f'games/{gameid}/type').get()
+
 
     #tempo de espera
-    time.sleep(10)
+    #time.sleep(10)
 
     #informacoes de resolucao do ecra
     root = tkinter.Tk()
@@ -118,17 +121,19 @@ def start_game(white, black, mode):
 
     #abrir configuracao do jogo
     pyautogui.hotkey('ctrl', 'n')
-    if mode == 'blitz':
+    if mode == 0:
         #iniciar jogo em blitz
         pyautogui.click(int(width)/2.167042889,int(height)/2.03)
         pyautogui.press('enter')
-    elif mode == 'rapid':
+    elif mode == 1:
         #iniciar jogo em rapid
         pyautogui.click(int(width)/2.167042889,int(height)/1.918294849)
         pyautogui.press('enter')
-    elif mode == 'normal':
+    elif mode == 2:
         #iniciar jogo em normal
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
         pyautogui.press('enter')
     
-    makeMove('something')
+    #makeMove(gameid)
+
+start_game('-MWUB1mXE9rg8b7auYiJ')
