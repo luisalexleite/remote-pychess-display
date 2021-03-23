@@ -51,5 +51,9 @@
 
 
 
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
     <color name="white">#FFFFFF</color>
 </resources>
