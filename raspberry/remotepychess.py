@@ -10,6 +10,7 @@ from firebase_admin import firestore
 from firebase_admin import db
 from firebase_admin import auth
 from lib.chessengine import checkMove
+import sys
 
 #requisitos do firebase
 cred = credentials.Certificate('./cred/remote-pychess-f8ba9c6e343c.json')
@@ -85,11 +86,10 @@ def start_game(gameid):
     white = db.reference(f'games/{gameid}/whites').get()
     black = db.reference(f'games/{gameid}/blacks').get()
     mode = db.reference(f'games/{gameid}/type').get()
-    db.reference(f'games/{gameid}').update({'state' : 1})
 
 
     #tempo de espera
-    time.sleep(5)
+    time.sleep(2)
 
     #informacoes de resolucao do ecra
     root = tkinter.Tk()
@@ -106,6 +106,8 @@ def start_game(gameid):
     #PyChess em fullscreen
     pyautogui.hotkey('fn', 'f11')
 
+    time.sleep(1)
+    
     #abrir as preferencias
     pyautogui.click(int(width)/22.588235294,int(height)/98.181818182)
     pyautogui.press('down', presses=2)
@@ -135,17 +137,21 @@ def start_game(gameid):
     if mode == 0:
         #iniciar jogo em blitz
         pyautogui.click(int(width)/2.167042889,int(height)/2.03)
+        time.sleep(1)
         pyautogui.press('enter')
     elif mode == 1:
         #iniciar jogo em rapid
         pyautogui.click(int(width)/2.167042889,int(height)/1.918294849)
+        time.sleep(1)
         pyautogui.press('enter')
     elif mode == 2:
         #iniciar jogo em normal
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
         pyautogui.press('enter')
-    
-    time.sleep(5)
+        
+    time.sleep(1)
+    db.reference(f'games/{gameid}').update({'state' : 1})
+
     makeMove(gameid)
 
-start_game('-MWUB1mXE9rg8b7auYiQ')
+start_game(sys.argv[1])
