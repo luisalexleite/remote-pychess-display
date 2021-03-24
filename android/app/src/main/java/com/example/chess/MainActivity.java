@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private final CollectionReference perfilRef = db.collection("Perfil");
     Button button_out;
     Button button_perfil;
+    Button button_match;
 
     //Bottom navigation listener
     @SuppressLint("NonConstantResourceId")
@@ -78,6 +79,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        //Game Start
+        button_match = findViewById(R.id.button_match);
+        button_match.setOnClickListener(v -> {
+            Intent game = new Intent(this, GameActivity.class);
+            startActivity(game);
+        });
 
         //get userID
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
