@@ -7,18 +7,22 @@
     projectId: "remote-pychess",
     storageBucket: "remote-pychess.appspot.com",
     messagingSenderId: "914254287981",
-    appId: "1:914254287981:web:5fc544c7daa4ec110a5b64",
-    measurementId: "G-TRD3REPTL0"
+    appId: "1:914254287981:web:091c8214af93fd480a5b64",
+    measurementId: "G-YX8YYWSDH0"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 
-  var ref = firebase.database().ref("games/1/");
-  ref.once("value")
-  .then(function(snapshot) {
-    var key = snapshot.key; // "ada"
-    console.log(key)
-    var childKey = snapshot.child("blacks").val(); // "last"
-    console.log(childKey)
-  });
+  var database = firebase.database();
+
+  var ref = database.ref('games');
+    ref.on('child_added', (data) => {
+       var key = data.key;
+       database.ref("games/" + data.key + "/state" ).get().then(function(snapshot) {
+        console.log(snapshot.val());
+          if (snapshot.val() == 0) {
+            window.location.replace("http://localhost/startgame?id=" + key);
+          }
+    });
+      });

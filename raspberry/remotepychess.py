@@ -12,7 +12,7 @@ from firebase_admin import auth
 from lib.chessengine import checkMove
 
 #requisitos do firebase
-cred = credentials.Certificate('raspberry/cred/remote-pychess-f8ba9c6e343c.json')
+cred = credentials.Certificate('./cred/remote-pychess-f8ba9c6e343c.json')
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://remote-pychess-default-rtdb.europe-west1.firebasedatabase.app/remote-pychess-default-rtdb/'
 })
@@ -26,7 +26,7 @@ def makeMove(gameid):
     board = chess.Board().fen()
     whites=False
     #enquanto o jogo decorrer
-    while db.reference(f'games/{gameid}/state').get() == 0 or db.reference(f'games/{gameid}/state').get() == 3:
+    while db.reference(f'games/{gameid}/state').get() == 1 or db.reference(f'games/{gameid}/state').get() == 4:
         #obter dados do ultimo movimento
         movement = db.reference(f'movements/{gameid}').order_by_key().equal_to(f'{moveCount}').get()
         #se hover algum moviento disponível
@@ -45,34 +45,34 @@ def makeMove(gameid):
                             result = 3
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
-                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
-                        db.reference(f'games/{gameid}').update({'state' : 1, 'method': 1, 'result': result})
+                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 2})
+                        db.reference(f'games/{gameid}').update({'state' : 2, 'method': 1, 'result': result})
                     elif (stalemate == True):
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
                         db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
-                        db.reference(f'games/{gameid}').update({'state' : 1, 'method': 2, 'result': 2})
+                        db.reference(f'games/{gameid}').update({'state' : 2, 'method': 2, 'result': 2})
                     elif (nomaterial == True):
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
                         db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
-                        db.reference(f'games/{gameid}').update({'state' : 1, 'method': 3, 'result': 2})
+                        db.reference(f'games/{gameid}').update({'state' : 2, 'method': 3, 'result': 2})
                     elif (repetition == True):
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
                         db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
-                        db.reference(f'games/{gameid}').update({'state' : 1, 'method': 4, 'result': 2})
+                        db.reference(f'games/{gameid}').update({'state' : 2, 'method': 4, 'result': 2})
                     elif (claim == True):
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
                         db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
-                        db.reference(f'games/{gameid}').update({'state' : 3})
+                        db.reference(f'games/{gameid}').update({'state' : 4})
                     else:
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
-                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
+                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 2})
                 else:
-                    db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 2})
+                    db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 3})
             moveCount +=1
         except:
             continue
@@ -85,6 +85,7 @@ def start_game(gameid):
     white = db.reference(f'games/{gameid}/whites').get()
     black = db.reference(f'games/{gameid}/blacks').get()
     mode = db.reference(f'games/{gameid}/type').get()
+    db.reference(f'games/{gameid}').update({'state' : 1})
 
 
     #tempo de espera
@@ -147,4 +148,4 @@ def start_game(gameid):
     time.sleep(5)
     makeMove(gameid)
 
-start_game('-MWUB1mXE9rg8b7auYiJ')
+start_game('-MWUB1mXE9rg8b7auYiQ')
