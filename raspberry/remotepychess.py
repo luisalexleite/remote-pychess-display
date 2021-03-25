@@ -46,7 +46,7 @@ def makeMove(gameid):
                             result = 3
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
-                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 2})
+                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
                         db.reference(f'games/{gameid}').update({'state' : 2, 'method': 1, 'result': result})
                     elif (stalemate == True):
                         pyautogui.write(movement [f'{moveCount}']['move'])
@@ -71,9 +71,9 @@ def makeMove(gameid):
                     else:
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
-                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 2})
+                        db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
                 else:
-                    db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 3})
+                    db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 2})
             moveCount +=1
         except:
             continue
