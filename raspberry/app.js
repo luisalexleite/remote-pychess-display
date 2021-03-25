@@ -29,9 +29,7 @@ function check(key) {
   database.ref("games/" + key + "/state" ).get().then(function(snapshot) {
     console.log(snapshot.val());
      if (snapshot.val() == 0) {
-       //firebase.database().ref('inline/' + Date.now()) .set({
-         //game : key
-       //});
+
       
      }
 });
@@ -40,11 +38,12 @@ function check(key) {
   ref.on('child_added', (data) => {
        var key = data.key;
        var val = data.val();
-       console.log(key);
-       console.log(val);
        var state = val['state'];
-       console.log(state);
        if (state == 0) {
-          window.location.href = 'http://localhost:8000/startgame.php?id=' + key;
+        //firebase.database().ref('inline/' + Date.now()) .set({
+          //game : key
+        //});
+          window.open('http://localhost:8000/startgame.php?id=' + key, '_blank', 'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=0,height=0,left=-1000,top=-1000');
+          return false;
        }
   });
