@@ -5,12 +5,13 @@ import time
 import tkinter
 import chess
 import firebase_admin
+import math
+import sys
 from firebase_admin import credentials
 from firebase_admin import firestore
 from firebase_admin import db
 from firebase_admin import auth
 from lib.chessengine import checkMove
-import sys
 
 #requisitos do firebase
 cred = credentials.Certificate('./cred/remote-pychess-f8ba9c6e343c.json')
@@ -82,6 +83,10 @@ def makeMove(gameid):
         end_game()
 
 def start_game(gameid):
+    #alterar delay
+    delay = 5
+    delaymin = math.ceil(delay/5)
+    delaymed = math.ceil(delay/3)
 
     white = db.reference(f'games/{gameid}/whites').get()
     black = db.reference(f'games/{gameid}/blacks').get()
@@ -89,7 +94,7 @@ def start_game(gameid):
 
 
     #tempo de espera
-    time.sleep(2)
+    time.sleep(delaymed)
 
     #informacoes de resolucao do ecra
     root = tkinter.Tk()
@@ -101,12 +106,12 @@ def start_game(gameid):
     subprocess.Popen(['pychess'])
 
     #esperar pela abertura do PyChess
-    time.sleep(1)
+    time.sleep(delay)
 
     #PyChess em fullscreen
     pyautogui.hotkey('fn', 'f11')
 
-    time.sleep(1)
+    time.sleep(delaymin)
     
     #abrir as preferencias
     pyautogui.click(int(width)/22.588235294,int(height)/98.181818182)
@@ -114,7 +119,7 @@ def start_game(gameid):
     pyautogui.press('enter')
 
     #esperar que abram as preferencias
-    time.sleep(1)
+    time.sleep(delaymin)
 
     #mudar nome do jogador com as brancas
     pyautogui.press('pgup')
@@ -137,19 +142,19 @@ def start_game(gameid):
     if mode == 0:
         #iniciar jogo em blitz
         pyautogui.click(int(width)/2.167042889,int(height)/2.03)
-        time.sleep(1)
+        time.sleep(delaymin)
         pyautogui.press('enter')
     elif mode == 1:
         #iniciar jogo em rapid
         pyautogui.click(int(width)/2.167042889,int(height)/1.918294849)
-        time.sleep(1)
+        time.sleep(delaymin)
         pyautogui.press('enter')
     elif mode == 2:
         #iniciar jogo em normal
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
         pyautogui.press('enter')
         
-    time.sleep(1)
+    time.sleep(delaymin)
     db.reference(f'games/{gameid}').update({'state' : 1})
 
     makeMove(gameid)
