@@ -119,7 +119,7 @@ def start_game(gameid):
     pyautogui.press('enter')
 
     #esperar que abram as preferencias
-    time.sleep(delaymin)
+    time.sleep(delaymed)
 
     #mudar nome do jogador com as brancas
     pyautogui.press('pgup')
@@ -134,10 +134,13 @@ def start_game(gameid):
     pyautogui.press('backspace')
     pyautogui.write(black)
 
+    time.sleep(delaymin)
     #fechar preferencias
     pyautogui.press('esc')
 
     #abrir configuracao do jogo
+    time.sleep(delaymed)
+
     pyautogui.hotkey('ctrl', 'n')
     if mode == 0:
         #iniciar jogo em blitz
