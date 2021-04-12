@@ -84,7 +84,7 @@ def makeMove(gameid):
 
 def start_game(gameid):
     #alterar delay
-    delay = 10
+    delay = 15
     delaymin = math.ceil(delay/5)
     delaymed = math.ceil(delay/3)
 
