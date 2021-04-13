@@ -115,7 +115,9 @@ def start_game(gameid):
     
     #abrir as preferencias
     pyautogui.click(int(width)/22.588235294,int(height)/98.181818182)
-    pyautogui.press('down', presses=2)
+    pyautogui.press('down')
+    time.sleep(0.5)
+    pyautogui.press('down')
     pyautogui.press('enter')
 
     #esperar que abram as preferencias
