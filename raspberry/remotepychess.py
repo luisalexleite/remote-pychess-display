@@ -123,15 +123,23 @@ def start_game(gameid):
 
     #mudar nome do jogador com as brancas
     pyautogui.press('pgup')
+    time.sleep(0.5)
     pyautogui.press('down')
+    time.sleep(0.5)
     pyautogui.hotkey('ctrl', 'a')
+    time.sleep(0.5)
     pyautogui.hotkey('backspace')
+    time.sleep(0.5)
     pyautogui.write(white)
 
     #mudar nome do jogador com as pretas
+    time.sleep(0.5)
     pyautogui.press('down')
+    time.sleep(0.5)
     pyautogui.hotkey('ctrl', 'a')
+    time.sleep(0.5)
     pyautogui.press('backspace')
+    time.sleep(0.5)
     pyautogui.write(black)
 
     time.sleep(delaymin)
@@ -144,22 +152,27 @@ def start_game(gameid):
     pyautogui.hotkey('ctrl', 'n')
     if mode == 0:
         #iniciar jogo em blitz
+        time.sleep(0.5)
         pyautogui.click(int(width)/2.167042889,int(height)/2.03)
-        time.sleep(delaymin)
+        time.sleep(0.5)
         pyautogui.press('enter')
     elif mode == 1:
         #iniciar jogo em rapid
+        time.sleep(0.5)
         pyautogui.click(int(width)/2.167042889,int(height)/1.918294849)
-        time.sleep(delaymin)
+        time.sleep(0.5)
         pyautogui.press('enter')
     elif mode == 2:
         #iniciar jogo em normal
+        time.sleep(0.5)
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
+        time.sleep(0.5)
         pyautogui.press('enter')
         
     time.sleep(delaymin)
     db.reference(f'games/{gameid}').update({'state' : 1})
 
+    time.sleep(delaymed)
     makeMove(gameid)
 
 start_game(sys.argv[1])
