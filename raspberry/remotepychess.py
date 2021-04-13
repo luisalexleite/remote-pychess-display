@@ -152,7 +152,8 @@ def start_game(gameid):
     time.sleep(delaymed)
 
     pyautogui.hotkey('ctrl', 'n')
-    time.sleep(delaymin)
+    
+    time.sleep(delaymed)
     if mode == 0:
         #iniciar jogo em blitz
         time.sleep(0.5)
