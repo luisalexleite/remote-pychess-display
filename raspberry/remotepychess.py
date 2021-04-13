@@ -149,7 +149,7 @@ def start_game(gameid):
     pyautogui.press('esc')
 
     #abrir configuracao do jogo
-    time.sleep(delaymin)
+    time.sleep(delaymed)
 
     pyautogui.hotkey('ctrl', 'n')
 
