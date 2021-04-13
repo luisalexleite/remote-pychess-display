@@ -149,26 +149,24 @@ def start_game(gameid):
     pyautogui.press('esc')
 
     #abrir configuracao do jogo
-    time.sleep(delaymed)
+    time.sleep(delaymin)
 
     pyautogui.hotkey('ctrl', 'n')
-    
+
     time.sleep(delaymed)
+
     if mode == 0:
         #iniciar jogo em blitz
-        time.sleep(0.5)
         pyautogui.click(int(width)/2.167042889,int(height)/2.03)
         time.sleep(0.5)
         pyautogui.press('enter')
     elif mode == 1:
         #iniciar jogo em rapid
-        time.sleep(0.5)
         pyautogui.click(int(width)/2.167042889,int(height)/1.918294849)
         time.sleep(0.5)
         pyautogui.press('enter')
     elif mode == 2:
         #iniciar jogo em normal
-        time.sleep(0.5)
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
         time.sleep(0.5)
         pyautogui.press('enter')
