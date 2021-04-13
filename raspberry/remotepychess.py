@@ -123,23 +123,23 @@ def start_game(gameid):
 
     #mudar nome do jogador com as brancas
     pyautogui.press('pgup')
-    time.sleep(0.5)
+    time.sleep(delaymin)
     pyautogui.press('down')
-    time.sleep(0.5)
+    time.sleep(delaymin)
     pyautogui.hotkey('ctrl', 'a')
-    time.sleep(0.5)
+    time.sleep(delaymin)
     pyautogui.hotkey('backspace')
-    time.sleep(0.5)
+    time.sleep(delaymin)
     pyautogui.write(white)
 
     #mudar nome do jogador com as pretas
-    time.sleep(0.5)
+    time.sleep(delaymin)
     pyautogui.press('down')
-    time.sleep(0.5)
+    time.sleep(delaymin)
     pyautogui.hotkey('ctrl', 'a')
-    time.sleep(0.5)
+    time.sleep(delaymin)
     pyautogui.press('backspace')
-    time.sleep(0.5)
+    time.sleep(delaymin)
     pyautogui.write(black)
 
     time.sleep(delaymin)
