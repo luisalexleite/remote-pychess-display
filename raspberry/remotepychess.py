@@ -111,7 +111,7 @@ def start_game(gameid):
     #PyChess em fullscreen
     pyautogui.hotkey('fn', 'f11')
 
-    time.sleep(delaymin)
+    time.sleep(delaymed)
     
     #abrir as preferencias
     pyautogui.click(int(width)/22.588235294,int(height)/98.181818182)
@@ -170,11 +170,10 @@ def start_game(gameid):
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
         time.sleep(0.5)
         pyautogui.press('enter')
-        
-    time.sleep(delaymin)
     db.reference(f'games/{gameid}').update({'state' : 1})
 
-    time.sleep(delaymed)
+    time.sleep(delay)
+
     makeMove(gameid)
 
 start_game(sys.argv[1])
