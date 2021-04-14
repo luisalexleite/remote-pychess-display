@@ -85,8 +85,8 @@ def makeMove(gameid):
 def start_game(gameid):
     #alterar delay
     delay = 20
-    delaymin = math.ceil(delay/5)
-    delaymed = math.ceil(delay/3)
+    delaymin = math.ceil(delay/4)
+    delaymed = math.ceil(delay/2)
 
     white = db.reference(f'games/{gameid}/whites').get()
     black = db.reference(f'games/{gameid}/blacks').get()
