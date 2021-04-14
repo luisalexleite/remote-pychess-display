@@ -17,13 +17,7 @@
 
   var database = firebase.database();
 
-  function wait(ms)
-{
-    var d = new Date();
-    var d2 = null;
-    do { d2 = new Date(); }
-    while(d2-d < ms);
-}
+
 
 function check(key) {
   database.ref("games/" + key + "/state" ).get().then(function(snapshot) {
@@ -47,3 +41,5 @@ function check(key) {
           return false;
        }
   });
+
+  alterarEcra();
