@@ -16,18 +16,80 @@
   firebase.analytics();
 
   var database = firebase.database();
+  var game = [];
+  var wait = [];
+  var line = [];
+  var side = ['whites', 'blacks'];
 
+  function changeState(key) {
+    firebase.database().ref('search/' + key).update({
+      state: 1
+    });
+  }
 
+  function newMatch(key, val, game, side) {
+    if (val['state'] == 0) {
+      if(val['side'] == 'random') {
+        game[side[Math.floor(Math.random()*side.length)]] = val['user'];
+        game['type'] = val['type'];
+        changeState(key);
+      } else {
+        game[val['side']] = val['user'];
+        game['type'] = val['type'];
+        changeState(key);
+      }
+    }
+  }
 
-function check(key) {
-  database.ref("games/" + key + "/state" ).get().then(function(snapshot) {
-    console.log(snapshot.val());
-     if (snapshot.val() == 0) {
+  function match(key, val, game) {
+    if (val['state'] == 0) {
+      if (val['type'] == game['type']) {
+      if (val['side'] == 'random') {
+        if (typeof game['whites'] == 'undefined') {
+          game['whites'] = val['user'];
+          line.push(game);
+          changeState(key);
+          game = [];
+        } else {
+          game['blacks'] = val['user'];
+          line.push(game);
+          changeState(key);
+          game = [];
+        }
+      } else {
+      if (game[val['side']] === 'undefined') {
+        game[val['side']] = val['user'];
+        line.push(game);
+        changeState(key);
+        game = [];
+      } else {
+        wait.push([val['side'], val['user'], val['type']]);
+        changeState(key);
+      }
+    }
+  }
+  } else {
+    wait.push([val['side'], val['user'], val['type']]);
+    changeState(key);
+  }
+  }
 
-      
-     }
+  var search = database.ref('search');
+  search.on('child_added', (data) => {
+    var val = data.val();
+    var key = data.key;
+    
+    if (Object.keys(game).length == 0) {
+      if (Object.keys(wait).length == 0) {
+      newMatch(key,val,game,side);
+      } else {
+        //verificar se existem elementos à espera
+      }
+    } else {
+      match(key, val, game);
+} 
 });
-}
+
   var ref = database.ref('games');
   ref.on('child_added', (data) => {
        var key = data.key;
