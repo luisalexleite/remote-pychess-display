@@ -75,6 +75,7 @@
         game[val['side']] = wait['user'];
         game['type'] = wait['type'];
         gamelist.push(game);
+        wait.shift();
         var push = [];
         push['user'] = val['user'];
         push['type'] = val['type'];
@@ -83,7 +84,7 @@
     }
   }
     } else {
-      //falta CheckLine
+      //falta CheckLine();
       if(val['type'] == gamelist[Object.keys(gamelist).length -1]['type']) {
         var game = gamelist[Object.keys(gamelist).length -1];
         if (val['side'] == 'random') {
