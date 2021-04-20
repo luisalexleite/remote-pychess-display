@@ -16,78 +16,103 @@
   firebase.analytics();
 
   var database = firebase.database();
-  var game = [];
+  var gamelist = [];
   var wait = [];
-  var line = [];
-  var side = ['whites', 'blacks'];
+  var side = ['whites', 'blacks']
 
-  function changeState(key) {
-    firebase.database().ref('search/' + key).update({
-      state: 1
-    });
-  }
-
-  function newMatch(key, val, game, side) {
-    if (val['state'] == 0) {
-      if(val['side'] == 'random') {
-        game[side[Math.floor(Math.random()*side.length)]] = val['user'];
-        game['type'] = val['type'];
-        changeState(key);
-      } else {
-        game[val['side']] = val['user'];
-        game['type'] = val['type'];
-        changeState(key);
-      }
+  function length (arr) {
+    if (arr == null) {
+      return 0;
+    } else if (Object.keys(arr).length == 0) {
+      console.log('teste');
+      return 0;
+    } else if (Object.keys(arr[Object.keys(arr).length -1]).length == 0 || Object.keys(arr[Object.keys(arr).length -1]).length == 3) {
+      return 0;
+    }
+    else{
+      return 1;
     }
   }
 
-  function match(key, val, game) {
-    if (val['state'] == 0) {
-      if (val['type'] == game['type']) {
-      if (val['side'] == 'random') {
-        if (typeof game['whites'] == 'undefined') {
-          game['whites'] = val['user'];
-          line.push(game);
-          changeState(key);
-          game = [];
-        } else {
-          game['blacks'] = val['user'];
-          line.push(game);
-          changeState(key);
-          game = [];
-        }
-      } else {
-      if (game[val['side']] === 'undefined') {
-        game[val['side']] = val['user'];
-        line.push(game);
-        changeState(key);
-        game = [];
-      } else {
-        wait.push([val['side'], val['user'], val['type']]);
-        changeState(key);
-      }
-    }
+  function random(side) {
+    return side[Math.floor(Math.random() * side.length)]
   }
-  } else {
-    wait.push([val['side'], val['user'], val['type']]);
-    changeState(key);
-  }
+
+  function checkLine() {
+    //ver se alguum dos que estão na fila corresponde aos critérios de escolha
   }
 
   var search = database.ref('search');
   search.on('child_added', (data) => {
     var val = data.val();
     var key = data.key;
-    
-    if (Object.keys(game).length == 0) {
-      if (Object.keys(wait).length == 0) {
-      newMatch(key,val,game,side);
-      } else {
-        //verificar se existem elementos à espera
-      }
+    console.log(val['user']);
+
+    if (length(gamelist) == 0) {
+      if(wait.length == 0) {
+      var game = [];
+      if (val['side'] == 'random') {
+      game[random(side)] = val['user'];
+      game['type'] = val['type'];
+      gamelist.push(game);
     } else {
-      match(key, val, game);
-} 
+        game[val['side']] = val['user'];
+        game['type'] = val['type'];
+        gamelist.push(game);
+    }
+  } else {
+    if (wait[0]['side'] == 'random') {
+      game[random(side)] = wait['user'];
+      game['type'] = wait['type'];
+      gamelist.push(game);
+      wait.shift();
+      var push = [];
+      push['user'] = val['user'];
+      push['type'] = val['type'];
+      push['side'] = val['side'];
+      wait[Object.keys(wait).length] = push;
+    } else {
+        game[val['side']] = wait['user'];
+        game['type'] = wait['type'];
+        gamelist.push(game);
+        var push = [];
+        push['user'] = val['user'];
+        push['type'] = val['type'];
+        push['side'] = val['side'];
+        wait[Object.keys(wait).length] = push;
+    }
+  }
+    } else {
+      //falta CheckLine
+      if(val['type'] == gamelist[Object.keys(gamelist).length -1]['type']) {
+        var game = gamelist[Object.keys(gamelist).length -1];
+        if (val['side'] == 'random') {
+          if(game ['whites'] == null) {
+            game['whites'] = val['user'];
+          } else {
+            game['blacks'] = val['user'];
+          }
+          game['type'] = val['type'];
+        } else {
+          if(game[val['side']] == null) {
+            game[val['side']] = val['user'];
+            game['type'] = val['type'];
+          } else {
+            var push = [];
+            push['user'] = val['user'];
+            push['type'] = val['type'];
+            push['side'] = val['side'];
+            wait[Object.keys(wait).length] = push;
+          }
+        }
+      } else {
+            var push = [];
+            push['user'] = val['user'];
+            push['type'] = val['type'];
+            push['side'] = val['side'];
+            wait[Object.keys(wait).length] = push;
+      }
+    }
 });
 
   var ref = database.ref('games');
@@ -100,7 +125,6 @@
           //game : key
         //});
           window.open('http://localhost:8000/startgame.php?id=' + key, '_blank', 'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=0,height=0,left=-1000,top=-1000');
-          return false;
        }
   });
 
