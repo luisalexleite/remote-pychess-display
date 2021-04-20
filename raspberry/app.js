@@ -47,7 +47,7 @@
     var val = data.val();
     var key = data.key;
     console.log(val['user']);
-
+    if(val['state'] == 0) {
     if (length(gamelist) == 0) {
       if(wait.length == 0) {
       var game = [];
@@ -114,6 +114,7 @@
             wait[Object.keys(wait).length] = push;
       }
     }
+  }
 });
 
   var ref = database.ref('games');
