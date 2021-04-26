@@ -28,6 +28,9 @@ moveCount = 1
 state = 0
 firstmovewhite = firstmoveblack = True
 
+def changestate(gameid):
+    db.reference(f'games/{gameid}').update({'state' : 1})
+
 def convert(seconds):
     return time.strftime("%M:%S", time.gmtime(seconds))
 
@@ -281,6 +284,7 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     Janela = QtWidgets.QMainWindow()
     ui = Ui_Janela()
+    changestate(gameid)
     ui.setupUi()
     Janela.showFullScreen()
     sys.exit(app.exec())
