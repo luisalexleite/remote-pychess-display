@@ -39,7 +39,7 @@ def getType(gameid):
     return typ
 
 if(getType(gameid) == 0):
-    secondswhite = secondsblack = 10
+    secondswhite = secondsblack = 300
 elif (getType(gameid) == 1):
     secondswhite = secondsblack = 900
 else:
@@ -51,7 +51,21 @@ def getUsers(gameid):
     whiteprof = firedb.collection(u'profile').document(f'{white}').get().to_dict()
     blackprof = firedb.collection(u'profile').document(f'{black}').get().to_dict()
 
-    return whiteprof, blackprof
+    return white, black, whiteprof, blackprof
+
+def getElo(white, black):
+    whiteelo = int(white['rating'])
+    blackelo = int(black['rating'])
+    whiteelodif = math.ceil(10 * (1/ (1 + math.pow(10,(whiteelo - blackelo)/400))))
+    blackelodif = math.ceil(10 * (1/ (1 + math.pow(10,(blackelo - whiteelo)/400))))
+
+    return whiteelodif, blackelodif
+
+def registElo(whiteelo, blackelo):
+    white = firedb.collection(u'profile').document(f'{whiteid}')
+    white.update({u'rating': whiteelo})
+    black = firedb.collection(u'profile').document(f'{blackid}')
+    black.update({u'rating': blackelo})
 
 def checktime(whites, firstmovewhite, firstmoveblack):
     global secondswhite, secondsblack
@@ -59,12 +73,10 @@ def checktime(whites, firstmovewhite, firstmoveblack):
         secondswhite -= 0.5
         if (secondswhite < 0):
             secondswhite = 0
-        print(secondswhite)
     elif (whites == True and firstmoveblack == False):
         secondsblack -= 0.5
         if (secondsblack < 0):
             secondsblack = 0
-        print(secondsblack)
 
 def makeMove(gameid):
     global board
@@ -152,10 +164,43 @@ class Ui_Janela(object):
             
             if result['result'] == 1:
                 inistr = f"{white['username']} ganhou por "
+                if(blackelodif >= int(black['rating'])):
+                    blackelo = 0
+                    blackdif = 0
+                    blackelostr = f"{blackelo} -{blackdif}"
+                else:
+                    blackelo = int(black['rating']) - blackelodif
+                    blackdif = blackelodif
+                    blackelostr = f"{blackelo} -{blackdif}"
+
+                whiteelo = int(white['rating']) + whiteelodif
+                whitedif = whiteelodif
+                whiteelostr = f"{whiteelo} +{whitedif}"
+
             elif result['result'] == 3:
                 inistr = f"{black['username']} ganhou por "
+                if(whiteelodif >= int(white['rating'])):
+                    whiteelo = 0
+                    whitedif = 0
+                    whiteelostr = f"{whiteelo} -{whitedif}"
+                else:
+                    whiteelo = int(white['rating']) - whiteelodif
+                    whitedif = whiteelodif
+                    whiteelostr = f"{whiteelo} -{whitedif}"
+
+                blackelo = int(black['rating']) + blackelodif
+                blackdif = blackelodif
+                blackelostr = f"{blackelo} +{blackdif}"
             else:
                 inistr = "Empate por "
+                blackelo = int(black['rating']) + 1
+                blackdif = 1
+                blackelostr = f"{blackelo} +{blackdif}"
+                whiteelo = int(white['rating'])
+                whitedif = 0
+                whiteelostr = f"{whiteelo} -{whitedif}"
+
+            registElo(whiteelo, blackelo)
 
             if result['method'] == 1:
                 title = finistr ="Checkmate"
@@ -173,7 +218,7 @@ class Ui_Janela(object):
                 finistr ="ter acabado o tempo"
                 title = "Acabou o Tempo"
 
-            self.endgame.setText(inistr + finistr + ".")
+            self.endgame.setText(inistr + finistr + ".\n" + white['username'] + f": {whiteelostr} " + black['username'] + f": {blackelostr}")
             self.endgame.setWindowTitle(title)
             self.timer = QtCore.QTimer()
             self.timer.setSingleShot(True)
@@ -287,7 +332,8 @@ class Ui_Janela(object):
 
 if __name__ == "__main__":
     import sys
-    white, black = getUsers(gameid)
+    whiteid, blackid, white, black = getUsers(gameid)
+    whiteelodif, blackelodif = getElo(white,black)
     app = QtWidgets.QApplication(sys.argv)
     Janela = QtWidgets.QMainWindow()
     ui = Ui_Janela()
