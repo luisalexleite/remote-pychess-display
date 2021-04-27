@@ -39,7 +39,7 @@ def getType(gameid):
     return typ
 
 if(getType(gameid) == 0):
-    secondswhite = secondsblack = 300
+    secondswhite = secondsblack = 10
 elif (getType(gameid) == 1):
     secondswhite = secondsblack = 900
 else:
@@ -175,13 +175,20 @@ class Ui_Janela(object):
 
             self.endgame.setText(inistr + finistr + ".")
             self.endgame.setWindowTitle(title)
-            self.endgame.show()
             self.timer = QtCore.QTimer()
+            self.timer.setSingleShot(True)
+            self.timer.setInterval(5000)
+            self.timer.timeout.connect(self.close)
+            self.timer.start()
+            self.endgame.show()
         else:
             self.game = QtSvg.QSvgWidget(self.centralwidget)
             self.game.setGeometry(QtCore.QRect(500, 300, 861, 731))
             self.game.load(gamesvg.encode("UTF-8"))
             self.game.setObjectName("game")
+
+    def close(self):
+        sys.exit()
 
     def setupUi(self):
         Janela.setObjectName("Janela")
