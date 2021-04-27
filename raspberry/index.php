@@ -12,6 +12,16 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Aleo&display=swap');
+.loader {
+     background-color: #2d2f30;
+     position: fixed;
+     width: 100%;
+     height: 100%;
+     z-index: 1;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+}
 body {
      background-color: #2d2f30;
      font-family: "Aleo";
@@ -104,6 +114,19 @@ text-align: center;
      font-size: 50px;
 }
 </style>
+<div class="loader">
+<div class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-red-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="wrapper">
 <img id='logo' src='img/logo.png'>
 <br>
