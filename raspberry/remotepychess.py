@@ -39,7 +39,7 @@ def getType(gameid):
     return typ
 
 if(getType(gameid) == 0):
-    secondswhite = secondsblack = 10
+    secondswhite = secondsblack = 300
 elif (getType(gameid) == 1):
     secondswhite = secondsblack = 900
 else:
@@ -253,14 +253,14 @@ class Ui_Janela(object):
         self.blackstime = QtWidgets.QLabel(self.centralwidget)
         self.blackstime.setGeometry(QtCore.QRect(1290, 200, 121, 61))
         font = QtGui.QFont()
-        font.setPointSize(36)
+        font.setPointSize(30)
         self.blackstime.setFont(font)
         self.blackstime.setStyleSheet("color: white;")
         self.blackstime.setObjectName("blackstime")
         self.whitestime = QtWidgets.QLabel(self.centralwidget)
         self.whitestime.setGeometry(QtCore.QRect(450, 200, 121, 61))
         font = QtGui.QFont()
-        font.setPointSize(36)
+        font.setPointSize(30)
         self.whitestime.setFont(font)
         self.whitestime.setStyleSheet("color: white;")
         self.whitestime.setObjectName("whitestime")
