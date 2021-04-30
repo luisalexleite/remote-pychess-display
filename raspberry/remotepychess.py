@@ -164,13 +164,13 @@ class Ui_Janela(object):
             
             if result['result'] == 1:
                 inistr = f"{white['username']} ganhou por "
-                if(blackelodif >= int(black['rating'])):
+                if(whiteelodif >= int(black['rating'])):
                     blackelo = 0
                     blackdif = 0
                     blackelostr = f"{blackelo} -{blackdif}"
                 else:
-                    blackelo = int(black['rating']) - blackelodif
-                    blackdif = blackelodif
+                    blackelo = int(black['rating']) - whiteelodif
+                    blackdif = whiteelodif
                     blackelostr = f"{blackelo} -{blackdif}"
 
                 whiteelo = int(white['rating']) + whiteelodif
@@ -179,13 +179,13 @@ class Ui_Janela(object):
 
             elif result['result'] == 3:
                 inistr = f"{black['username']} ganhou por "
-                if(whiteelodif >= int(white['rating'])):
+                if(blackelodif >= int(white['rating'])):
                     whiteelo = 0
                     whitedif = 0
                     whiteelostr = f"{whiteelo} -{whitedif}"
                 else:
-                    whiteelo = int(white['rating']) - whiteelodif
-                    whitedif = whiteelodif
+                    whiteelo = int(white['rating']) - blackelodif
+                    whitedif = blackelodif
                     whiteelostr = f"{whiteelo} -{whitedif}"
 
                 blackelo = int(black['rating']) + blackelodif
