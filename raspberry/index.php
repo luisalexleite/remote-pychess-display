@@ -11,140 +11,157 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Aleo&display=swap');
-.loader {
-     background-color: #2d2f30;
-     position: fixed;
-     width: 100%;
-     height: 100%;
-     z-index: 1;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-}
-body {
-     background-color: #2d2f30;
-     font-family: "Aleo";
-}
-.wrapper{
-text-align: center;
-}
-#logo {
-     margin-top: -60px;
-}
-#mens {
-     color: #FFFFFF;
-     font-size: 30px;
-}
-#board {
-     height: 300px;
-     width: 300px;
-}
-.card-panel {
-     background-color: #de6464;
-}
-#peqtext {
-     font-size: 20px;
-}
-@keyframes blink {
-    /**
+     @import url('https://fonts.googleapis.com/css2?family=Aleo&display=swap');
+
+     .loader {
+          background-color: #2d2f30;
+          position: fixed;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+     }
+
+     body {
+          background-color: #2d2f30;
+          font-family: "Aleo";
+     }
+
+     .wrapper {
+          text-align: center;
+     }
+
+     #logo {
+          margin-top: -60px;
+     }
+
+     #mens {
+          color: #FFFFFF;
+          font-size: 30px;
+     }
+
+     #board {
+          height: 300px;
+          width: 300px;
+     }
+
+     .card-panel {
+          background-color: #de6464;
+     }
+
+     #peqtext {
+          font-size: 20px;
+     }
+
+     @keyframes blink {
+
+          /**
      * At the start of the animation the dot
      * has an opacity of .2
      */
-    0% {
-      opacity: .2;
-    }
-    /**
+          0% {
+               opacity: .2;
+          }
+
+          /**
      * At 20% the dot is fully visible and
      * then fades out slowly
      */
-    20% {
-      opacity: 1;
-    }
-    /**
+          20% {
+               opacity: 1;
+          }
+
+          /**
      * Until it reaches an opacity of .2 and
      * the animation can start again
      */
-    100% {
-      opacity: .2;
-    }
-}
+          100% {
+               opacity: .2;
+          }
+     }
 
-#mens span {
-    /**
+     #mens span {
+          /**
      * Use the blink animation, which is defined above
      */
-    animation-name: blink;
-    /**
+          animation-name: blink;
+          /**
      * The animation should take 1.4 seconds
      */
-    animation-duration: 1.4s;
-    /**
+          animation-duration: 1.4s;
+          /**
      * It will repeat itself forever
      */
-    animation-iteration-count: infinite;
-    /**
+          animation-iteration-count: infinite;
+          /**
      * This makes sure that the starting style (opacity: .2)
      * of the animation is applied before the animation starts.
      * Otherwise we would see a short flash or would have
      * to set the default styling of the dots to the same
      * as the animation. Same applies for the ending styles.
      */
-    animation-fill-mode: both;
-}
+          animation-fill-mode: both;
+     }
 
-#mens span:nth-child(2) {
-    /**
+     #mens span:nth-child(2) {
+          /**
      * Starts the animation of the third dot
      * with a delay of .2s, otherwise all dots
      * would animate at the same time
      */
-    animation-delay: .2s;
-}
+          animation-delay: .2s;
+     }
 
-#mens span:nth-child(3) {
-    /**
+     #mens span:nth-child(3) {
+          /**
      * Starts the animation of the third dot
      * with a delay of .4s, otherwise all dots
      * would animate at the same time
      */
-    animation-delay: .4s;
-}
-#mens span {
-     font-size: 50px;
-}
+          animation-delay: .4s;
+     }
+
+     #mens span {
+          font-size: 50px;
+     }
 </style>
 <div class="loader">
-<div class="preloader-wrapper big active">
-    <div class="spinner-layer spinner-red-only">
-      <div class="circle-clipper left">
-        <div class="circle"></div>
-      </div><div class="gap-patch">
-        <div class="circle"></div>
-      </div><div class="circle-clipper right">
-        <div class="circle"></div>
-      </div>
-    </div>
-  </div>
+     <div class="preloader-wrapper big active">
+          <div class="spinner-layer spinner-red-only">
+               <div class="circle-clipper left">
+                    <div class="circle"></div>
+               </div>
+               <div class="gap-patch">
+                    <div class="circle"></div>
+               </div>
+               <div class="circle-clipper right">
+                    <div class="circle"></div>
+               </div>
+          </div>
+     </div>
 </div>
 <div class="wrapper">
-<img id='logo' src='img/logo.png'>
-<br>
-<div id="mens">À espera de um jogo<span>.</span><span>.</span><span>.</span></div>
-<br>
-<img id="board" src="img/siciliana.gif">
-<br>
-<br>
-<br>
-<div class="container">
-<div class="card-panel">
-     <span class="white-text"><h4 style="text-align:left"><span style="font-size:30px" class="material-icons">
-info
-</span> <span id="title">Defesa Siciliana</span></h4>
-<p id="peqtext" style="text-align:left">A defesa siciliana é uma das principais respostas para e4. As pretas assumem o controle da quadrado d4 com um peão lateral, assim ele desequilibra a posição e evita dar às brancas um alvo central.</span>
-</p>
-      </div>
-</div>
+     <img id='logo' src='img/logo.png'>
+     <br>
+     <div id="mens">À espera de um jogo<span>.</span><span>.</span><span>.</span></div>
+     <br>
+     <img id="board" src="img/siciliana.gif">
+     <br>
+     <br>
+     <br>
+     <div class="container">
+          <div class="card-panel">
+               <span class="white-text">
+                    <h4 style="text-align:left"><span style="font-size:30px" class="material-icons">
+                              info
+                         </span> <span id="title">Defesa Siciliana</span></h4>
+                    <p id="peqtext" style="text-align:left">A defesa siciliana é uma das principais respostas para e4. As pretas assumem o controle da quadrado d4 com um peão lateral, assim ele desequilibra a posição e evita dar às brancas um alvo central.
+               </span>
+               </p>
+          </div>
+     </div>
 </div>
 <script src="hints.js"></script>
 <script src="hintsexec.js"></script>
