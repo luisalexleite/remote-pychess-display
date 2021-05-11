@@ -3,10 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.chess">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -15,24 +19,31 @@
         android:roundIcon="@mipmap/launcher_ic"
         android:supportsRtl="true"
         android:theme="@style/Theme.PyChessApp">
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="false" />
+
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
 
 
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDtTvUMyfawTJH55zMyvzIgFyuMHo2-tpQ"/>
-
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
-
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".login.LoginActivity"/>
-        <activity android:name=".login.RegisterActivity"/>
-        <activity android:name=".login.ActivityPasswordReset"/>
-        <activity android:name=".profile.ProfileActivity"/>
-        <activity android:name=".profile.ProfileEditActivity"/>
-
+        <activity android:name=".MainActivity" />
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".login.RegisterActivity" />
+        <activity android:name=".login.ActivityPasswordReset" />
+        <activity android:name=".GameActivity" />
+        <activity android:name=".GameJoinActivity" />
+        <activity android:name=".profile.ProfileActivity" />
+        <activity android:name=".profile.ProfileEditActivity" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
