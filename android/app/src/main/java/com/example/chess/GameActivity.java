@@ -3,7 +3,6 @@ package com.example.chess;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,8 +39,6 @@ public class GameActivity extends AppCompatActivity {
 
     Button teste;
     Button teste2;
-    Button resign;
-    EditText play;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +75,7 @@ public class GameActivity extends AppCompatActivity {
                     DatabaseReference mDatabase = database.getInstance().getReference();
 
                     //Game
-                    mDatabase.child("games").child(randomString).child("whites").setValue(userID);
-                    //mDatabase.child("games").child(randomString).child("blacks").setValue("luis");
+                    mDatabase.child("games").child(randomString).child("whites").setValue(username);
                     mDatabase.child("games").child(randomString).child("state").setValue(0);
                     mDatabase.child("games").child(randomString).child("type").setValue(0);
 
@@ -89,25 +85,16 @@ public class GameActivity extends AppCompatActivity {
             });
 
         //Moves
-        play = findViewById(R.id.play);
         teste2 = findViewById(R.id.teste2);
         teste2.setOnClickListener(v -> {
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference mDatabase = database.getInstance().getReference();
-            String plays = play.getText().toString();
-            mDatabase.child("movements").child(randomString).child(String.valueOf(i = i + 1)).child("move").setValue(plays);
+
+            mDatabase.child("movements").child(randomString).child(String.valueOf(i = i + 1)).child("move").setValue("e4");
             mDatabase.child("movements").child(randomString).child(String.valueOf(i)).child("state").setValue(0);
 
         });
-
-        resign = findViewById(R.id.resign);
-        resign.setOnClickListener(v ->{
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference mDatabase = database.getInstance().getReference();
-            mDatabase.child("games").child(randomString).child("state").setValue(2);
-            mDatabase.child("games").child(randomString).child("method").setValue(7);
-                });
 
         }
     }

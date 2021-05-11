@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Button button_out;
     Button button_perfil;
     Button button_match;
-    Button button_join;
 
     //Bottom navigation listener
     @SuppressLint("NonConstantResourceId")
@@ -85,13 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         button_match.setOnClickListener(v -> {
             Intent game = new Intent(this, GameActivity.class);
             startActivity(game);
-        });
-
-        //Join Start
-        button_join = findViewById(R.id.button_join);
-        button_join.setOnClickListener(v -> {
-            Intent game2 = new Intent(this, GameJoinActivity.class);
-            startActivity(game2);
         });
 
         //get userID
