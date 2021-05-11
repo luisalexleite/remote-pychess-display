@@ -1,20 +1,23 @@
 package com.example.chess;
 
 import android.os.Bundle;
-import android.provider.Settings;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -23,12 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.nio.charset.Charset;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity {
+public class GameJoinActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     FirebaseAuth fAuth;
@@ -40,31 +40,22 @@ public class GameActivity extends AppCompatActivity {
 
     Button teste;
     Button teste2;
-    Button resign;
     EditText play;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_join_game);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         fStorage = FirebaseStorage.getInstance().getReference();
         userID = fAuth.getCurrentUser().getUid();
 
+        
 
 
-        // Random String
-        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder sb = new StringBuilder();
-        Random random = new Random();
-        int length = 15;
-        for(int i = 0; i < length; i++) {
-            int index = random.nextInt(alphabet.length());
-            char randomChar = alphabet.charAt(index);
-            sb.append(randomChar);
-        }
-        String randomString = sb.toString();
+
 
         DocumentReference documentReference = fStore.collection("profile").document(userID);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
@@ -72,21 +63,25 @@ public class GameActivity extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 String username = documentSnapshot.getString("username");
 
-                teste = findViewById(R.id.teste);
+                teste = findViewById(R.id.join);
                 teste.setOnClickListener(v -> {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference mDatabase = database.getInstance().getReference();
 
                     //Game
-                    mDatabase.child("games").child(randomString).child("whites").setValue(userID);
-                    //mDatabase.child("games").child(randomString).child("blacks").setValue("luis");
-                    mDatabase.child("games").child(randomString).child("state").setValue(0);
-                    mDatabase.child("games").child(randomString).child("type").setValue(0);
+                    String ola1 = String.valueOf(mDatabase.child("games").get());
+                    //String ola = String.valueOf(mDatabase.child("games").get().getResult().getValue());
+                    Toast.makeText(GameJoinActivity.this, ola1, Toast.LENGTH_SHORT).show();
+
+
+
 
                 });
 
             }
             });
+
+
 
         //Moves
         play = findViewById(R.id.play);
@@ -96,18 +91,9 @@ public class GameActivity extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference mDatabase = database.getInstance().getReference();
             String plays = play.getText().toString();
-            mDatabase.child("movements").child(randomString).child(String.valueOf(i = i + 1)).child("move").setValue(plays);
-            mDatabase.child("movements").child(randomString).child(String.valueOf(i)).child("state").setValue(0);
+
 
         });
-
-        resign = findViewById(R.id.resign);
-        resign.setOnClickListener(v ->{
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference mDatabase = database.getInstance().getReference();
-            mDatabase.child("games").child(randomString).child("state").setValue(2);
-            mDatabase.child("games").child(randomString).child("method").setValue(7);
-                });
 
         }
     }

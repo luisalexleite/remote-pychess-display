@@ -14,14 +14,14 @@
 
 
         <Button
-            android:id="@+id/teste"
+            android:id="@+id/join"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:padding="10dp"
             android:background="@drawable/roundedbutton"
-            android:text="Create Match" />
+            android:text="Join Match" />
         <EditText
             android:id="@+id/play"
             android:layout_width="100dp"
@@ -43,15 +43,6 @@
             android:layout_gravity="center"
             android:background="@drawable/roundedbutton"
             android:text="Submit" />
-
-        <Button
-            android:id="@+id/resign"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/roundedbutton"
-            android:text="Resign" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
