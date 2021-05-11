@@ -5,6 +5,8 @@ import time
 import tkinter
 import chess
 import firebase_admin
+import math
+import sys
 from firebase_admin import credentials
 from firebase_admin import firestore
 from firebase_admin import db
@@ -12,7 +14,7 @@ from firebase_admin import auth
 from lib.chessengine import checkMove
 
 #requisitos do firebase
-cred = credentials.Certificate('raspberry/cred/remote-pychess-f8ba9c6e343c.json')
+cred = credentials.Certificate('./cred/remote-pychess-f8ba9c6e343c.json')
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://remote-pychess-default-rtdb.europe-west1.firebasedatabase.app/remote-pychess-default-rtdb/'
 })
@@ -26,7 +28,7 @@ def makeMove(gameid):
     board = chess.Board().fen()
     whites=False
     #enquanto o jogo decorrer
-    while db.reference(f'games/{gameid}/state').get() == 0 or db.reference(f'games/{gameid}/state').get() == 3:
+    while db.reference(f'games/{gameid}/state').get() == 1 or db.reference(f'games/{gameid}/state').get() == 4:
         #obter dados do ultimo movimento
         movement = db.reference(f'movements/{gameid}').order_by_key().equal_to(f'{moveCount}').get()
         #se hover algum moviento disponível
@@ -46,27 +48,27 @@ def makeMove(gameid):
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
                         db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
-                        db.reference(f'games/{gameid}').update({'state' : 1, 'method': 1, 'result': result})
+                        db.reference(f'games/{gameid}').update({'state' : 2, 'method': 1, 'result': result})
                     elif (stalemate == True):
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
                         db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
-                        db.reference(f'games/{gameid}').update({'state' : 1, 'method': 2, 'result': 2})
+                        db.reference(f'games/{gameid}').update({'state' : 2, 'method': 2, 'result': 2})
                     elif (nomaterial == True):
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
                         db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
-                        db.reference(f'games/{gameid}').update({'state' : 1, 'method': 3, 'result': 2})
+                        db.reference(f'games/{gameid}').update({'state' : 2, 'method': 3, 'result': 2})
                     elif (repetition == True):
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
                         db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
-                        db.reference(f'games/{gameid}').update({'state' : 1, 'method': 4, 'result': 2})
+                        db.reference(f'games/{gameid}').update({'state' : 2, 'method': 4, 'result': 2})
                     elif (claim == True):
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
                         db.reference(f'movements/{gameid}/{moveCount}').update({'state' : 1})
-                        db.reference(f'games/{gameid}').update({'state' : 3})
+                        db.reference(f'games/{gameid}').update({'state' : 4})
                     else:
                         pyautogui.write(movement [f'{moveCount}']['move'])
                         pyautogui.press('enter')
@@ -81,6 +83,10 @@ def makeMove(gameid):
         end_game()
 
 def start_game(gameid):
+    #alterar delay
+    delay = 20
+    delaymin = math.ceil(delay/4)
+    delaymed = math.ceil(delay/2)
 
     white = db.reference(f'games/{gameid}/whites').get()
     black = db.reference(f'games/{gameid}/blacks').get()
@@ -88,7 +94,7 @@ def start_game(gameid):
 
 
     #tempo de espera
-    time.sleep(5)
+    time.sleep(delaymed)
 
     #informacoes de resolucao do ecra
     root = tkinter.Tk()
@@ -100,51 +106,74 @@ def start_game(gameid):
     subprocess.Popen(['pychess'])
 
     #esperar pela abertura do PyChess
-    time.sleep(1)
+    time.sleep(delay)
 
     #PyChess em fullscreen
     pyautogui.hotkey('fn', 'f11')
 
+    time.sleep(delaymed)
+    
     #abrir as preferencias
     pyautogui.click(int(width)/22.588235294,int(height)/98.181818182)
-    pyautogui.press('down', presses=2)
+    pyautogui.press('down')
+    time.sleep(0.5)
+    pyautogui.press('down')
     pyautogui.press('enter')
 
     #esperar que abram as preferencias
-    time.sleep(1)
+    time.sleep(delaymed)
 
     #mudar nome do jogador com as brancas
     pyautogui.press('pgup')
+    time.sleep(delaymin)
     pyautogui.press('down')
+    time.sleep(delaymin)
     pyautogui.hotkey('ctrl', 'a')
+    time.sleep(delaymin)
     pyautogui.hotkey('backspace')
+    time.sleep(delaymin)
     pyautogui.write(white)
 
     #mudar nome do jogador com as pretas
+    time.sleep(delaymin)
     pyautogui.press('down')
+    time.sleep(delaymin)
     pyautogui.hotkey('ctrl', 'a')
+    time.sleep(delaymin)
     pyautogui.press('backspace')
+    time.sleep(delaymin)
     pyautogui.write(black)
 
+    time.sleep(delaymin)
     #fechar preferencias
     pyautogui.press('esc')
 
     #abrir configuracao do jogo
+    time.sleep(delaymed)
+
     pyautogui.hotkey('ctrl', 'n')
+
+    time.sleep(delaymed)
+
     if mode == 0:
         #iniciar jogo em blitz
         pyautogui.click(int(width)/2.167042889,int(height)/2.03)
+        time.sleep(0.5)
         pyautogui.press('enter')
     elif mode == 1:
         #iniciar jogo em rapid
         pyautogui.click(int(width)/2.167042889,int(height)/1.918294849)
+        time.sleep(0.5)
         pyautogui.press('enter')
     elif mode == 2:
         #iniciar jogo em normal
         pyautogui.click(int(width)/2.167042889,int(height)/1.839863714)
+        time.sleep(0.5)
         pyautogui.press('enter')
-    
-    time.sleep(5)
+    db.reference(f'games/{gameid}').update({'state' : 1})
+
+    time.sleep(delay)
+
     makeMove(gameid)
 
-start_game('-MWUB1mXE9rg8b7auYiJ')
+start_game(sys.argv[1])
