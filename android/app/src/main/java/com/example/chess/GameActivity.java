@@ -3,6 +3,7 @@ package com.example.chess;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     StorageReference fStorage;
     String userID;
+    EditText move;
     String username = "a";
     private int i = 0;
 
@@ -48,6 +50,7 @@ public class GameActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         fStorage = FirebaseStorage.getInstance().getReference();
         userID = fAuth.getCurrentUser().getUid();
+
 
 
 
@@ -75,9 +78,11 @@ public class GameActivity extends AppCompatActivity {
                     DatabaseReference mDatabase = database.getInstance().getReference();
 
                     //Game
-                    mDatabase.child("games").child(randomString).child("whites").setValue(username);
                     mDatabase.child("games").child(randomString).child("state").setValue(0);
+                    mDatabase.child("games").child(randomString).child("whites").setValue(userID);
                     mDatabase.child("games").child(randomString).child("type").setValue(0);
+                    mDatabase.child("games").child(randomString).child("blacks").setValue("8D038Y1kAVNNcjKuxSJRmdBbRRc2");
+
 
                 });
 
@@ -87,11 +92,14 @@ public class GameActivity extends AppCompatActivity {
         //Moves
         teste2 = findViewById(R.id.teste2);
         teste2.setOnClickListener(v -> {
+            move = findViewById(R.id.movein);
+
+            String move2 = move.getText().toString().trim();
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference mDatabase = database.getInstance().getReference();
 
-            mDatabase.child("movements").child(randomString).child(String.valueOf(i = i + 1)).child("move").setValue("e4");
+            mDatabase.child("movements").child(randomString).child(String.valueOf(i = i + 1)).child("move").setValue(move2);
             mDatabase.child("movements").child(randomString).child(String.valueOf(i)).child("state").setValue(0);
 
         });
