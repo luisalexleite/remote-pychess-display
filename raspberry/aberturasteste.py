@@ -2,22 +2,22 @@ import chess
 import chess.pgn
 from lib.chessengine import checkMove
 
-
 board = chess.Board().fen()
 movearr = []
-boardreset = chess.Board()
 exporter = chess.pgn.StringExporter(
     headers=False, variations=False, comments=False)
-eco = open("eco.pgn")
-ECO = ""
+ECOcode = ""
 opening = ""
 variation = ""
-err = 0
+lasteco = 0
+
 while True:
     inp = input()
     teste = checkMove(board, inp)
     state = teste[0]
     board = teste[6]
+    finish = 0
+    eco = open('eco.pgn', 'r+')
 
     if (state == True):
         movearr.append(inp)
@@ -25,21 +25,24 @@ while True:
         movecheck = chess.Board().variation_san(
             [boardreset.push_san(m) for m in movearr]) + " *"
 
-        print(movecheck)
         while True:
             game = chess.pgn.read_game(eco)
             if game is None:
+                openingcheck = None
                 break
             else:
                 san = game.accept(exporter)
-                if (movecheck in san):
-                    ECO = game.headers['ECO']
-                    opening = game.headers['Opening']
-                    try:
-                        variation = game.headers['Variation']
-                    except:
-                        variation = ""
-
+                if (movecheck in str(san)):
+                    openingcheck = game
                     break
 
-        print(ECO, opening, variation)
+        if openingcheck is not None:
+            ECOcode = openingcheck.headers['ECO']
+            opening = openingcheck.headers['Opening']
+
+            try:
+                variation = openingcheck.headers['Variation']
+            except:
+                variation = ""
+
+    print(ECOcode, opening, variation)
