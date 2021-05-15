@@ -5,6 +5,7 @@ import time
 import tkinter
 import chess
 import chess.svg
+import chess.pgn
 import firebase_admin
 import math
 import sys
@@ -27,6 +28,8 @@ whites = False
 moveCount = 1
 state = 0
 firstmovewhite = firstmoveblack = True
+movearr = []
+opening = ""
 
 
 def changestate(gameid):
@@ -48,6 +51,39 @@ elif (getType(gameid) == 1):
     secondswhite = secondsblack = 900
 else:
     secondswhite = secondsblack = 2400
+
+
+def getOpening(move):
+    global movearr
+    ECOcode = ""
+    opening = ""
+    variation = ""
+    eco = open('eco.pgn', 'r+')
+    movearr.append(move)
+    boardreset = chess.Board()
+    movecheck = chess.Board().variation_san(
+        [boardreset.push_san(m) for m in movearr]) + " *"
+
+    while True:
+        game = chess.pgn.read_game(eco)
+        if game is None:
+            openingcheck = None
+            break
+        else:
+            san = game.accept(exporter)
+            if (movecheck in str(san)):
+                openingcheck = game
+                break
+
+        if openingcheck is not None:
+            ECOcode = openingcheck.headers['ECO']
+            opening = openingcheck.headers['Opening']
+            try:
+                variation = openingcheck.headers['Variation']
+            except:
+                variation = ""
+
+    return ECOcode + opening + variation, movecheck
 
 
 def getUsers(gameid):
@@ -149,16 +185,19 @@ def makeMove(gameid):
                     else:
                         db.reference(
                             f'movements/{gameid}/{moveCount}').update({'state': 1})
+                    # print(getOpening(movement[f'{moveCount}']['move'])[0])
                 else:
                     db.reference(
                         f'movements/{gameid}/{moveCount}').update({'state': 2})
                 moveCount = moveCount + 1
+
                 if (whites == True and firstmovewhite == True):
                     firstmovewhite = False
                 elif (whites == False and firstmoveblack == True):
                     firstmoveblack = False
                 else:
                     checktime(whites, firstmovewhite, firstmoveblack)
+
                 return True, chess.svg.board(board=chess.Board(board))
             checktime(whites, firstmovewhite, firstmoveblack)
             return True, chess.svg.board(board=chess.Board(board))
