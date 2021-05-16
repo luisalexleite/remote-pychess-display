@@ -28,8 +28,10 @@ whites = False
 moveCount = 1
 state = 0
 firstmovewhite = firstmoveblack = True
-movearr = []
-opening = ""
+pointswhite = 0
+pointsblack = 0
+pieceswhite = ""
+piecesblack = ""
 
 
 def changestate(gameid):
@@ -86,6 +88,67 @@ def getOpening(move):
     return ECOcode + opening + variation, movecheck
 
 
+def getPieces(fen):
+    piecesblack = ""
+    pieceswhite = ""
+    pointswhite = 0
+    pointsblack = 0
+
+    k = fen.count('k')
+    r = 2 - fen.count('r')
+    n = 2 - fen.count('n')
+    b = 2 - fen.count('b')
+    p = 8 - fen.count('p')
+
+    K = fen.count('K')
+    R = 2 - fen.count('R')
+    N = 2 - fen.count('N')
+    B = 2 - fen.count('B')
+    P = 8 - fen.count('P')
+
+    if k == 0:
+        piecesblack += '\u265b'
+        pointswhite += 9
+
+    if r > 0:
+        piecesblack += r * '\u265c'
+        pointswhite += r * 5
+
+    if n > 0:
+        piecesblack += n * '\u265e'
+        pointswhite += n * 3
+
+    if b > 0:
+        piecesblack += b * '\u265d'
+        pointswhite += b * 3
+
+    if p > 0:
+        piecesblack += p * '\u265f'
+        pointswhite += p * 1
+
+    if K == 0:
+        pieceswhite += '\u2655'
+        pointsblack += 9
+
+    if R > 0:
+        pieceswhite += R * '\u2656'
+        pointsblack += R * 5
+
+    if N > 0:
+        pieceswhite += N * '\u2658'
+        pointsblack += N * 3
+
+    if B > 0:
+        pieceswhite += B * '\u2657'
+        pointsblack += B * 3
+
+    if P > 0:
+        pieceswhite += P * '\u2659'
+        pointsblack += P * 1
+
+    return pieceswhite, piecesblack, pointswhite, pointsblack
+
+
 def getUsers(gameid):
     white = db.reference(f'games/{gameid}/whites').get()
     black = db.reference(f'games/{gameid}/blacks').get()
@@ -133,6 +196,7 @@ def makeMove(gameid):
     global moveCount
     global firstmovewhite, firstmoveblack
     global secondsblack, secondswhite
+    global pieceswhite, piecesblack, pointswhite, pointsblack
     # enquanto o jogo decorrer
     if db.reference(f'games/{gameid}/state').get() == 1 or db.reference(f'games/{gameid}/state').get() == 4:
         if secondsblack <= 0:
@@ -186,6 +250,8 @@ def makeMove(gameid):
                         db.reference(
                             f'movements/{gameid}/{moveCount}').update({'state': 1})
                     # print(getOpening(movement[f'{moveCount}']['move'])[0])
+                    pieceswhite, piecesblack, pointswhite, pointsblack = getPieces(
+                        board)
                 else:
                     db.reference(
                         f'movements/{gameid}/{moveCount}').update({'state': 2})
@@ -381,12 +447,27 @@ class Ui_Janela(object):
         self.blackstime.setStyleSheet("color: white;")
         self.blackstime.setObjectName("blackstime")
         self.whitestime = QtWidgets.QLabel(self.centralwidget)
-        self.whitestime.setGeometry(QtCore.QRect(450, 200, 121, 61))
+        self.whitestime.setGeometry(QtCore.QRect(470, 200, 121, 61))
         font = QtGui.QFont()
         font.setPointSize(30)
         self.whitestime.setFont(font)
         self.whitestime.setStyleSheet("color: white;")
         self.whitestime.setObjectName("whitestime")
+        self.whitepoints = QtWidgets.QLabel(self.centralwidget)
+        self.whitepoints.setGeometry(QtCore.QRect(50, 300, 200, 200))
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.whitepoints.setFont(font)
+        self.whitepoints.setAlignment(QtCore.Qt.AlignTop)
+        self.whitepoints.setObjectName("whitepoints")
+        self.blackpoints = QtWidgets.QLabel(self.centralwidget)
+        self.blackpoints.setGeometry(QtCore.QRect(1450, 300, 200, 200))
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.blackpoints.setFont(font)
+        self.blackpoints.setAlignment(QtCore.Qt.AlignTop)
+        self.blackpoints.setStyleSheet("color: white;")
+        self.blackpoints.setObjectName("blackpoints")
         Janela.setCentralWidget(self.centralwidget)
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(Janela)
@@ -406,6 +487,10 @@ class Ui_Janela(object):
             "Janela", f"<html><head/><body><p>{convert(secondsblack)}</p></body></html>"))
         self.whitestime.setText(_translate(
             "Janela", f"<html><head/><body><p>{convert(secondswhite)}</p></body></html>"))
+        self.whitepoints.setText(_translate(
+            "Janela", f"<html><head/><body><p style='word-break: break-all;'>{piecesblack}<br><span style='color:white;'>{pointswhite} ponto(s)</span></p></body></html>"))
+        self.blackpoints.setText(_translate(
+            "Janela", f"<html><head/><body><p style='word-break: break-all;'>{pieceswhite}<br><span style='color:white;'>{pointsblack} ponto(s)</span></p></body></html>"))
 
 
 if __name__ == "__main__":
