@@ -258,10 +258,12 @@ def makeMove(gameid):
                         db.reference(
                             f'movements/{gameid}/{moveCount}').update({'state': 1})
                     moveCount = moveCount + 1
+                    """
                     openinginfo, movehistory = getOpening(move)
                     opening = refreshOpenings(openinginfo)
                     pieceswhite, piecesblack, pointswhite, pointsblack = getPieces(
                         board)
+                    """
                 else:
                     db.reference(
                         f'movements/{gameid}/{moveCount}').update({'state': 2})
