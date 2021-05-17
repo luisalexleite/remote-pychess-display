@@ -35,6 +35,7 @@ piecesblack = ""
 movearr = []
 opening = "?"
 movehistory = ""
+check = None
 
 
 def changestate(gameid):
@@ -185,11 +186,11 @@ def registElo(whiteelo, blackelo):
 def checktime(whites, firstmovewhite, firstmoveblack):
     global secondswhite, secondsblack
     if(whites == False and firstmovewhite == False):
-        secondswhite -= 0.5
+        secondswhite -= 1
         if (secondswhite < 0):
             secondswhite = 0
     elif (whites == True and firstmoveblack == False):
-        secondsblack -= 0.5
+        secondsblack -= 1
         if (secondsblack < 0):
             secondsblack = 0
 
@@ -270,12 +271,11 @@ def makeMove(gameid):
                 elif (whites == False and firstmoveblack == True):
                     firstmoveblack = False
 
-                return True, chess.svg.board(board=chess.Board(board))
+                return True, chess.svg.board(board=chess.Board(board), check=chess.Board(board).checkers())
 
-            return True, chess.svg.board(board=chess.Board(board))
+            return True, chess.svg.board(board=chess.Board(board), check=chess.Board(board).checkers())
         except:
-            checktime(whites, firstmovewhite, firstmoveblack)
-            return True, chess.svg.board(board=chess.Board(board))
+            return True, chess.svg.board(board=chess.Board(board), check=chess.Board(board).checkers())
     else:
         # terminar o jogo
         result = db.reference(f'games/{gameid}').get()
@@ -286,7 +286,7 @@ class Ui_Janela(object):
     def __init__(self):
         self.timer = QtCore.QTimer()
         self.timer.setSingleShot(False)
-        self.timer.setInterval(500)
+        self.timer.setInterval(1000)
         self.timer.timeout.connect(self.setupUi)
         self.timer.start()
 
