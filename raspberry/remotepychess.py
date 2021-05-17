@@ -67,7 +67,6 @@ def getOpening(move):
     boardreset = chess.Board()
     movecheck = chess.Board().variation_san(
         [boardreset.push_san(m) for m in movearr])
-    """
     while True:
         game = chess.pgn.read_game(eco)
         if game is None:
@@ -78,7 +77,6 @@ def getOpening(move):
             if (movecheck + " *" in str(san)):
                 openingcheck = game.headers
                 break
-    """
     eco.close()
     # return openingcheck, movecheck
     return movecheck
