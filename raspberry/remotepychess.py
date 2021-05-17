@@ -67,7 +67,7 @@ def getOpening(move):
     boardreset = chess.Board()
     movecheck = chess.Board().variation_san(
         [boardreset.push_san(m) for m in movearr])
-
+    """
     while True:
         game = chess.pgn.read_game(eco)
         if game is None:
@@ -78,10 +78,11 @@ def getOpening(move):
             if (movecheck + " *" in str(san)):
                 openingcheck = game.headers
                 break
-
+    """
     eco.close()
 
-    return openingcheck, movecheck
+    # return openingcheck, movecheck
+    return movecheck
 
 
 def refreshOpenings(opening):
@@ -259,7 +260,10 @@ def makeMove(gameid):
                             f'movements/{gameid}/{moveCount}').update({'state': 1})
                     moveCount = moveCount + 1
                     """
-                    openinginfo, movehistory = getOpening(move)
+                    openinginfo, 
+                    """
+                    movehistory = getOpening(move)
+                    """
                     opening = refreshOpenings(openinginfo)
                     """
                     pieceswhite, piecesblack, pointswhite, pointsblack = getPieces(
@@ -292,7 +296,7 @@ class Ui_Janela(object):
     def __init__(self):
         self.timer = QtCore.QTimer()
         self.timer.setSingleShot(False)
-        self.timer.setInterval(2000)
+        self.timer.setInterval(1000)
         self.timer.timeout.connect(self.setupUi)
         self.timer.start()
 
