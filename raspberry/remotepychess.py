@@ -80,8 +80,8 @@ def getOpening(move):
             if (movecheck + " *" in str(san)):
                 openingcheck = game.headers
                 break
-    """
     eco.close()
+    """
 
     # return openingcheck, movecheck
     return movecheck
