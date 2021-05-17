@@ -187,11 +187,11 @@ def registElo(whiteelo, blackelo):
 def checktime(whites, firstmovewhite, firstmoveblack):
     global secondswhite, secondsblack
     if(whites == False and firstmovewhite == False):
-        secondswhite -= 0.5
+        secondswhite -= 1
         if (secondswhite < 0):
             secondswhite = 0
     elif (whites == True and firstmoveblack == False):
-        secondsblack -= 0.5
+        secondsblack -= 1
         if (secondsblack < 0):
             secondsblack = 0
 
@@ -261,9 +261,9 @@ def makeMove(gameid):
                     """
                     openinginfo, movehistory = getOpening(move)
                     opening = refreshOpenings(openinginfo)
+                    """
                     pieceswhite, piecesblack, pointswhite, pointsblack = getPieces(
                         board)
-                    """
                 else:
                     db.reference(
                         f'movements/{gameid}/{moveCount}').update({'state': 2})
@@ -292,7 +292,7 @@ class Ui_Janela(object):
     def __init__(self):
         self.timer = QtCore.QTimer()
         self.timer.setSingleShot(False)
-        self.timer.setInterval(500)
+        self.timer.setInterval(1000)
         self.timer.timeout.connect(self.setupUi)
         self.timer.start()
 
