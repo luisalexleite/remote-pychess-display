@@ -32,6 +32,9 @@ pointswhite = 0
 pointsblack = 0
 pieceswhite = ""
 piecesblack = ""
+movearr = []
+opening = "?"
+movehistory = ""
 
 
 def changestate(gameid):
@@ -57,14 +60,13 @@ else:
 
 def getOpening(move):
     global movearr
-    ECOcode = ""
-    opening = ""
-    variation = ""
+    exporter = chess.pgn.StringExporter(
+        headers=False, variations=False, comments=False)
     eco = open('eco.pgn', 'r+')
     movearr.append(move)
     boardreset = chess.Board()
     movecheck = chess.Board().variation_san(
-        [boardreset.push_san(m) for m in movearr]) + " *"
+        [boardreset.push_san(m) for m in movearr])
 
     while True:
         game = chess.pgn.read_game(eco)
@@ -73,19 +75,23 @@ def getOpening(move):
             break
         else:
             san = game.accept(exporter)
-            if (movecheck in str(san)):
-                openingcheck = game
+            if (movecheck + " *" in str(san)):
+                openingcheck = game.headers
                 break
 
-        if openingcheck is not None:
-            ECOcode = openingcheck.headers['ECO']
-            opening = openingcheck.headers['Opening']
-            try:
-                variation = openingcheck.headers['Variation']
-            except:
-                variation = ""
+    eco.close()
 
-    return ECOcode + opening + variation, movecheck
+    return openingcheck, movecheck
+
+
+def refreshOpenings(opening):
+    try:
+        openingcheck = opening['ECO'] + " " + \
+            opening['Opening'] + " " + opening['Variation']
+    except:
+        openingcheck = opening['ECO'] + " " + opening['Opening']
+
+    return openingcheck
 
 
 def getPieces(fen):
@@ -197,6 +203,7 @@ def makeMove(gameid):
     global firstmovewhite, firstmoveblack
     global secondsblack, secondswhite
     global pieceswhite, piecesblack, pointswhite, pointsblack
+    global opening, movehistory
     # enquanto o jogo decorrer
     if db.reference(f'games/{gameid}/state').get() == 1 or db.reference(f'games/{gameid}/state').get() == 4:
         if secondsblack <= 0:
@@ -212,8 +219,9 @@ def makeMove(gameid):
         try:
             # verificar se movimento foi executado
             if movement[f'{moveCount}']['state'] == 0:
+                move = movement[f'{moveCount}']['move']
                 valid, checkmate, stalemate, nomaterial, claim, repetition, board = checkMove(
-                    board, movement[f'{moveCount}']['move'])
+                    board, move)
                 # verificar se há vitória, empate ou se continua o jogo
                 if (valid == True):
                     whites ^= True
@@ -249,13 +257,15 @@ def makeMove(gameid):
                     else:
                         db.reference(
                             f'movements/{gameid}/{moveCount}').update({'state': 1})
-                    # print(getOpening(movement[f'{moveCount}']['move'])[0])
+                    moveCount = moveCount + 1
+                    openinginfo, movehistory = getOpening(move)
+                    opening = refreshOpenings(openinginfo)
                     pieceswhite, piecesblack, pointswhite, pointsblack = getPieces(
                         board)
                 else:
                     db.reference(
                         f'movements/{gameid}/{moveCount}').update({'state': 2})
-                moveCount = moveCount + 1
+                    moveCount = moveCount + 1
 
                 if (whites == True and firstmovewhite == True):
                     firstmovewhite = False
@@ -454,20 +464,40 @@ class Ui_Janela(object):
         self.whitestime.setStyleSheet("color: white;")
         self.whitestime.setObjectName("whitestime")
         self.whitepoints = QtWidgets.QLabel(self.centralwidget)
-        self.whitepoints.setGeometry(QtCore.QRect(50, 300, 200, 200))
+        self.whitepoints.setGeometry(QtCore.QRect(50, 300, 400, 100))
         font = QtGui.QFont()
-        font.setPointSize(20)
+        font.setPointSize(10)
         self.whitepoints.setFont(font)
         self.whitepoints.setAlignment(QtCore.Qt.AlignTop)
+        self.whitepoints.setWordWrap(True)
         self.whitepoints.setObjectName("whitepoints")
         self.blackpoints = QtWidgets.QLabel(self.centralwidget)
-        self.blackpoints.setGeometry(QtCore.QRect(1450, 300, 200, 200))
+        self.blackpoints.setGeometry(QtCore.QRect(1450, 300, 400, 100))
         font = QtGui.QFont()
-        font.setPointSize(20)
+        font.setPointSize(10)
         self.blackpoints.setFont(font)
         self.blackpoints.setAlignment(QtCore.Qt.AlignTop)
+        self.blackpoints.setWordWrap(True)
         self.blackpoints.setStyleSheet("color: white;")
         self.blackpoints.setObjectName("blackpoints")
+        self.opening = QtWidgets.QLabel(self.centralwidget)
+        self.opening.setGeometry(QtCore.QRect(1450, 400, 400, 100))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.opening.setFont(font)
+        self.opening.setAlignment(QtCore.Qt.AlignTop)
+        self.opening.setWordWrap(True)
+        self.opening.setStyleSheet("color: white;")
+        self.opening.setObjectName("opening")
+        self.movehistory = QtWidgets.QLabel(self.centralwidget)
+        self.movehistory.setGeometry(QtCore.QRect(1450, 500, 400, 100))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.movehistory.setFont(font)
+        self.movehistory.setAlignment(QtCore.Qt.AlignTop)
+        self.movehistory.setWordWrap(True)
+        self.movehistory.setStyleSheet("color: white;")
+        self.movehistory.setObjectName("movehistory")
         Janela.setCentralWidget(self.centralwidget)
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(Janela)
@@ -488,9 +518,13 @@ class Ui_Janela(object):
         self.whitestime.setText(_translate(
             "Janela", f"<html><head/><body><p>{convert(secondswhite)}</p></body></html>"))
         self.whitepoints.setText(_translate(
-            "Janela", f"<html><head/><body><p style='word-break: break-all;'>{piecesblack}<br><span style='color:white;'>{pointswhite} ponto(s)</span></p></body></html>"))
+            "Janela", f"<html><head/><body><p>{piecesblack}<br><span style='color:white;'>{pointswhite} ponto(s)</span></p></body></html>"))
         self.blackpoints.setText(_translate(
-            "Janela", f"<html><head/><body><p style='word-break: break-all;'>{pieceswhite}<br><span style='color:white;'>{pointsblack} ponto(s)</span></p></body></html>"))
+            "Janela", f"<html><head/><body><p>{pieceswhite}<br><span style='color:white;'>{pointsblack} ponto(s)</span></p></body></html>"))
+        self.opening.setText(_translate(
+            "Janela", f"<html><head/><body><p>\U0001f4d6 {opening}<br></body></html>"))
+        self.movehistory.setText(_translate(
+            "Janela", f"<html><head/><body><p>{movehistory}<br></body></html>"))
 
 
 if __name__ == "__main__":
