@@ -78,8 +78,8 @@ def getOpening(move):
                 openingcheck = game.headers
                 break
     eco.close()
-    # return openingcheck, movecheck
-    return movecheck
+    return openingcheck, movecheck
+    # return movecheck
 
 
 def refreshOpenings(opening):
@@ -256,13 +256,8 @@ def makeMove(gameid):
                         db.reference(
                             f'movements/{gameid}/{moveCount}').update({'state': 1})
                     moveCount = moveCount + 1
-                    """
-                    openinginfo, 
-                    """
-                    movehistory = getOpening(move)
-                    """
+                    openinginfo, movehistory = getOpening(move)
                     opening = refreshOpenings(openinginfo)
-                    """
                     pieceswhite, piecesblack, pointswhite, pointsblack = getPieces(
                         board)
                 else:
@@ -274,11 +269,9 @@ def makeMove(gameid):
                     firstmovewhite = False
                 elif (whites == False and firstmoveblack == True):
                     firstmoveblack = False
-                else:
-                    checktime(whites, firstmovewhite, firstmoveblack)
 
                 return True, chess.svg.board(board=chess.Board(board))
-            checktime(whites, firstmovewhite, firstmoveblack)
+
             return True, chess.svg.board(board=chess.Board(board))
         except:
             checktime(whites, firstmovewhite, firstmoveblack)
@@ -505,6 +498,7 @@ class Ui_Janela(object):
         Janela.setCentralWidget(self.centralwidget)
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(Janela)
+        checktime(whites, firstmovewhite, firstmoveblack)
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
