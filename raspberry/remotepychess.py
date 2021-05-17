@@ -258,10 +258,8 @@ def makeMove(gameid):
                         db.reference(
                             f'movements/{gameid}/{moveCount}').update({'state': 1})
                     moveCount = moveCount + 1
-                    """
                     openinginfo, movehistory = getOpening(move)
                     opening = refreshOpenings(openinginfo)
-                    """
                     pieceswhite, piecesblack, pointswhite, pointsblack = getPieces(
                         board)
                 else:
@@ -520,11 +518,11 @@ class Ui_Janela(object):
         self.whitestime.setText(_translate(
             "Janela", f"<html><head/><body><p>{convert(secondswhite)}</p></body></html>"))
         self.whitepoints.setText(_translate(
-            "Janela", f"<html><head/><body><p>{piecesblack}<br><span style='color:white;'>{pointswhite} ponto(s)</span></p></body></html>"))
+            "Janela", f"<html><head/><body><p><span style='text-shadow: 2px 2px #ffffff'>{piecesblack}</span><br><span style='color:white;'>{pointswhite} ponto(s)</span></p></body></html>"))
         self.blackpoints.setText(_translate(
             "Janela", f"<html><head/><body><p>{pieceswhite}<br><span style='color:white;'>{pointsblack} ponto(s)</span></p></body></html>"))
         self.opening.setText(_translate(
-            "Janela", f"<html><head/><body><p>\U0001f4d6 {opening}<br></body></html>"))
+            "Janela", f"<html><head/><body><p>\u26ef {opening}<br></body></html>"))
         self.movehistory.setText(_translate(
             "Janela", f"<html><head/><body><p>{movehistory}<br></body></html>"))
 
