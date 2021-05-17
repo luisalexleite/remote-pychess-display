@@ -187,11 +187,11 @@ def registElo(whiteelo, blackelo):
 def checktime(whites, firstmovewhite, firstmoveblack):
     global secondswhite, secondsblack
     if(whites == False and firstmovewhite == False):
-        secondswhite -= 1
+        secondswhite -= 2
         if (secondswhite < 0):
             secondswhite = 0
     elif (whites == True and firstmoveblack == False):
-        secondsblack -= 1
+        secondsblack -= 2
         if (secondsblack < 0):
             secondsblack = 0
 
@@ -258,8 +258,10 @@ def makeMove(gameid):
                         db.reference(
                             f'movements/{gameid}/{moveCount}').update({'state': 1})
                     moveCount = moveCount + 1
+                    """
                     openinginfo, movehistory = getOpening(move)
                     opening = refreshOpenings(openinginfo)
+                    """
                     pieceswhite, piecesblack, pointswhite, pointsblack = getPieces(
                         board)
                 else:
@@ -290,7 +292,7 @@ class Ui_Janela(object):
     def __init__(self):
         self.timer = QtCore.QTimer()
         self.timer.setSingleShot(False)
-        self.timer.setInterval(1000)
+        self.timer.setInterval(2000)
         self.timer.timeout.connect(self.setupUi)
         self.timer.start()
 
@@ -522,7 +524,7 @@ class Ui_Janela(object):
         self.blackpoints.setText(_translate(
             "Janela", f"<html><head/><body><p>{pieceswhite}<br><span style='color:white;'>{pointsblack} ponto(s)</span></p></body></html>"))
         self.opening.setText(_translate(
-            "Janela", f"<html><head/><body><p>\u26ef {opening}<br></body></html>"))
+            "Janela", f"<html><head/><body><p>Abertura - {opening}<br></body></html>"))
         self.movehistory.setText(_translate(
             "Janela", f"<html><head/><body><p>{movehistory}<br></body></html>"))
 
