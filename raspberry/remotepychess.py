@@ -63,8 +63,8 @@ def getOpening(move):
     """
     exporter = chess.pgn.StringExporter(
         headers=False, variations=False, comments=False)
-    eco = open('eco.pgn', 'r+')
     """
+    eco = open('eco.pgn', 'r')
     movearr.append(move)
     boardreset = chess.Board()
     movecheck = chess.Board().variation_san(
@@ -80,9 +80,8 @@ def getOpening(move):
             if (movecheck + " *" in str(san)):
                 openingcheck = game.headers
                 break
-    eco.close()
     """
-
+    eco.close()
     # return openingcheck, movecheck
     return movecheck
 
