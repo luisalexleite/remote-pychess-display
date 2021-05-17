@@ -60,9 +60,11 @@ else:
 
 def getOpening(move):
     global movearr
+    """
     exporter = chess.pgn.StringExporter(
         headers=False, variations=False, comments=False)
     eco = open('eco.pgn', 'r+')
+    """
     movearr.append(move)
     boardreset = chess.Board()
     movecheck = chess.Board().variation_san(
