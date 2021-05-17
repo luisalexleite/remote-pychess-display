@@ -187,11 +187,11 @@ def registElo(whiteelo, blackelo):
 def checktime(whites, firstmovewhite, firstmoveblack):
     global secondswhite, secondsblack
     if(whites == False and firstmovewhite == False):
-        secondswhite -= 2
+        secondswhite -= 1
         if (secondswhite < 0):
             secondswhite = 0
     elif (whites == True and firstmoveblack == False):
-        secondsblack -= 2
+        secondsblack -= 1
         if (secondsblack < 0):
             secondsblack = 0
 
@@ -472,6 +472,7 @@ class Ui_Janela(object):
         self.whitepoints.setFont(font)
         self.whitepoints.setAlignment(QtCore.Qt.AlignTop)
         self.whitepoints.setWordWrap(True)
+        self.whitepoints.setStyleSheet("color: black;")
         self.whitepoints.setObjectName("whitepoints")
         self.blackpoints = QtWidgets.QLabel(self.centralwidget)
         self.blackpoints.setGeometry(QtCore.QRect(1450, 300, 400, 100))
