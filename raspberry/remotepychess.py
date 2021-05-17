@@ -271,11 +271,23 @@ def makeMove(gameid):
                 elif (whites == False and firstmoveblack == True):
                     firstmoveblack = False
 
-                return True, chess.svg.board(board=chess.Board(board), check=chess.Board(board).checkers())
+                side = chess.BLACK if whites else chess.WHITE
+                check = chess.Board(board).king(
+                    side) if chess.Board(board).is_check() else None
 
-            return True, chess.svg.board(board=chess.Board(board), check=chess.Board(board).checkers())
+                return True, chess.svg.board(board=chess.Board(board), check=check)
+
+            side = chess.BLACK if whites else chess.WHITE
+            check = chess.Board(board).king(
+                side) if chess.Board(board).is_check() else None
+
+            return True, chess.svg.board(board=chess.Board(board), check=check)
         except:
-            return True, chess.svg.board(board=chess.Board(board), check=chess.Board(board).checkers())
+            side = chess.BLACK if whites else chess.WHITE
+            check = chess.Board(board).king(
+                side) if chess.Board(board).is_check() else None
+
+            return True, chess.svg.board(board=chess.Board(board), check=check)
     else:
         # terminar o jogo
         result = db.reference(f'games/{gameid}').get()
