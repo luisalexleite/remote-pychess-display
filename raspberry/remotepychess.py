@@ -36,6 +36,8 @@ movearr = []
 opening = "?"
 movehistory = ""
 check = None
+exists = True
+lastmove = None
 
 
 def changestate(gameid):
@@ -60,7 +62,8 @@ else:
 
 
 def getOpening(move):
-    global movearr
+    global movearr, exists
+    exist = False
     exporter = chess.pgn.StringExporter(
         headers=False, variations=False, comments=False)
     eco = open('eco.pgn', 'r')
@@ -68,18 +71,23 @@ def getOpening(move):
     boardreset = chess.Board()
     movecheck = chess.Board().variation_san(
         [boardreset.push_san(m) for m in movearr])
-    while True:
-        game = chess.pgn.read_game(eco)
-        if game is None:
-            openingcheck = None
-            break
-        else:
-            san = game.accept(exporter)
-            if (movecheck + " *" in str(san)):
-                openingcheck = game.headers
+    if exists == True:
+        while True:
+            game = chess.pgn.read_game(eco)
+            if game is None:
+                openingcheck = None
                 break
+            else:
+                san = game.accept(exporter)
+                if (movecheck in str(san)):
+                    exist = True
+                    if (movecheck + " *" in str(san)):
+                        openingcheck = game.headers
+                        break
+    else:
+        openingcheck = None
     eco.close()
-    return openingcheck, movecheck
+    return openingcheck, movecheck, exist
     # return movecheck
 
 
@@ -201,8 +209,8 @@ def makeMove(gameid):
     global moveCount
     global firstmovewhite, firstmoveblack
     global secondsblack, secondswhite
-    global pieceswhite, piecesblack, pointswhite, pointsblack
-    global opening, movehistory
+    global opening, movehistory, exists
+    global lastmove
     # enquanto o jogo decorrer
     if db.reference(f'games/{gameid}/state').get() == 1 or db.reference(f'games/{gameid}/state').get() == 4:
         if secondsblack <= 0:
@@ -219,8 +227,8 @@ def makeMove(gameid):
             # verificar se movimento foi executado
             if movement[f'{moveCount}']['state'] == 0:
                 move = movement[f'{moveCount}']['move']
-                valid, checkmate, stalemate, nomaterial, claim, repetition, board = checkMove(
-                    board, move)
+                valid, checkmate, stalemate, nomaterial, claim, repetition, board, lastmove = checkMove(
+                    board, move, lastmove)
                 # verificar se há vitória, empate ou se continua o jogo
                 if (valid == True):
                     whites ^= True
@@ -257,10 +265,9 @@ def makeMove(gameid):
                         db.reference(
                             f'movements/{gameid}/{moveCount}').update({'state': 1})
                     moveCount = moveCount + 1
-                    openinginfo, movehistory = getOpening(move)
-                    opening = refreshOpenings(openinginfo)
-                    pieceswhite, piecesblack, pointswhite, pointsblack = getPieces(
-                        board)
+                    openinginfo, movehistory, exists = getOpening(move)
+                    if exists == True and openinginfo != None:
+                        opening = refreshOpenings(openinginfo)
                 else:
                     db.reference(
                         f'movements/{gameid}/{moveCount}').update({'state': 2})
@@ -275,19 +282,19 @@ def makeMove(gameid):
                 check = chess.Board(board).king(
                     side) if chess.Board(board).is_check() else None
 
-                return True, chess.svg.board(board=chess.Board(board), check=check)
+                return True, chess.svg.board(board=chess.Board(board), check=check, lastmove=lastmove)
 
             side = chess.BLACK if whites else chess.WHITE
             check = chess.Board(board).king(
                 side) if chess.Board(board).is_check() else None
 
-            return True, chess.svg.board(board=chess.Board(board), check=check)
+            return True, chess.svg.board(board=chess.Board(board), check=check, lastmove=lastmove)
         except:
             side = chess.BLACK if whites else chess.WHITE
             check = chess.Board(board).king(
                 side) if chess.Board(board).is_check() else None
 
-            return True, chess.svg.board(board=chess.Board(board), check=check)
+            return True, chess.svg.board(board=chess.Board(board), check=check, lastmove=lastmove)
     else:
         # terminar o jogo
         result = db.reference(f'games/{gameid}').get()
@@ -387,6 +394,9 @@ class Ui_Janela(object):
         sys.exit()
 
     def setupUi(self):
+        global pieceswhite, piecesblack, pointswhite, pointsblack
+        pieceswhite, piecesblack, pointswhite, pointsblack = getPieces(
+            board)
         Janela.setObjectName("Janela")
         Janela.setWindowModality(QtCore.Qt.NonModal)
         Janela.setEnabled(True)
@@ -474,7 +484,7 @@ class Ui_Janela(object):
         self.whitepoints = QtWidgets.QLabel(self.centralwidget)
         self.whitepoints.setGeometry(QtCore.QRect(50, 300, 400, 100))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(12)
         self.whitepoints.setFont(font)
         self.whitepoints.setAlignment(QtCore.Qt.AlignTop)
         self.whitepoints.setWordWrap(True)
@@ -483,7 +493,7 @@ class Ui_Janela(object):
         self.blackpoints = QtWidgets.QLabel(self.centralwidget)
         self.blackpoints.setGeometry(QtCore.QRect(1450, 300, 400, 100))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(12)
         self.blackpoints.setFont(font)
         self.blackpoints.setAlignment(QtCore.Qt.AlignTop)
         self.blackpoints.setWordWrap(True)
