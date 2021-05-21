@@ -90,15 +90,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
+            android:layout_marginBottom="60dp"
             android:layout_marginTop="40dp"
             android:background="@drawable/roundedbutton"
             android:text="Desistir" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="60dp"
+            android:layout_height="170dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="horizontal">
@@ -116,12 +115,29 @@
                     android:contentDescription="@string/img_desc"
                     android:scaleType="centerCrop" />
 
-                <TextView
-                    android:id="@+id/rating_game"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp" />
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/rating_join"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="Rating:"
+                  />
+
+                    <TextView
+                        android:id="@+id/rating_game"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -143,11 +159,29 @@
                     android:background="@drawable/demo_player"
                     android:contentDescription="@string/img_desc"
                     android:scaleType="centerCrop" />
-                <TextView
-                    android:id="@+id/rating_game2"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp" />
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/rating_join2"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:text="Rating:"
+                        />
+
+                    <TextView
+                        android:id="@+id/rating_game2"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

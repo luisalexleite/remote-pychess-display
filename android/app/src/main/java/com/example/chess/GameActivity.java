@@ -47,23 +47,24 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
+    //Inicialização de variáveis
     private static final int RESULT_SPEECH = 1;
-    ImageButton btnSpeak;
-    TextView tvText;
-    private DatabaseReference mDatabase;
+    String userID, randomString, gameID, blacks, whites;
+    private int i = -1;
+
+    //Base de dados
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     StorageReference fStorage;
     FirebaseDatabase database;
     DatabaseReference reference;
-    String userID, randomString, gameID;
-    EditText move;
-    String username = "a";
-    private int i = -1;
-    String blacks;
+
+
+    //Inicialização de views
+    ImageButton btnSpeak;
+    TextView tvText;
     Button createGame, addJogada, giveup;
     ImageView profileImageGame, profileImageGame2;
-    //CheckBox
     CheckBox cbwhite, cbblack;
 
     //Chess Stuff
@@ -77,18 +78,18 @@ public class GameActivity extends AppCompatActivity {
                     , "g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8"
                     , "h1", "h2", "h3", "h4", "h5", "h6", "h7", "h8" };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
 
         //FireBase
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         fStorage = FirebaseStorage.getInstance().getReference();
         userID = fAuth.getCurrentUser().getUid();
+
+        //Imagens
         profileImageGame = findViewById(R.id.image_profile_game);
         profileImageGame2 = findViewById(R.id.image_profile_game2);
 
@@ -96,34 +97,16 @@ public class GameActivity extends AppCompatActivity {
         cbwhite = findViewById(R.id.checkWhite);
         cbblack = findViewById(R.id.checkBlack);
 
-        // Voice recognition
-        tvText = findViewById(R.id.tvText);
-        btnSpeak = findViewById(R.id.btnSpeak);
-        btnSpeak.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-pt");
-                try {
-                    startActivityForResult(intent, RESULT_SPEECH);
-                    tvText.setText("");
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(getApplicationContext(), "Your device dont support this", Toast.LENGTH_SHORT);
-                    e.printStackTrace();
-                }
-            }
-        });
+        speak();
         randomString = randomString();
         createGame();
         giveUp();
+        back();
+        listener();
 
-        ImageButton back = findViewById(R.id.backBtnProfile);
-        back.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        });
+    }
 
+    private void listener(){
         reference = database.getInstance().getReference().child("game_waiting");
         reference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -184,11 +167,34 @@ public class GameActivity extends AppCompatActivity {
             Picasso.get().load(uri).into(profileImageGame);
 
         });
-
-
-
-        }
-
+    }
+    private void back(){
+        ImageButton back = findViewById(R.id.backBtnProfile);
+        back.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
+    }
+    private void speak(){
+        // Voice recognition
+        tvText = findViewById(R.id.tvText);
+        btnSpeak = findViewById(R.id.btnSpeak);
+        btnSpeak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-pt");
+                try {
+                    startActivityForResult(intent, RESULT_SPEECH);
+                    tvText.setText("");
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getApplicationContext(), "Your device dont support this", Toast.LENGTH_SHORT);
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     //Chess Methods
     private void createGame(){
 

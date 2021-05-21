@@ -22,7 +22,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -32,21 +36,25 @@ import java.util.Random;
 
 public class JoinActivity extends AppCompatActivity {
 
+    //Inicialização de variáveis
     private int i = 0;
+    String userID, gameID = "", blacks, whites;
     private static final int RESULT_SPEECH = 1;
-    ImageButton btnSpeak2;
-    TextView tvText2, rating1, rating2;
+
+    //Base de dados
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     StorageReference fStorage;
     FirebaseDatabase database;
     DatabaseReference reference;
-    String userID, gameID = "", blacks;
+
+    //Views
     Button joinGame2, addJogada2, giveup2;
+    ImageButton btnSpeak2;
+    TextView tvText2, rating1, rating2, ratingJoin1, ratingJoin2;
     ImageView profileImageGame, profileImageGame2;
 
-
-    //Chess Stuff
+    //Chess
     String[] pieces = {"K", "N", "Q", "R", "B", "O-O", "O-O-O"
             , "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8"
             , "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"
@@ -57,47 +65,43 @@ public class JoinActivity extends AppCompatActivity {
             , "g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8"
             , "h1", "h2", "h3", "h4", "h5", "h6", "h7", "h8" };
 
+    //Main Function
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
+        //Referencias da Base de dados
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         fStorage = FirebaseStorage.getInstance().getReference();
         userID = fAuth.getCurrentUser().getUid();
 
+        //Referencias de views
         profileImageGame = findViewById(R.id.image_profile_game);
         profileImageGame2 = findViewById(R.id.image_profile_game2);
+        ratingJoin1 = findViewById(R.id.rating_join);
+        ratingJoin2 = findViewById(R.id.rating_join2);
         rating1 = findViewById(R.id.rating_game);
         rating2 = findViewById(R.id.rating_game2);
-
         tvText2 = findViewById(R.id.tvText2);
-        btnSpeak2 = findViewById(R.id.btnSpeak2);
-        btnSpeak2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-pt");
-                try {
-                    startActivityForResult(intent, RESULT_SPEECH);
-                    tvText2.setText("");
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(getApplicationContext(), "Your device dont support this", Toast.LENGTH_SHORT);
-                    e.printStackTrace();
-                }
-            }
-        });
 
+        //Método ao clicar botão Voice recognition
+        speak();
+
+        //Método ao Clicar botão Desistir
         giveUp();
 
-        ImageButton back = findViewById(R.id.backBtnProfile);
-        back.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        });
+        //Metodo ao Clicar para trás
+        back();
 
+        rating();
+
+        //Metodo para os listeners
+        listener();
+
+    }
+    private void listener(){
         reference = database.getInstance().getReference().child("game_waiting");
         reference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -137,6 +141,8 @@ public class JoinActivity extends AppCompatActivity {
                             mDatabase.child("games").child(gameID).child("type").setValue(0);
                             mDatabase.child("games").child(gameID).child("whites").setValue(blacks);
                             mDatabase.child("games").child(gameID).child("blacks").setValue(userID);
+
+
                         }
 
                         @Override
@@ -169,12 +175,52 @@ public class JoinActivity extends AppCompatActivity {
 
             }
         });
-
-
         StorageReference profileRef = fStorage.child(userID + ".jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
             Picasso.get().load(uri).into(profileImageGame);
 
+        });
+
+    }
+    private void rating(){
+        DocumentReference documentReference = fStore.collection("profile").document(userID);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+                ratingJoin1.setText(documentSnapshot.getString("username") + "   -   ");
+                long rating2 = documentSnapshot.getLong("rating");
+                String s = String.valueOf(rating2);
+                rating1.setText(s);
+                //}
+            }
+        });
+
+    }
+    private void back(){
+        ImageButton back = findViewById(R.id.backBtnProfile);
+        back.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
+    }
+    private void speak(){
+        btnSpeak2 = findViewById(R.id.btnSpeak2);
+
+        btnSpeak2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-pt");
+                try {
+                    startActivityForResult(intent, RESULT_SPEECH);
+                    tvText2.setText("");
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getApplicationContext(), "Your device dont support this", Toast.LENGTH_SHORT);
+                    e.printStackTrace();
+                }
+            }
         });
     }
     private void giveUp() {
@@ -202,7 +248,6 @@ public class JoinActivity extends AppCompatActivity {
             result = "";
             return result;
         }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
