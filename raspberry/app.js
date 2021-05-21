@@ -20,14 +20,12 @@
   var database = firebase.database();
 
   var ref = database.ref('games');
+  
   ref.on('child_added', (data) => {
        var key = data.key;
        var val = data.val();
        var state = val['state'];
        if (state == 0) {
-        //firebase.database().ref('inline/' + Date.now()) .set({
-          //game : key
-        //});
           window.location = 'http://localhost:8000/startgame.php?id=' + key;
        }
   });
