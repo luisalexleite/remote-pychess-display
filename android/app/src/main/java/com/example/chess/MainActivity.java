@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private final CollectionReference perfilRef = db.collection("Perfil");
     Button button_out;
     Button button_perfil;
-    Button button_match;
+    Button button_match, joinGame;
 
     //Bottom navigation listener
     @SuppressLint("NonConstantResourceId")
@@ -84,6 +84,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         button_match.setOnClickListener(v -> {
             Intent game = new Intent(this, GameActivity.class);
             startActivity(game);
+        });
+
+        //Join Start
+        joinGame = findViewById(R.id.button_join);
+        joinGame.setOnClickListener(v -> {
+            Intent join = new Intent(this, JoinActivity.class);
+            startActivity(join);
         });
 
         //get userID
