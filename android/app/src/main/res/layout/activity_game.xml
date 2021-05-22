@@ -107,7 +107,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
             android:layout_marginTop="40dp"
             android:background="@drawable/roundedbutton"
             android:text="Adicionar jogada" />
@@ -123,35 +122,94 @@
             android:text="Desistir" />
 
         <LinearLayout
+            android:id="@+id/layout_vs1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="60dp"
+            android:layout_height="180dp"
+            android:visibility="gone"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/image_profile_game"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:background="@drawable/demo_player"
-                android:contentDescription="@string/img_desc"
-                android:scaleType="centerCrop" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/image_profile_game"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:background="@drawable/demo_player"
+                    android:contentDescription="@string/img_desc"
+                    android:scaleType="centerCrop" />
+
+
+                    <TextView
+                        android:id="@+id/rating_game11"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:padding="5dp"
+                        android:text="Rating:"
+                        />
+
+                    <TextView
+                        android:id="@+id/rating_game12"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="VS"
+                android:layout_gravity="top"
                 android:padding="30dp"
                 android:textSize="40sp" />
 
-            <ImageView
-                android:id="@+id/image_profile_game2"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:background="@drawable/demo_player"
-                android:contentDescription="@string/img_desc"
-                android:scaleType="centerCrop" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/image_profile_game2"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:background="@drawable/demo_player"
+                    android:contentDescription="@string/img_desc"
+                    android:scaleType="centerCrop" />
+
+
+                    <TextView
+                        android:id="@+id/rating_game21"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:padding="5dp"
+                        android:text="@string/find_rating"
+                        />
+
+                    <TextView
+                        android:id="@+id/rating_game22"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
 

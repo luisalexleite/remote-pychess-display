@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,8 +50,9 @@ public class GameActivity extends AppCompatActivity {
 
     //Inicialização de variáveis
     private static final int RESULT_SPEECH = 1;
-    String userID, randomString, gameID, blacks, whites;
+    String userID, randomString, gameID, blacks, color2="", color1="";
     private int i = -1;
+    int count = 0;
 
     //Base de dados
     FirebaseAuth fAuth;
@@ -62,10 +64,11 @@ public class GameActivity extends AppCompatActivity {
 
     //Inicialização de views
     ImageButton btnSpeak;
-    TextView tvText;
+    TextView tvText, rating1, rating2, username1, username2;
     Button createGame, addJogada, giveup;
     ImageView profileImageGame, profileImageGame2;
     CheckBox cbwhite, cbblack;
+    LinearLayout vs;
 
     //Chess Stuff
     String[] pieces = {"K", "N", "Q", "R", "B", "O-O", "O-O-O"
@@ -97,12 +100,20 @@ public class GameActivity extends AppCompatActivity {
         cbwhite = findViewById(R.id.checkWhite);
         cbblack = findViewById(R.id.checkBlack);
 
-        speak();
+        rating1 = findViewById(R.id.rating_game12);
+        rating2 = findViewById(R.id.rating_game22);
+        username1 = findViewById(R.id.rating_game11);
+        username2= findViewById(R.id.rating_game21);
+        vs = findViewById(R.id.layout_vs1);
+
+
         randomString = randomString();
         createGame();
+        listener();
+        speak();
         giveUp();
         back();
-        listener();
+        rating();
 
     }
 
@@ -111,62 +122,83 @@ public class GameActivity extends AppCompatActivity {
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-
-
-
             }
-
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 System.out.println(snapshot.getKey());
                 gameID = snapshot.getKey();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference getid = ref.child("game_waiting").child(randomString).child(color2);;
+                getid.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        blacks = dataSnapshot.getValue(String.class);
+                        System.out.println("joinActivity: "+ blacks);
+                        if(count == 2) {
+                            StorageReference profileRef = fStorage.child(blacks + ".jpg");
+                            profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                Picasso.get().load(uri).into(profileImageGame2);
 
+                            });
+                            //rating2();
+                            vs.setVisibility(View.VISIBLE);
+                        }
+                        count++;
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
             }
-
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
             }
-
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference getid = ref.child("game_waiting").child(randomString).child("blacks");
-        getid.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                blacks = dataSnapshot.getValue(String.class);
-                System.out.println("blacks: "+ blacks);
-
-                StorageReference profileRef2 = fStorage.child(blacks + ".jpg");
-                profileRef2.getDownloadUrl().addOnSuccessListener(uri -> {
-                    Picasso.get().load(uri).into(profileImageGame2);
-
-                });
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         StorageReference profileRef = fStorage.child(userID + ".jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
             Picasso.get().load(uri).into(profileImageGame);
 
         });
+    }
+
+    private void rating(){
+        DocumentReference documentReference = fStore.collection("profile").document(userID);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+                username1.setText(documentSnapshot.getString("username"));
+                long rating3 = documentSnapshot.getLong("rating");
+                String s = String.valueOf(rating3);
+                rating1.setText(s);
+                //}
+            }
+        });
+
+    }
+    private void rating2(){
+        DocumentReference documentReference = fStore.collection("profile").document(blacks);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+                username2.setText(documentSnapshot.getString("username"));
+                long rating3 = documentSnapshot.getLong("rating");
+                String s = String.valueOf(rating3);
+                rating2.setText(s);
+                //}
+            }
+        });
+
     }
     private void back(){
         ImageButton back = findViewById(R.id.backBtnProfile);
@@ -213,7 +245,13 @@ public class GameActivity extends AppCompatActivity {
                 cbwhite.setVisibility(View.GONE);
                 btnSpeak.setVisibility(View.VISIBLE);
                 giveup.setVisibility(View.VISIBLE);
-                //addJogada.setVisibility(View.VISIBLE);
+                cbblack.setVisibility(View.INVISIBLE);
+                cbwhite.setVisibility(View.INVISIBLE);
+                color2 = "blacks";
+                color1 = "whites";
+
+
+
 
             }
 
@@ -226,7 +264,10 @@ public class GameActivity extends AppCompatActivity {
                 cbwhite.setVisibility(View.GONE);
                 btnSpeak.setVisibility(View.VISIBLE);
                 giveup.setVisibility(View.VISIBLE);
-                //addJogada.setVisibility(View.VISIBLE);
+                cbblack.setVisibility(View.INVISIBLE);
+                cbwhite.setVisibility(View.INVISIBLE);
+                color2 = "whites";
+                color1 = "blacks";
             }
             if(cbblack.isChecked() && cbwhite.isChecked()){
                 Toast.makeText(GameActivity.this, "Escolhe só uma das opções", Toast.LENGTH_SHORT).show();
@@ -309,17 +350,15 @@ public class GameActivity extends AppCompatActivity {
                         result = result.replace("captura", "");
                     } else if (result.contains("rock rei")) {
                         result = result.replace("rock", "O-O");
-
                     } if (result.contains("é")) {
                         result = result.replace("é", "e");
-                    }
-                    if (result.contains("rock Q")) {
+                    } if (result.contains("hey")) {
+                        result = result.replace("hey", "K");
+                    } if (result.contains("rock Q")) {
                         result = result.replace("rock Q", "O-O-O");
-                    }
-                    if (result.contains("rock K")) {
+                    } if (result.contains("rock K")) {
                         result = result.replace("rock K", "O-O");
-                    }
-                    if (result.contains("para")) {
+                    } if (result.contains("para")) {
                         result = result.replace("para", "");
                     }
 

@@ -61,4 +61,5 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="Jogo">Jogo</string>
+    <string name="find_rating">\???</string>
 </resources>

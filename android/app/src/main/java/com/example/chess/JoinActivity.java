@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ public class JoinActivity extends AppCompatActivity {
 
     //Inicialização de variáveis
     private int i = 0;
-    String userID, gameID = "", blacks, whites;
+    String userID, gameID = "", blacks, whites, color, color2;
     private static final int RESULT_SPEECH = 1;
 
     //Base de dados
@@ -53,6 +54,7 @@ public class JoinActivity extends AppCompatActivity {
     ImageButton btnSpeak2;
     TextView tvText2, rating1, rating2, ratingJoin1, ratingJoin2;
     ImageView profileImageGame, profileImageGame2;
+    LinearLayout vs;
 
     //Chess
     String[] pieces = {"K", "N", "Q", "R", "B", "O-O", "O-O-O"
@@ -85,6 +87,7 @@ public class JoinActivity extends AppCompatActivity {
         rating1 = findViewById(R.id.rating_game);
         rating2 = findViewById(R.id.rating_game2);
         tvText2 = findViewById(R.id.tvText2);
+        vs = findViewById(R.id.layout_v2);
 
         //Método ao clicar botão Voice recognition
         speak();
@@ -106,81 +109,91 @@ public class JoinActivity extends AppCompatActivity {
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-
             }
-
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                 System.out.println(snapshot.getKey());
                 gameID = snapshot.getKey();
-                joinGame2 = findViewById(R.id.joinGame2);
-                joinGame2.setOnClickListener(v -> {
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference mDatabase = database.getInstance().getReference();
-                    mDatabase.child("game_waiting").child(gameID).child("state").setValue(0);
-                    mDatabase.child("game_waiting").child(gameID).child("blacks").setValue(userID);
-                    joinGame2.setVisibility(View.GONE);
-
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                    DatabaseReference getid = ref.child("game_waiting").child(gameID).child("whites");
-                    getid.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            blacks = dataSnapshot.getValue(String.class);
-                            System.out.println("whites: "+ blacks);
-
-                            StorageReference profileRef2 = fStorage.child(blacks + ".jpg");
-                            profileRef2.getDownloadUrl().addOnSuccessListener(uri -> {
-                                Picasso.get().load(uri).into(profileImageGame2);
-                                System.out.println();
-                            });
-                            Toast.makeText(JoinActivity.this, "Jogo Encontrado, podes dar join!", Toast.LENGTH_SHORT).show();
-                            mDatabase.child("games").child(gameID).child("state").setValue(0);
-                            mDatabase.child("games").child(gameID).child("type").setValue(0);
-                            mDatabase.child("games").child(gameID).child("whites").setValue(blacks);
-                            mDatabase.child("games").child(gameID).child("blacks").setValue(userID);
-
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-
-                });
+                joinGame(gameID);
                 System.out.println(gameID);
-
-
-
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
             }
-
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
         StorageReference profileRef = fStorage.child(userID + ".jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
             Picasso.get().load(uri).into(profileImageGame);
+        });
+    }
+    private void joinGame(String GameID){
+        joinGame2 = findViewById(R.id.joinGame2);
+        joinGame2.setOnClickListener(v -> {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference mDatabase = database.getInstance().getReference();
+            mDatabase.child("game_waiting").child(gameID).child("state").setValue(0);
+            mDatabase.child("game_waiting").child(gameID).child(color).setValue(userID);
+            joinGame2.setVisibility(View.GONE);
 
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference getid = ref.child("game_waiting").child(gameID).child(color);
+            getid.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    blacks = dataSnapshot.getValue(String.class);
+                    System.out.println("joinActivity: "+ blacks);
+
+                    StorageReference profileRef2 = fStorage.child(blacks + ".jpg");
+                    profileRef2.getDownloadUrl().addOnSuccessListener(uri -> {
+                        Picasso.get().load(uri).into(profileImageGame2);
+                        System.out.println();
+                    });
+                    Toast.makeText(JoinActivity.this, "Jogo Encontrado!", Toast.LENGTH_SHORT).show();
+                    mDatabase.child("games").child(gameID).child("state").setValue(0);
+                    mDatabase.child("games").child(gameID).child("type").setValue(0);
+                    mDatabase.child("games").child(gameID).child(color).setValue(blacks);
+                    mDatabase.child("games").child(gameID).child(color2).setValue(userID);
+
+                    //rating2();
+                    vs.setVisibility(View.VISIBLE);
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
         });
 
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference getid = ref.child("game_waiting").child(gameID);
+        getid.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot a : dataSnapshot.getChildren()){
+                    System.out.println("valor: " + a.getKey());
+                    if(a.getKey() == "whites"){
+                        color = "blacks";
+                        color2 ="whites";
+                    }else{
+                        color = "whites";
+                        color2 = "blacks";
+                    }
+
+                }
+
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
     private void rating(){
         DocumentReference documentReference = fStore.collection("profile").document(userID);
@@ -188,10 +201,25 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-                ratingJoin1.setText(documentSnapshot.getString("username") + "   -   ");
+                ratingJoin1.setText(documentSnapshot.getString("username"));
                 long rating2 = documentSnapshot.getLong("rating");
                 String s = String.valueOf(rating2);
                 rating1.setText(s);
+                //}
+            }
+        });
+
+    }
+    private void rating2(){
+        DocumentReference documentReference = fStore.collection("profile").document(blacks);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+                ratingJoin2.setText(documentSnapshot.getString("username"));
+                long rating3 = documentSnapshot.getLong("rating");
+                String s = String.valueOf(rating3);
+                rating2.setText(s);
                 //}
             }
         });
