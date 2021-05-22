@@ -82,6 +82,10 @@ public class JoinActivity extends AppCompatActivity {
         //Referencias de views
         profileImageGame = findViewById(R.id.image_profile_game);
         profileImageGame2 = findViewById(R.id.image_profile_game2);
+        giveup2 = findViewById(R.id.giveUp2);
+        btnSpeak2 = findViewById(R.id.btnSpeak2);
+        addJogada2 = findViewById(R.id.addJogada2);
+        joinGame2 = findViewById(R.id.joinGame2);
         ratingJoin1 = findViewById(R.id.rating_join);
         ratingJoin2 = findViewById(R.id.rating_join2);
         rating1 = findViewById(R.id.rating_game);
@@ -135,16 +139,41 @@ public class JoinActivity extends AppCompatActivity {
         });
     }
     private void joinGame(String GameID){
-        joinGame2 = findViewById(R.id.joinGame2);
+
+        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference getid2 = ref2.child("game_waiting").child(gameID);
+        getid2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot a : dataSnapshot.getChildren()){
+                    System.out.println("valor: " + a.getKey());
+                    if(a.getKey().equals("whites")){
+                        color = "blacks";
+                        color2 ="whites";
+                    }
+                    if(a.getKey().equals("blacks")){
+                        color = "whites";
+                        color2 = "blacks";
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
         joinGame2.setOnClickListener(v -> {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference mDatabase = database.getInstance().getReference();
             mDatabase.child("game_waiting").child(gameID).child("state").setValue(0);
             mDatabase.child("game_waiting").child(gameID).child(color).setValue(userID);
             joinGame2.setVisibility(View.GONE);
+            addJogada2.setVisibility(View.VISIBLE);
+            btnSpeak2.setVisibility(View.VISIBLE);
+            giveup2.setVisibility(View.VISIBLE);
+
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-            DatabaseReference getid = ref.child("game_waiting").child(gameID).child(color);
+            DatabaseReference getid = ref.child("game_waiting").child(gameID).child(color2);
             getid.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -159,10 +188,10 @@ public class JoinActivity extends AppCompatActivity {
                     Toast.makeText(JoinActivity.this, "Jogo Encontrado!", Toast.LENGTH_SHORT).show();
                     mDatabase.child("games").child(gameID).child("state").setValue(0);
                     mDatabase.child("games").child(gameID).child("type").setValue(0);
-                    mDatabase.child("games").child(gameID).child(color).setValue(blacks);
-                    mDatabase.child("games").child(gameID).child(color2).setValue(userID);
+                    mDatabase.child("games").child(gameID).child(color2).setValue(blacks);
+                    mDatabase.child("games").child(gameID).child(color).setValue(userID);
 
-                    //rating2();
+                    rating2();
                     vs.setVisibility(View.VISIBLE);
                 }
                 @Override
@@ -171,29 +200,6 @@ public class JoinActivity extends AppCompatActivity {
             });
         });
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference getid = ref.child("game_waiting").child(gameID);
-        getid.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot a : dataSnapshot.getChildren()){
-                    System.out.println("valor: " + a.getKey());
-                    if(a.getKey() == "whites"){
-                        color = "blacks";
-                        color2 ="whites";
-                    }else{
-                        color = "whites";
-                        color2 = "blacks";
-                    }
-
-                }
-
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
     }
     private void rating(){
         DocumentReference documentReference = fStore.collection("profile").document(userID);
@@ -202,8 +208,8 @@ public class JoinActivity extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
                 ratingJoin1.setText(documentSnapshot.getString("username"));
-                long rating2 = documentSnapshot.getLong("rating");
-                String s = String.valueOf(rating2);
+                long rating3 = documentSnapshot.getLong("rating");
+                String s = String.valueOf(rating3);
                 rating1.setText(s);
                 //}
             }
@@ -233,7 +239,7 @@ public class JoinActivity extends AppCompatActivity {
         });
     }
     private void speak(){
-        btnSpeak2 = findViewById(R.id.btnSpeak2);
+
 
         btnSpeak2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,7 +258,7 @@ public class JoinActivity extends AppCompatActivity {
         });
     }
     private void giveUp() {
-            giveup2 = findViewById(R.id.giveUp2);
+
             giveup2.setOnClickListener(v -> {
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -264,7 +270,7 @@ public class JoinActivity extends AppCompatActivity {
             });
         }
     private String addPlay (String result){
-            addJogada2 = findViewById(R.id.addJogada2);
+
             String finalResult = result;
             addJogada2.setOnClickListener(v -> {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();

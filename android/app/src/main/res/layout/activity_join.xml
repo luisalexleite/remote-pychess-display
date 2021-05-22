@@ -47,59 +47,12 @@
 
     </LinearLayout>
 
-        <Button
-            android:id="@+id/joinGame2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/roundedbutton"
-            android:text="Join Jogo" />
-
-        <TextView
-            android:id="@+id/tvText2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
-            android:text=""
-            android:textSize="18sp"  />
-
-        <ImageButton
-            android:id="@+id/btnSpeak2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleX="3"
-
-            android:scaleY="3"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_settings"/>
-
-        <Button
-            android:id="@+id/addJogada2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/roundedbutton"
-            android:text="Adicionar jogada" />
-
-        <Button
-            android:id="@+id/giveUp2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="60dp"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/roundedbutton"
-            android:text="Desistir" />
-
         <LinearLayout
             android:id="@+id/layout_v2"
             android:layout_width="wrap_content"
             android:layout_height="180dp"
             android:visibility="gone"
+            android:layout_marginTop="40dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="horizontal">
@@ -119,23 +72,23 @@
 
 
 
-                    <TextView
-                        android:id="@+id/rating_join"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:gravity="center"
-                        android:text="Rating:"
-                  />
+                <TextView
+                    android:id="@+id/rating_join"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="Rating:"
+                    />
 
-                    <TextView
-                        android:id="@+id/rating_game"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:textSize="18sp"
-                        android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/rating_game"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -161,26 +114,78 @@
                     android:scaleType="centerCrop" />
 
 
-                    <TextView
-                        android:id="@+id/rating_join2"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textSize="18sp"
-                        android:text="@string/find_rating"
-                        />
+                <TextView
+                    android:id="@+id/rating_join2"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="@string/find_rating"
+                    />
 
-                    <TextView
-                        android:id="@+id/rating_game2"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/rating_game2"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/joinGame2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/roundedbutton"
+            android:text="Join Jogo" />
+
+        <TextView
+            android:id="@+id/tvText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:text=""
+            android:textSize="18sp"  />
+
+        <ImageButton
+            android:id="@+id/btnSpeak2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="3"
+            android:visibility="invisible"
+            android:scaleY="3"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_settings"/>
+
+        <Button
+            android:id="@+id/addJogada2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/roundedbutton"
+            android:text="Adicionar jogada" />
+
+        <Button
+            android:id="@+id/giveUp2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:layout_marginBottom="60dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/roundedbutton"
+            android:text="Desistir" />
+
+
     </LinearLayout>
 </RelativeLayout>

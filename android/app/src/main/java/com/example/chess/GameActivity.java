@@ -45,12 +45,12 @@ import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Random;
-
+import java.util.Random;
 public class GameActivity extends AppCompatActivity {
 
     //Inicialização de variáveis
     private static final int RESULT_SPEECH = 1;
-    String userID, randomString, gameID, blacks, color2="", color1="";
+    String userID, randomString, gameID, blacks, color2="";
     private int i = -1;
     int count = 0;
 
@@ -64,10 +64,10 @@ public class GameActivity extends AppCompatActivity {
 
     //Inicialização de views
     ImageButton btnSpeak;
-    TextView tvText, rating1, rating2, username1, username2;
+    TextView tvText, rating1, rating2, username1, username2, espera;
     Button createGame, addJogada, giveup;
     ImageView profileImageGame, profileImageGame2;
-    CheckBox cbwhite, cbblack;
+    CheckBox cbwhite, cbblack, cbrandom;
     LinearLayout vs;
 
     //Chess Stuff
@@ -99,12 +99,17 @@ public class GameActivity extends AppCompatActivity {
         //CheckBox
         cbwhite = findViewById(R.id.checkWhite);
         cbblack = findViewById(R.id.checkBlack);
+        cbrandom = findViewById(R.id.checkRandom);
 
+        btnSpeak = findViewById(R.id.btnSpeak);
+        addJogada = findViewById(R.id.addJogada);
         rating1 = findViewById(R.id.rating_game12);
         rating2 = findViewById(R.id.rating_game22);
         username1 = findViewById(R.id.rating_game11);
-        username2= findViewById(R.id.rating_game21);
+        username2 = findViewById(R.id.rating_game21);
+        espera = findViewById(R.id.espera);
         vs = findViewById(R.id.layout_vs1);
+        tvText = findViewById(R.id.tvText);
 
 
         randomString = randomString();
@@ -140,8 +145,15 @@ public class GameActivity extends AppCompatActivity {
                                 Picasso.get().load(uri).into(profileImageGame2);
 
                             });
-                            //rating2();
+                            rating2();
+
                             vs.setVisibility(View.VISIBLE);
+                            addJogada.setVisibility(View.VISIBLE);
+                            btnSpeak.setVisibility(View.VISIBLE);
+                            giveup.setVisibility(View.VISIBLE);
+                            espera.setVisibility(View.GONE);
+                            Toast.makeText(GameActivity.this, "Jogo Encontrado!", Toast.LENGTH_SHORT).show();
+
                         }
                         count++;
                     }
@@ -209,8 +221,8 @@ public class GameActivity extends AppCompatActivity {
     }
     private void speak(){
         // Voice recognition
-        tvText = findViewById(R.id.tvText);
-        btnSpeak = findViewById(R.id.btnSpeak);
+
+
         btnSpeak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,46 +248,57 @@ public class GameActivity extends AppCompatActivity {
             DatabaseReference mDatabase = database.getInstance().getReference();
 
             //Create Game
-            if(cbwhite.isChecked() && !cbblack.isChecked()){
+            if(cbwhite.isChecked() && !cbblack.isChecked() && !cbrandom.isChecked()){
                 mDatabase.child("game_waiting").child(randomString).child("whites").setValue(userID);
                 mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
                 Toast.makeText(GameActivity.this, "Jogo criado com sucesso!", Toast.LENGTH_SHORT).show();
-                createGame.setVisibility(View.GONE);
-                cbblack.setVisibility(View.GONE);
-                cbwhite.setVisibility(View.GONE);
-                btnSpeak.setVisibility(View.VISIBLE);
-                giveup.setVisibility(View.VISIBLE);
-                cbblack.setVisibility(View.INVISIBLE);
-                cbwhite.setVisibility(View.INVISIBLE);
                 color2 = "blacks";
-                color1 = "whites";
-
-
-
-
+                cbwhite.setVisibility(View.GONE);
+                cbblack.setVisibility(View.GONE);
+                cbrandom.setVisibility(View.GONE);
+                createGame.setVisibility(View.GONE);
+                espera.setVisibility(View.VISIBLE);
+                vs.setVisibility(View.VISIBLE);
             }
 
-            if(cbblack.isChecked() && !cbwhite.isChecked()){
+            if(cbblack.isChecked() && !cbwhite.isChecked() && !cbrandom.isChecked()){
                 mDatabase.child("game_waiting").child(randomString).child("blacks").setValue(userID);
                 mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
                 Toast.makeText(GameActivity.this, "Jogo criado com sucesso!", Toast.LENGTH_SHORT).show();
-                createGame.setVisibility(View.GONE);
-                cbblack.setVisibility(View.GONE);
-                cbwhite.setVisibility(View.GONE);
-                btnSpeak.setVisibility(View.VISIBLE);
-                giveup.setVisibility(View.VISIBLE);
-                cbblack.setVisibility(View.INVISIBLE);
-                cbwhite.setVisibility(View.INVISIBLE);
                 color2 = "whites";
-                color1 = "blacks";
+                cbwhite.setVisibility(View.GONE);
+                cbblack.setVisibility(View.GONE);
+                cbrandom.setVisibility(View.GONE);
+                createGame.setVisibility(View.GONE);
+                espera.setVisibility(View.VISIBLE);
+                vs.setVisibility(View.VISIBLE);
             }
-            if(cbblack.isChecked() && cbwhite.isChecked()){
+
+            if(!cbblack.isChecked() && !cbwhite.isChecked() && cbrandom.isChecked()){
+                Toast.makeText(GameActivity.this, "Jogo criado com sucesso!", Toast.LENGTH_SHORT).show();
+                Random cor = new Random();
+                int rnd = cor.nextInt(2);
+                if(rnd == 1){
+                    color2 = "whites";
+                    mDatabase.child("game_waiting").child(randomString).child("blacks").setValue(userID);
+                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
+                } else {
+                    color2 = "blacks";
+                    mDatabase.child("game_waiting").child(randomString).child("whites").setValue(userID);
+                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
+                }
+
+                cbwhite.setVisibility(View.GONE);
+                cbblack.setVisibility(View.GONE);
+                cbrandom.setVisibility(View.GONE);
+                createGame.setVisibility(View.GONE);
+                espera.setVisibility(View.VISIBLE);
+                vs.setVisibility(View.VISIBLE);
+            }
+            if(cbblack.isChecked() && cbwhite.isChecked() || !cbblack.isChecked() && !cbwhite.isChecked() || !cbblack.isChecked() && !cbrandom.isChecked() || cbblack.isChecked() && cbrandom.isChecked() || !cbwhite.isChecked() && !cbrandom.isChecked() || cbwhite.isChecked() && cbrandom.isChecked()){
                 Toast.makeText(GameActivity.this, "Escolhe só uma das opções", Toast.LENGTH_SHORT).show();
             }
 
-            if(!cbblack.isChecked() && !cbwhite.isChecked()){
-                Toast.makeText(GameActivity.this, "Escolhe uma das opções", Toast.LENGTH_SHORT).show();
-            }
         });
     }
     private void giveUp(){
@@ -291,7 +314,7 @@ public class GameActivity extends AppCompatActivity {
         });
     }
     private String addPlay(String result){
-        addJogada = findViewById(R.id.addJogada);
+
         String finalResult = result;
         addJogada.setOnClickListener(v -> {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
