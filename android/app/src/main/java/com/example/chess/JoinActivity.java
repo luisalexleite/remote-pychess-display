@@ -33,13 +33,20 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class JoinActivity extends AppCompatActivity {
 
     //Inicialização de variáveis
-    private int i = 0;
-    String userID, gameID = "", blacks, whites, color, color2;
+    int i = 0, moveCount, j = 0, state;
+    String userID;
+    String gameID = "";
+    String blacks;
+    String whites;
+    String color;
+    String color2;
+    View moves;
     private static final int RESULT_SPEECH = 1;
 
     //Base de dados
@@ -52,8 +59,8 @@ public class JoinActivity extends AppCompatActivity {
     //Views
     Button joinGame2, addJogada2, giveup2;
     ImageButton btnSpeak2;
-    TextView tvText2, rating1, rating2, ratingJoin1, ratingJoin2;
-    ImageView profileImageGame, profileImageGame2;
+    TextView tvText2, rating1, rating2, ratingJoin1, ratingJoin2, moves2, lista_jogos;
+    ImageView profileImageGame, profileImageGame2, cavaloBrancas1, cavaloBrancas2, cavaloPretas1, cavaloPretas2;
     LinearLayout vs;
 
     //Chess
@@ -92,18 +99,20 @@ public class JoinActivity extends AppCompatActivity {
         rating2 = findViewById(R.id.rating_game2);
         tvText2 = findViewById(R.id.tvText2);
         vs = findViewById(R.id.layout_v2);
+        moves2 = findViewById(R.id.movesText2);
+        cavaloBrancas1 = findViewById(R.id.cavalo_brancas);
+        cavaloBrancas2 = findViewById(R.id.cavalo_brancas2);
+        cavaloPretas1 = findViewById(R.id.cavalo_pretas);
+        cavaloPretas2 = findViewById(R.id.cavalo_pretas2);
+        lista_jogos = findViewById(R.id.lista_jogos);
 
         //Método ao clicar botão Voice recognition
         speak();
-
         //Método ao Clicar botão Desistir
         giveUp();
-
         //Metodo ao Clicar para trás
         back();
-
         rating();
-
         //Metodo para os listeners
         listener();
 
@@ -119,7 +128,13 @@ public class JoinActivity extends AppCompatActivity {
 
                 System.out.println(snapshot.getKey());
                 gameID = snapshot.getKey();
-                joinGame(gameID);
+
+                if(j == 0){
+                    joinGame(gameID);
+                    joinGame2.setVisibility(View.VISIBLE);
+                    movements();
+                    j++;
+                }
                 System.out.println(gameID);
             }
 
@@ -137,6 +152,54 @@ public class JoinActivity extends AppCompatActivity {
         profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
             Picasso.get().load(uri).into(profileImageGame);
         });
+
+    }
+    private void movements(){
+        reference = FirebaseDatabase.getInstance().getReference().child("movements").child(gameID);
+        reference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                moveCount = Integer.parseInt(snapshot.getKey());
+                System.out.println("move" + moveCount);
+
+                state = Integer.parseInt(snapshot.child("state").getValue().toString());
+                if (state == 2) {
+                    Toast.makeText(JoinActivity.this, "Jogada Inválida!", Toast.LENGTH_SHORT).show();
+                }
+                if (state == 1) {
+                    //WHITES
+                    moves2.append(moveCount + ". " + snapshot.child("move").getValue() + ", ");
+                    if (color2.equals("blacks") && moveCount % 2 == 0) {
+                        addJogada2.setVisibility(View.VISIBLE);
+                    }
+                    if (color2.equals("blacks") && moveCount % 2 != 0) {
+                        addJogada2.setVisibility(View.INVISIBLE);
+                    }
+
+                    //BLACKS
+                    if (color2.equals("whites") && moveCount % 2 != 0) {
+                        addJogada2.setVisibility(View.VISIBLE);
+                    }
+                    if (color2.equals("whites") && moveCount % 2 == 0) {
+                        addJogada2.setVisibility(View.INVISIBLE);
+                    }
+                }
+
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
     private void joinGame(String GameID){
 
@@ -147,11 +210,11 @@ public class JoinActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot a : dataSnapshot.getChildren()){
                     System.out.println("valor: " + a.getKey());
-                    if(a.getKey().equals("whites")){
+                    if(Objects.equals(a.getKey(), "whites")){
                         color = "blacks";
                         color2 ="whites";
                     }
-                    if(a.getKey().equals("blacks")){
+                    if(Objects.equals(a.getKey(), "blacks")){
                         color = "whites";
                         color2 = "blacks";
                     }
@@ -167,10 +230,20 @@ public class JoinActivity extends AppCompatActivity {
             mDatabase.child("game_waiting").child(gameID).child("state").setValue(0);
             mDatabase.child("game_waiting").child(gameID).child(color).setValue(userID);
             joinGame2.setVisibility(View.GONE);
-            addJogada2.setVisibility(View.VISIBLE);
             btnSpeak2.setVisibility(View.VISIBLE);
             giveup2.setVisibility(View.VISIBLE);
+            lista_jogos.setVisibility(View.GONE);
+            if(color2.equals("whites")){
+                addJogada2.setVisibility(View.INVISIBLE);
+                cavaloPretas1.setVisibility(View.VISIBLE);
+                cavaloBrancas2.setVisibility(View.VISIBLE);
+            }
 
+            if(color2.equals("blacks")){
+                addJogada2.setVisibility(View.VISIBLE);
+                cavaloBrancas1.setVisibility(View.VISIBLE);
+                cavaloPretas2.setVisibility(View.VISIBLE);
+            }
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
             DatabaseReference getid = ref.child("game_waiting").child(gameID).child(color2);
@@ -201,6 +274,44 @@ public class JoinActivity extends AppCompatActivity {
         });
 
     }
+    private String addPlay (String result){
+
+        String finalResult = result;
+        addJogada2.setOnClickListener(v -> {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference mDatabase = database.getInstance().getReference();
+
+            //Whites
+            if((color2.equals("blacks"))) {
+                if(i == 1){
+                    mDatabase.child("movements").child(gameID).child(String.valueOf(i + 1)).child("move").setValue(finalResult);
+                    mDatabase.child("movements").child(gameID).child(String.valueOf(i + 1)).child("state").setValue(0);
+                    addJogada2.setVisibility(View.INVISIBLE);
+                    i++;
+                } else {
+                    mDatabase.child("movements").child(gameID).child(String.valueOf(moveCount + 1)).child("move").setValue(finalResult);
+                    mDatabase.child("movements").child(gameID).child(String.valueOf(moveCount + 1)).child("state").setValue(0);
+                }
+
+            }
+            //Blacks
+            if ((color2.equals("whites"))) {
+                if(i == 1){
+                    addJogada2.setVisibility(View.INVISIBLE);
+                    i++;
+                } else {
+                    mDatabase.child("movements").child(gameID).child(String.valueOf(moveCount + 1)).child("move").setValue(finalResult);
+                    mDatabase.child("movements").child(gameID).child(String.valueOf(moveCount + 1)).child("state").setValue(0);
+                }
+
+            }
+
+
+        });
+        return result;
+    }
+
+    //Less trouble methods
     private void rating(){
         DocumentReference documentReference = fStore.collection("profile").document(userID);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
@@ -264,23 +375,20 @@ public class JoinActivity extends AppCompatActivity {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference mDatabase = database.getInstance().getReference();
 
-                mDatabase.child("games").child(gameID).child("method").setValue(7);
-                mDatabase.child("games").child(gameID).child("result").setValue(1);
-                mDatabase.child("games").child(gameID).child("state").setValue(2);
-            });
-        }
-    private String addPlay (String result){
+                //blacks
+                if(color2.equals("whites")){
+                    mDatabase.child("games").child(gameID).child("method").setValue(7);
+                    mDatabase.child("games").child(gameID).child("result").setValue(3);
+                    mDatabase.child("games").child(gameID).child("state").setValue(2);
+                }
 
-            String finalResult = result;
-            addJogada2.setOnClickListener(v -> {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference mDatabase = database.getInstance().getReference();
-                mDatabase.child("movements").child(gameID).child(String.valueOf(i = i + 2)).child("move").setValue(finalResult);
-                mDatabase.child("movements").child(gameID).child(String.valueOf(i)).child("state").setValue(0);
-
+                //whites
+                if(color2.equals("blacks")){
+                    mDatabase.child("games").child(gameID).child("method").setValue(7);
+                    mDatabase.child("games").child(gameID).child("result").setValue(1);
+                    mDatabase.child("games").child(gameID).child("state").setValue(2);
+                }
             });
-            result = "";
-            return result;
         }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

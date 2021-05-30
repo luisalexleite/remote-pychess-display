@@ -44,6 +44,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Random;
 public class GameActivity extends AppCompatActivity {
@@ -51,8 +52,8 @@ public class GameActivity extends AppCompatActivity {
     //Inicialização de variáveis
     private static final int RESULT_SPEECH = 1;
     String userID, randomString, gameID, blacks, color2="";
-    private int i = -1;
-    int count = 0;
+    int i = 0, j = 0, state;
+    int count = 0, moveCount;
 
     //Base de dados
     FirebaseAuth fAuth;
@@ -64,9 +65,9 @@ public class GameActivity extends AppCompatActivity {
 
     //Inicialização de views
     ImageButton btnSpeak;
-    TextView tvText, rating1, rating2, username1, username2, espera;
+    TextView tvText, rating1, rating2, username1, username2, espera, moves;
     Button createGame, addJogada, giveup;
-    ImageView profileImageGame, profileImageGame2;
+    ImageView profileImageGame, profileImageGame2, cavaloBrancas1, cavaloBrancas2, cavaloPretas1, cavaloPretas2;
     CheckBox cbwhite, cbblack, cbrandom;
     LinearLayout vs;
 
@@ -110,12 +111,17 @@ public class GameActivity extends AppCompatActivity {
         espera = findViewById(R.id.espera);
         vs = findViewById(R.id.layout_vs1);
         tvText = findViewById(R.id.tvText);
-
+        moves = findViewById(R.id.movesText);
+        cavaloBrancas1 = findViewById(R.id.cavalo_brancas);
+        cavaloBrancas2 = findViewById(R.id.cavalo_brancas2);
+        cavaloPretas1 = findViewById(R.id.cavalo_pretas);
+        cavaloPretas2 = findViewById(R.id.cavalo_pretas2);
 
         randomString = randomString();
         createGame();
         listener();
         speak();
+        movements();
         giveUp();
         back();
         rating();
@@ -132,29 +138,40 @@ public class GameActivity extends AppCompatActivity {
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 System.out.println(snapshot.getKey());
                 gameID = snapshot.getKey();
+                j = 1;
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference getid = ref.child("game_waiting").child(randomString).child(color2);;
                 getid.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         blacks = dataSnapshot.getValue(String.class);
-                        System.out.println("joinActivity: "+ blacks);
+                        System.out.println("GameActivity: "+ blacks);
                         if(count == 2) {
                             StorageReference profileRef = fStorage.child(blacks + ".jpg");
                             profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
                                 Picasso.get().load(uri).into(profileImageGame2);
 
                             });
+
+                            if(color2.equals("whites")){
+                                cavaloPretas1.setVisibility(View.VISIBLE);
+                                cavaloBrancas2.setVisibility(View.VISIBLE);
+                            }
+                            if(color2.equals("blacks")){
+                                cavaloBrancas1.setVisibility(View.VISIBLE);
+                                cavaloPretas2.setVisibility(View.VISIBLE);
+                            }
                             rating2();
+                        }
 
                             vs.setVisibility(View.VISIBLE);
-                            addJogada.setVisibility(View.VISIBLE);
+
                             btnSpeak.setVisibility(View.VISIBLE);
                             giveup.setVisibility(View.VISIBLE);
                             espera.setVisibility(View.GONE);
                             Toast.makeText(GameActivity.this, "Jogo Encontrado!", Toast.LENGTH_SHORT).show();
 
-                        }
+
                         count++;
                     }
 
@@ -180,6 +197,7 @@ public class GameActivity extends AppCompatActivity {
             Picasso.get().load(uri).into(profileImageGame);
 
         });
+
     }
 
     private void rating(){
@@ -259,6 +277,7 @@ public class GameActivity extends AppCompatActivity {
                 createGame.setVisibility(View.GONE);
                 espera.setVisibility(View.VISIBLE);
                 vs.setVisibility(View.VISIBLE);
+                addJogada.setVisibility(View.VISIBLE);
             }
 
             if(cbblack.isChecked() && !cbwhite.isChecked() && !cbrandom.isChecked()){
@@ -272,6 +291,7 @@ public class GameActivity extends AppCompatActivity {
                 createGame.setVisibility(View.GONE);
                 espera.setVisibility(View.VISIBLE);
                 vs.setVisibility(View.VISIBLE);
+                addJogada.setVisibility(View.GONE);
             }
 
             if(!cbblack.isChecked() && !cbwhite.isChecked() && cbrandom.isChecked()){
@@ -282,10 +302,12 @@ public class GameActivity extends AppCompatActivity {
                     color2 = "whites";
                     mDatabase.child("game_waiting").child(randomString).child("blacks").setValue(userID);
                     mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
+                    addJogada.setVisibility(View.GONE);
                 } else {
                     color2 = "blacks";
                     mDatabase.child("game_waiting").child(randomString).child("whites").setValue(userID);
                     mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
+                    addJogada.setVisibility(View.VISIBLE);
                 }
 
                 cbwhite.setVisibility(View.GONE);
@@ -296,8 +318,13 @@ public class GameActivity extends AppCompatActivity {
                 vs.setVisibility(View.VISIBLE);
             }
             if(cbblack.isChecked() && cbwhite.isChecked() || !cbblack.isChecked() && !cbwhite.isChecked() || !cbblack.isChecked() && !cbrandom.isChecked() || cbblack.isChecked() && cbrandom.isChecked() || !cbwhite.isChecked() && !cbrandom.isChecked() || cbwhite.isChecked() && cbrandom.isChecked()){
-                Toast.makeText(GameActivity.this, "Escolhe só uma das opções", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GameActivity.this, "Só podes escolher uma das opções", Toast.LENGTH_SHORT).show();
             }
+
+            if(!cbblack.isChecked() && !cbwhite.isChecked() && !cbrandom.isChecked()){
+                Toast.makeText(GameActivity.this, "Escolhe uma das opções!", Toast.LENGTH_SHORT).show();
+            }
+
 
         });
     }
@@ -308,22 +335,102 @@ public class GameActivity extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference mDatabase = database.getInstance().getReference();
 
-            mDatabase.child("games").child(randomString).child("method").setValue(7);
-            mDatabase.child("games").child(randomString).child("result").setValue(1);
-            mDatabase.child("games").child(randomString).child("state").setValue(2);
+            //blacks
+            if(color2.equals("whites")){
+                mDatabase.child("games").child(randomString).child("method").setValue(7);
+                mDatabase.child("games").child(randomString).child("result").setValue(3);
+                mDatabase.child("games").child(randomString).child("state").setValue(2);
+            }
+
+            //whites
+            if(color2.equals("blacks")){
+                mDatabase.child("games").child(randomString).child("method").setValue(7);
+                mDatabase.child("games").child(randomString).child("result").setValue(1);
+                mDatabase.child("games").child(randomString).child("state").setValue(2);
+            }
+
+        });
+    }
+    private void movements(){
+        reference = FirebaseDatabase.getInstance().getReference().child("movements").child(randomString);
+        reference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+
+
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                moveCount = Integer.parseInt(snapshot.getKey());
+                System.out.println("move" + moveCount);
+
+                state = Integer.parseInt(snapshot.child("state").getValue().toString());
+                if (state == 2) {
+                    Toast.makeText(GameActivity.this, "Jogada Inválida!", Toast.LENGTH_SHORT).show();
+                }
+                if (state == 1) {
+                    //WHITES
+                    moves.append(moveCount + ". " + snapshot.child("move").getValue() + ", ");
+                    if (color2.equals("blacks") && moveCount % 2 == 0) {
+                        addJogada.setVisibility(View.VISIBLE);
+                    }
+                    if (color2.equals("blacks") && moveCount % 2 != 0) {
+                        addJogada.setVisibility(View.INVISIBLE);
+                    }
+
+                    //BLACKS
+                    if (color2.equals("whites") && moveCount % 2 != 0) {
+                        addJogada.setVisibility(View.VISIBLE);
+                    }
+                    if (color2.equals("whites") && moveCount % 2 == 0) {
+                        addJogada.setVisibility(View.INVISIBLE);
+                    }
+                }
+
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
     }
     private String addPlay(String result){
 
         String finalResult = result;
+
+
         addJogada.setOnClickListener(v -> {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference mDatabase = database.getInstance().getReference();
-            mDatabase.child("movements").child(randomString).child(String.valueOf(i = i + 2)).child("move").setValue(finalResult);
-            mDatabase.child("movements").child(randomString).child(String.valueOf(i)).child("state").setValue(0);
 
+            //Whites
+
+            if ((color2.equals("blacks"))) {
+                if(i == 1){
+                    mDatabase.child("movements").child(randomString).child(String.valueOf(i + 1)).child("move").setValue(finalResult);
+                    mDatabase.child("movements").child(randomString).child(String.valueOf(i + 1)).child("state").setValue(0);
+                    addJogada.setVisibility(View.INVISIBLE);
+                    i++;
+                } else {
+                    mDatabase.child("movements").child(randomString).child(String.valueOf(moveCount + 1)).child("move").setValue(finalResult);
+                    mDatabase.child("movements").child(randomString).child(String.valueOf(moveCount + 1)).child("state").setValue(0);
+                }
+            }
+
+                //Blacks
+            if((color2.equals("whites"))) {
+                mDatabase.child("movements").child(randomString).child(String.valueOf(moveCount + 1)).child("move").setValue(finalResult);
+                mDatabase.child("movements").child(randomString).child(String.valueOf(moveCount + 1)).child("state").setValue(0);
+
+            }
         });
-        result = "";
         return result;
     }
     private String randomString(){
@@ -383,7 +490,10 @@ public class GameActivity extends AppCompatActivity {
                         result = result.replace("rock K", "O-O");
                     } if (result.contains("para")) {
                         result = result.replace("para", "");
+                    } if (result.contains("hi5")) {
+                        result = result.replace("hi5", "h5");
                     }
+
 
                     result = result.replaceAll("\\s+","");
                     tvText.setText(text.get(0)  + " -> " + result);
