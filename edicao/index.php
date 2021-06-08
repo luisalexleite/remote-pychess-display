@@ -8,7 +8,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
-
+<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-firestore.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Aleo&display=swap');
@@ -26,6 +26,11 @@ body {
      background-color: #2d2f30;
      font-family: "Aleo";
 }
+.img {
+     height: 250px;
+     width: 250px;
+}
+
 .jogadores{
      text-align: center;
      display: none;
@@ -148,6 +153,7 @@ body {
           <div class="card-panel">
                <span class="white-text"><h4 style="text-align:left"><span style="font-size:30px" class="material-icons">info</span> <span id="title">Defesa Siciliana</span></h4>
                <p id="peqtext" style="text-align:left">A defesa siciliana é uma das principais respostas para e4. As pretas assumem o controle da quadrado d4 com um peão lateral, assim ele desequilibra a posição e evita dar às brancas um alvo central.</span></p>
+          <button type="button" id="gravar"> Carrega-me</button>
           </div>
      </div>
 </div>
@@ -159,19 +165,19 @@ body {
     <br>
     <div class="container">
         <div class="row">
-            <div class="col s4" style="" id="brancas"><h5 style="color:white; text-align:left;">Nome</h5></div>
+            <div class="col s4" style=""><h5 style="color:white; text-align:left;" id="brancas">Nome</h5></div>
             <div class="col s4"></div>
-            <div class="col s4" style="" id="pretas"><h5 style="color:white; text-align:left;">Nome</h5></div>
+            <div class="col s4" style=""><h5 style="color:white; text-align:left;" id="pretas">Nome</h5></div>
         </div>
         <div class="row">
-            <div class="col s4 whites"></div>
-            <div class="col s4 blacks" style="margin-top:75px"><h1 style="color:white">VS.</h1></div>
-            <div class="col s4"></div>
+            <div class="col s4 whites "> <img class="img" id="imgbrancas"></img></div>
+            <div class="col s4" style="margin-top:75px"><h1 style="color:white">VS.</h1></div>
+            <div class="col s4 blacks "> <img class="img" id="imgpretas"></img></div>
         </div>
         <div class="row">
-            <div class="col s4" style=""><h5 style="color:white; text-align:left;">Elo: Ind.</h5></div>
+            <div class="col s4" style=""><h5 style="color:white; text-align:left;" id="ratingbrancas">Elo: Ind.</h5></div>
             <div class="col s4"></div>
-            <div class="col s4" style=""><h5 style="color:white; text-align:left;">Elo: Ind.</h5></div>
+            <div class="col s4" style=""><h5 style="color:white; text-align:left;" id="ratingpretas">Elo: Ind.</h5></div>
         </div>
         <div class="row">
             <div class="col s4"><img src="imgs/Whites.png" style="heigth: 100px; width:250px;"></img></div>
@@ -179,8 +185,8 @@ body {
             <div class="col s4"><img src="imgs/Blacks.png" style="heigth: 100px; width:250px;"></img></div>
         </div>
         <div class="row">
-            <div class="col s12"><h3 style="color:white"> Tipo de Jogo </h3></div>
-            <div class="col s12"><h5 style="color:white"> Timer </h5></div>
+            <div class="col s12"><h3 style="color:white" id="tipojogo"> Tipo de Jogo </h3></div>
+            <div class="col s12"><h5 style="color:white" id="timer"> Timer </h5></div>
     </div>
 </div>
 <script src="hints.js"></script>
