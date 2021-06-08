@@ -153,7 +153,6 @@ body {
           <div class="card-panel">
                <span class="white-text"><h4 style="text-align:left"><span style="font-size:30px" class="material-icons">info</span> <span id="title">Defesa Siciliana</span></h4>
                <p id="peqtext" style="text-align:left">A defesa siciliana é uma das principais respostas para e4. As pretas assumem o controle da quadrado d4 com um peão lateral, assim ele desequilibra a posição e evita dar às brancas um alvo central.</span></p>
-          <button type="button" id="gravar"> Carrega-me</button>
           </div>
      </div>
 </div>
@@ -192,4 +191,3 @@ body {
 <script src="hints.js"></script>
 <script src="hintsexec.js"></script>
 <script src="app.js"></script>
-
