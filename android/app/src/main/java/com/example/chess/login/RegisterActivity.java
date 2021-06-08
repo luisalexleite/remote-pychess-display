@@ -1,5 +1,6 @@
 package com.example.chess.login;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,9 +14,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.chess.R;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +39,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText emailText;
     EditText usernameText;
     ImageView image_profile;
+    private Uri imageUri;
+    private String imageLink = "";
     Button btn;
     private FirebaseAuth mAuth;
     FirebaseFirestore fStore;
@@ -106,6 +112,17 @@ public class RegisterActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(RegisterActivity.this, R.string.acc_create, Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
+                            user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(RegisterActivity.this, "O Email de Verificação foi enviado!", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
                             userID = mAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = fStore.collection("profile").document(userID);
                             Map<String, Object> profile = new HashMap<>();

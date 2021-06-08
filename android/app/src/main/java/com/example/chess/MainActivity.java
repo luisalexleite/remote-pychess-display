@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //get userID
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        assert user != null;
         final String userID = user.getUid();
 
 

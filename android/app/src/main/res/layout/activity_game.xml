@@ -16,6 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
             android:orientation="horizontal" >
 
             <ImageButton
@@ -185,21 +186,20 @@
         </LinearLayout>
 
 
-        <LinearLayout
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:orientation="horizontal">
-
-            <CheckBox
+            <RadioButton
                 android:id="@+id/checkBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Blacks" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/checkWhite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -207,16 +207,15 @@
                 android:textColor="@color/white"
                 android:text="Whites"  />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/checkRandom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:textColor="@color/white"
                 android:text="Random" />
+        </RadioGroup>
 
-
-        </LinearLayout>
 
         <Button
             android:id="@+id/createGame"
@@ -224,7 +223,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:background="@drawable/roundedbutton"
+            android:padding="10dp"
+            android:background="@drawable/roundedbutton2"
             android:text="Começar Jogo" />
         <TextView
             android:id="@+id/tvText"
@@ -265,7 +265,9 @@
             android:layout_gravity="center"
             android:visibility="invisible"
             android:layout_marginTop="40dp"
-            android:background="@drawable/roundedbutton"
+            android:background="@drawable/roundedbutton2"
+
+            android:padding="10dp"
             android:text="Adicionar jogada" />
 
         <Button
@@ -276,7 +278,8 @@
             android:visibility="gone"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="40dp"
-            android:background="@drawable/roundedbutton"
+            android:background="@drawable/roundedbutton2"
+            android:padding="10dp"
             android:text="Desistir" />
 
         <TextView
@@ -291,6 +294,40 @@
             android:layout_marginBottom="40dp"
             android:text=""
             android:textSize="18sp"  />
+
+        <TextView
+            android:id="@+id/win"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textSize="18sp"  />
+        <TextView
+            android:id="@+id/lost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textSize="18sp"  />
+
+        <Button
+            android:id="@+id/leave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/roundedbutton2"
+            android:padding="10dp"
+            android:text="Sair" />
+
+
 
     </LinearLayout>
 
