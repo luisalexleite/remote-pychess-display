@@ -39,10 +39,10 @@
                 android:layout_gravity="center"
                 android:paddingTop="6dp"
                 android:layout_marginLeft="-50dp"
-                android:text="@string/Jogo"
+                android:text="@string/game"
                 android:padding="4dp"
                 android:textAlignment="center"
-                android:textColor="#de6262"
+                android:textColor="@color/colorAccent"
                 android:textSize="30sp" />
 
 
@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:padding="5dp"
-                    android:text="Rating:"
+                    android:text="@string/rating2"
                     />
 
                 <TextView
@@ -120,7 +120,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="VS"
+                android:text="@string/vs"
                 android:layout_marginTop="10dp"
                 android:padding="30dp"
                 android:textSize="40sp" />
@@ -197,23 +197,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Blacks" />
+                android:textColor="@color/textColor"
+                android:text="@string/blacks" />
 
             <RadioButton
                 android:id="@+id/checkWhite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:textColor="@color/white"
-                android:text="Whites"  />
+                android:textColor="@color/textColor"
+                android:text="@string/whites"  />
 
             <RadioButton
                 android:id="@+id/checkRandom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:textColor="@color/white"
-                android:text="Random" />
+                android:textColor="@color/textColor"
+                android:text="@string/random" />
         </RadioGroup>
 
 
@@ -225,7 +226,7 @@
             android:layout_marginTop="30dp"
             android:padding="10dp"
             android:background="@drawable/roundedbutton2"
-            android:text="Começar Jogo" />
+            android:text="@string/come_ar_jogo" />
         <TextView
             android:id="@+id/tvText"
             android:layout_width="wrap_content"
@@ -244,8 +245,7 @@
             android:layout_marginTop="20dp"
             android:visibility="gone"
             android:layout_marginBottom="40dp"
-            android:text="À espera de um adversário..."
-            android:textColor="@color/white"
+            android:text="@string/waiting"
             android:textSize="24sp"  />
 
         <ImageButton
@@ -268,7 +268,7 @@
             android:background="@drawable/roundedbutton2"
 
             android:padding="10dp"
-            android:text="Adicionar jogada" />
+            android:text="@string/addplay" />
 
         <Button
             android:id="@+id/giveUp"
@@ -280,7 +280,7 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/roundedbutton2"
             android:padding="10dp"
-            android:text="Desistir" />
+            android:text="@string/giveup" />
 
         <TextView
             android:id="@+id/movesText"
@@ -325,7 +325,7 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/roundedbutton2"
             android:padding="10dp"
-            android:text="Sair" />
+            android:text="@string/leave" />
 
 
 

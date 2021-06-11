@@ -1,85 +1,58 @@
 package com.example.chess;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.speech.RecognizerIntent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.chess.login.LoginActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Random;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class GameActivity extends AppCompatActivity {
-
-    //Inicialização de variáveis
+    //Initialization
     private static final int RESULT_SPEECH = 1;
-    String userID, randomString, gameID, blacks, color2="", ratingFinal, ratingIni;
-    int i = 0, j = 0, h = 0, m = 0, m2 = 0, state;
-    int count = 0, moveCount;
+    private String userID, randomString, gameID, blacks, color2="", ratingFinal, ratingIni;
+    private int i = 0, h = 0, m = 0, m2 = 0, state, moveCount;
 
-    //Base de dados
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
-    StorageReference fStorage;
-    FirebaseDatabase database;
-    DatabaseReference reference;
+    //FireBase
+    private FirebaseFirestore fStore;
+    private StorageReference fStorage;
+    private DatabaseReference reference;
 
-
-    //Inicialização de views
-    ImageButton btnSpeak;
-    TextView tvText, rating1, rating2, username1, username2, espera, moves, lost, win;
-    Button createGame, addJogada, giveup, leave;
-    ImageView profileImageGame, profileImageGame2, cavaloBrancas1, cavaloBrancas2, cavaloPretas1, cavaloPretas2;
-    RadioButton cbwhite, cbblack, cbrandom;
-    LinearLayout vs;
+    //Initialization Views
+    private ImageButton btnSpeak;
+    private TextView tvText, rating1, rating2, username1, username2, espera, moves, lost, win;
+    private Button createGame, addJogada, giveup, leave;
+    private ImageView profileImageGame, profileImageGame2, cavaloBrancas1, cavaloBrancas2, cavaloPretas1, cavaloPretas2;
+    private RadioButton cbwhite, cbblack, cbrandom;
+    private LinearLayout vs;
 
     //Chess Stuff
-    String[] pieces = {"K", "N", "Q", "R", "B", "O-O", "O-O-O"
+    private final String[] pieces = {"K", "N", "Q", "R", "B", "O-O", "O-O-O"
                     , "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8"
                     , "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"
                     , "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"
@@ -94,21 +67,22 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        //FireBase
-        fAuth = FirebaseAuth.getInstance();
+        //Base de dados
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         fStorage = FirebaseStorage.getInstance().getReference();
-        userID = fAuth.getCurrentUser().getUid();
+        userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
 
-        //Imagens
+        //Images
         profileImageGame = findViewById(R.id.image_profile_game);
         profileImageGame2 = findViewById(R.id.image_profile_game2);
 
-        //CheckBox
+        //Switch
         cbwhite = findViewById(R.id.checkWhite);
         cbblack = findViewById(R.id.checkBlack);
         cbrandom = findViewById(R.id.checkRandom);
 
+        //Views
         btnSpeak = findViewById(R.id.btnSpeak);
         addJogada = findViewById(R.id.addJogada);
         rating1 = findViewById(R.id.rating_game12);
@@ -137,12 +111,9 @@ public class GameActivity extends AppCompatActivity {
         rating();
         endGame();
         leave();
-
-
     }
-
     private void listener(){
-        reference = database.getInstance().getReference().child("game_waiting");
+        reference = FirebaseDatabase.getInstance().getReference().child("game_waiting");
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -151,21 +122,17 @@ public class GameActivity extends AppCompatActivity {
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 System.out.println(snapshot.getKey());
                 gameID = snapshot.getKey();
-                j = 1;
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference getid = ref.child("game_waiting").child(randomString).child(color2);;
+                DatabaseReference getid = ref.child("game_waiting").child(randomString).child(color2);
                 getid.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         blacks = dataSnapshot.getValue(String.class);
 
                         if(blacks != null){
                             System.out.println("GameActivity: "+ blacks);
                             StorageReference profileRef = fStorage.child(blacks + ".jpg");
-                            profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                                Picasso.get().load(uri).into(profileImageGame2);
-                            });
-
+                            profileRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profileImageGame2));
                             if(color2.equals("whites")){
                                 cavaloPretas1.setVisibility(View.VISIBLE);
                                 cavaloBrancas2.setVisibility(View.VISIBLE);
@@ -175,11 +142,8 @@ public class GameActivity extends AppCompatActivity {
                                 cavaloPretas2.setVisibility(View.VISIBLE);
                                 addJogada.setVisibility(View.VISIBLE);
                             }
-
                             rating2();
-
                             vs.setVisibility(View.VISIBLE);
-
                             btnSpeak.setVisibility(View.VISIBLE);
                             giveup.setVisibility(View.VISIBLE);
                             espera.setVisibility(View.GONE);
@@ -187,60 +151,49 @@ public class GameActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
             }
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-            }
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) { }
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
 
 
         StorageReference profileRef = fStorage.child(userID + ".jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-            Picasso.get().load(uri).into(profileImageGame);
-
-        });
+        profileRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profileImageGame));
 
     }
-
     private void rating(){
         DocumentReference documentReference = fStore.collection("profile").document(userID);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+        documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
 
-                username1.setText(documentSnapshot.getString("username"));
-                long rating3 = documentSnapshot.getLong("rating");
-                ratingIni = String.valueOf(rating3);
-                rating1.setText(ratingIni);
-                if (h == 0){
-                    ratingFinal = ratingIni;
-                    h++;
-                }
+            assert documentSnapshot != null;
+            username1.setText(documentSnapshot.getString("username"));
+            long rating3 = documentSnapshot.getLong("rating");
+            ratingIni = String.valueOf(rating3);
+            rating1.setText(ratingIni);
+            if (h == 0){
+                ratingFinal = ratingIni;
+                h++;
             }
         });
 
     }
     private void rating2(){
         DocumentReference documentReference = fStore.collection("profile").document(blacks);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+        documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
 
-                username2.setText(documentSnapshot.getString("username"));
-                long rating3 = documentSnapshot.getLong("rating");
-                String s = String.valueOf(rating3);
-                rating2.setText(s);
-                //}
-            }
+            assert documentSnapshot != null;
+            username2.setText(documentSnapshot.getString("username"));
+            long rating3 = documentSnapshot.getLong("rating");
+            String s = String.valueOf(rating3);
+            rating2.setText(s);
+            //}
         });
 
     }
@@ -257,19 +210,16 @@ public class GameActivity extends AppCompatActivity {
         // Voice recognition
 
 
-        btnSpeak.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-pt");
-                try {
-                    startActivityForResult(intent, RESULT_SPEECH);
-                    tvText.setText("");
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(getApplicationContext(), "Your device dont support this", Toast.LENGTH_SHORT);
-                    e.printStackTrace();
-                }
+        btnSpeak.setOnClickListener(v -> {
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-pt");
+            try {
+                startActivityForResult(intent, RESULT_SPEECH);
+                tvText.setText("");
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getApplicationContext(), R.string.NotSuport, Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
             }
         });
     }
@@ -278,14 +228,13 @@ public class GameActivity extends AppCompatActivity {
 
         createGame = findViewById(R.id.createGame);
         createGame.setOnClickListener(v -> {
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference mDatabase = database.getInstance().getReference();
+            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
             //Create Game
             if(cbwhite.isChecked()){
                 mDatabase.child("game_waiting").child(randomString).child("whites").setValue(userID);
                 mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
-                Toast.makeText(GameActivity.this, "Jogo criado com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GameActivity.this, R.string.GameCreated, Toast.LENGTH_SHORT).show();
                 color2 = "blacks";
                 cbwhite.setVisibility(View.GONE);
                 cbblack.setVisibility(View.GONE);
@@ -299,7 +248,7 @@ public class GameActivity extends AppCompatActivity {
             if(cbblack.isChecked()){
                 mDatabase.child("game_waiting").child(randomString).child("blacks").setValue(userID);
                 mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
-                Toast.makeText(GameActivity.this, "Jogo criado com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GameActivity.this, R.string.GameCreated, Toast.LENGTH_SHORT).show();
                 color2 = "whites";
                 cbwhite.setVisibility(View.GONE);
                 cbblack.setVisibility(View.GONE);
@@ -311,21 +260,18 @@ public class GameActivity extends AppCompatActivity {
             }
 
             if(cbrandom.isChecked()){
-                Toast.makeText(GameActivity.this, "Jogo criado com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GameActivity.this, R.string.GameCreated, Toast.LENGTH_SHORT).show();
                 Random cor = new Random();
                 int rnd = cor.nextInt(2);
                 if(rnd == 1){
                     color2 = "whites";
                     mDatabase.child("game_waiting").child(randomString).child("blacks").setValue(userID);
-                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
-                    addJogada.setVisibility(View.GONE);
                 } else {
                     color2 = "blacks";
                     mDatabase.child("game_waiting").child(randomString).child("whites").setValue(userID);
-                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
-                    addJogada.setVisibility(View.GONE);
                 }
-
+                mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
+                addJogada.setVisibility(View.GONE);
                 cbwhite.setVisibility(View.GONE);
                 cbblack.setVisibility(View.GONE);
                 cbrandom.setVisibility(View.GONE);
@@ -341,8 +287,7 @@ public class GameActivity extends AppCompatActivity {
         giveup = findViewById(R.id.giveUp);
         giveup.setOnClickListener(v -> {
 
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference mDatabase = database.getInstance().getReference();
+            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
             //blacks
@@ -363,181 +308,96 @@ public class GameActivity extends AppCompatActivity {
         });
     }
     private void leave(){
-
         leave.setOnClickListener(v -> {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
-
     }
     private void endGame() {
         DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference().child("games").child(randomString);
         reference1.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String prevChildKey) {
                 if (!color2.equals("") && dataSnapshot.getValue() != null) {
 
                     if (color2.equals("blacks")) {
                         if (dataSnapshot.getValue().toString().equals("3")) {
-                            win.setText("Perdeste");
-                            vs.setVisibility(View.GONE);
-                            addJogada.setVisibility(View.GONE);
-                            btnSpeak.setVisibility(View.GONE);
-                            giveup.setVisibility(View.GONE);
-                            tvText.setVisibility(View.GONE);
-                            moves.setVisibility(View.GONE);
-                            leave.setVisibility(View.VISIBLE);
-
-                            try {
-                                TimeUnit.SECONDS.sleep(2);
-                            } catch (InterruptedException interruptedException) {
-                                interruptedException.printStackTrace();
-                            }
-
-                            DocumentReference docRef= fStore.collection("profile").document(userID);
-                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    String ratingFim = task.getResult().getLong("rating").toString();
-                                    System.out.println(ratingFim);
-                                    lost.setText("Rating desceu de " + ratingFinal+ " --> " + ratingFim);
-                                }
-                            });
-
-
-                            mDatabase.child("game_waiting").child(gameID).removeValue();
-                            //mDatabase.child("games").child(gameID).removeValue();
-
+                            endGameRating(getString(R.string.rating_down), getString(R.string.lost));
                         }
                         if (dataSnapshot.getValue().toString().equals("1")) {
-                            win.setText("Ganhaste");
-                            vs.setVisibility(View.GONE);
-                            addJogada.setVisibility(View.GONE);
-                            btnSpeak.setVisibility(View.GONE);
-                            giveup.setVisibility(View.GONE);
-                            tvText.setVisibility(View.GONE);
-                            moves.setVisibility(View.GONE);
-                            leave.setVisibility(View.VISIBLE);
-
-                            try {
-                                TimeUnit.SECONDS.sleep(2);
-                            } catch (InterruptedException interruptedException) {
-                                interruptedException.printStackTrace();
-                            }
-                            DocumentReference docRef= fStore.collection("profile").document(userID);
-                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    String ratingFim = task.getResult().getLong("rating").toString();
-                                    System.out.println(ratingFim);
-                                    lost.setText("Rating subiu de " + ratingFinal+ " --> " + ratingFim);
-                                }
-                            });
-                            mDatabase.child("game_waiting").child(gameID).removeValue();
-                            //mDatabase.child("games").child(gameID).removeValue();
+                            endGameRating(getString(R.string.rating_up), getString(R.string.won));
                         }
-
                     }
-
-
                     if (color2.equals("whites")) {
                         if (dataSnapshot.getValue().toString().equals("1")) {
-                            win.setText("Perdeste");
-                            vs.setVisibility(View.GONE);
-                            addJogada.setVisibility(View.GONE);
-                            btnSpeak.setVisibility(View.GONE);
-                            giveup.setVisibility(View.GONE);
-                            tvText.setVisibility(View.GONE);
-                            moves.setVisibility(View.GONE);
-                            leave.setVisibility(View.VISIBLE);
-
-                            try {
-                                TimeUnit.SECONDS.sleep(2);
-                            } catch (InterruptedException interruptedException) {
-                                interruptedException.printStackTrace();
-                            }
-                            DocumentReference docRef= fStore.collection("profile").document(userID);
-                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    String ratingFim = task.getResult().getLong("rating").toString();
-                                    System.out.println(ratingFim);
-                                    lost.setText("Rating desceu de " + ratingFinal+ " --> " + ratingFim);
-                                }
-                            });
-
-                            mDatabase.child("game_waiting").child(gameID).removeValue();
-                            //mDatabase.child("games").child(gameID).removeValue();
+                            endGameRating(getString(R.string.rating_down), getString(R.string.lost));
 
                         }
                         if (dataSnapshot.getValue().toString().equals("3")) {
-                            win.setText("Ganhaste");
-                            vs.setVisibility(View.GONE);
-                            addJogada.setVisibility(View.GONE);
-                            btnSpeak.setVisibility(View.GONE);
-                            giveup.setVisibility(View.GONE);
-                            tvText.setVisibility(View.GONE);
-                            moves.setVisibility(View.GONE);
-                            leave.setVisibility(View.VISIBLE);
-
-                            try {
-                                TimeUnit.SECONDS.sleep(2);
-                            } catch (InterruptedException interruptedException) {
-                                interruptedException.printStackTrace();
-                            }
-                            DocumentReference docRef= fStore.collection("profile").document(userID);
-                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    String ratingFim = task.getResult().getLong("rating").toString();
-                                    System.out.println(ratingFim);
-                                    lost.setText("Rating subiu de " + ratingFinal+ " --> " + ratingFim);
-                                }
-                            });
-                            mDatabase.child("game_waiting").child(gameID).removeValue();
-                            //mDatabase.child("games").child(gameID).removeValue();
+                            endGameRating(getString(R.string.rating_up), getString(R.string.won));
                         }
                     }
                 }
             }
-
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-
-            }
-
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String prevChildKey) {}
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String prevChildKey) {}
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
+    }
+    private void endGameRating(String rating, String won) {
+        win.setText(won);
+        vs.setVisibility(View.GONE);
+        addJogada.setVisibility(View.GONE);
+        btnSpeak.setVisibility(View.GONE);
+        giveup.setVisibility(View.GONE);
+        tvText.setVisibility(View.GONE);
+        moves.setVisibility(View.GONE);
+        leave.setVisibility(View.VISIBLE);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
+        }
+        DocumentReference docRef= fStore.collection("profile").document(userID);
+        docRef.get().addOnCompleteListener(task -> {
+            String ratingFim = task.getResult().getLong("rating").toString();
+            System.out.println(ratingFim);
+            lost.setText(String.format("%s%s --> %s", rating, ratingFinal, ratingFim));
+        });
+        mDatabase.child("game_waiting").child(gameID).removeValue();
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
+        }
+
+        docRef.get().addOnCompleteListener(task -> {
+            String ratingFim = task.getResult().getLong("rating").toString();
+            System.out.println(ratingFim);
+            lost.setText(String.format("%s%s --> %s", rating, ratingFinal, ratingFim));
+        });
     }
     private void movements(){
         reference = FirebaseDatabase.getInstance().getReference().child("movements").child(randomString);
         reference.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-
-
-            }
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
                 moveCount = Integer.parseInt(snapshot.getKey());
                 System.out.println("move" + moveCount);
-
                 state = Integer.parseInt(snapshot.child("state").getValue().toString());
                 String move = snapshot.child("move").getValue().toString();
                 if (state == 2 && !move.equals("err")) {
                     Toast.makeText(GameActivity.this, "Jogada Inválida!", Toast.LENGTH_SHORT).show();
-                    DatabaseReference mDatabase = database.getInstance().getReference();
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                     mDatabase.child("movements").child(randomString).child(String.valueOf(moveCount + 1)).child("move").setValue("err");
                     mDatabase.child("movements").child(randomString).child(String.valueOf(moveCount + 1)).child("state").setValue(0);
                 }
@@ -549,7 +409,6 @@ public class GameActivity extends AppCompatActivity {
                     } else {
                         m2++;
                         moves.append(m2 + ". " + snapshot.child("move").getValue() + " ");
-
                     }
                     if (color2.equals("blacks") && moveCount % 2 == 0) {
                         addJogada.setVisibility(View.VISIBLE);
@@ -566,50 +425,36 @@ public class GameActivity extends AppCompatActivity {
                         addJogada.setVisibility(View.INVISIBLE);
                     }
                 }
-
             }
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-            }
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) { }
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
-    private String addPlay(String result){
-
-        String finalResult = result;
-
-
+    private void addPlay(String result){
         addJogada.setOnClickListener(v -> {
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference mDatabase = database.getInstance().getReference();
-
+            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
             //Whites
-
             if ((color2.equals("blacks"))) {
                 if(i == 1){
-                    mDatabase.child("movements").child(randomString).child(String.valueOf(i + 1)).child("move").setValue(finalResult);
+                    mDatabase.child("movements").child(randomString).child(String.valueOf(i + 1)).child("move").setValue(result);
                     mDatabase.child("movements").child(randomString).child(String.valueOf(i + 1)).child("state").setValue(0);
                     addJogada.setVisibility(View.INVISIBLE);
                     i++;
                 } else {
-                    mDatabase.child("movements").child(randomString).child(String.valueOf(moveCount + 1)).child("move").setValue(finalResult);
+                    mDatabase.child("movements").child(randomString).child(String.valueOf(moveCount + 1)).child("move").setValue(result);
                     mDatabase.child("movements").child(randomString).child(String.valueOf(moveCount + 1)).child("state").setValue(0);
                 }
             }
-
                 //Blacks
             if((color2.equals("whites"))) {
-                mDatabase.child("movements").child(randomString).child(String.valueOf(moveCount + 1)).child("move").setValue(finalResult);
+                mDatabase.child("movements").child(randomString).child(String.valueOf(moveCount + 1)).child("move").setValue(result);
                 mDatabase.child("movements").child(randomString).child(String.valueOf(moveCount + 1)).child("state").setValue(0);
-
             }
         });
-        return result;
     }
     private String randomString(){
         // Random String
@@ -625,67 +470,33 @@ public class GameActivity extends AppCompatActivity {
         randomString = sb.toString();
         return randomString;
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode){
-            case RESULT_SPEECH:
-                if(resultCode == RESULT_OK && data != null){
-                    ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    String result = text.get(0);
-                    result = result.toLowerCase();
-
-                    if (result.contains("rainha")) {
-                        result = result.replace("rainha", "Q");
-                    } else if (result.contains("dama")) {
-                        result = result.replace("dama", "Q");
-                    } else if (result.contains("rei")) {
-                        result = result.replace("rei", "K");
-                    } else if (result.contains("bispo")) {
-                        result = result.replace("bispo", "B");
-                    } else if (result.contains("cavalo")) {
-                        result = result.replace("cavalo", "N");
-                    } else if (result.contains("torre")) {
-                        result = result.replace("torre", "R");
-                    } else if (result.contains("pião")) {
-                        result = result.replace("pião", "");
-                    } else if (result.contains("peao")) {
-                        result = result.replace("peao", "");
-                    } else if (result.contains("come")) {
-                        result = result.replace("come", "");
-                    } else if (result.contains("captura")) {
-                        result = result.replace("captura", "");
-                    } else if (result.contains("rock rei")) {
-                        result = result.replace("rock", "O-O");
-                    } if (result.contains("é")) {
-                        result = result.replace("é", "e");
-                    } if (result.contains("hey")) {
-                        result = result.replace("hey", "K");
-                    } if (result.contains("rock Q")) {
-                        result = result.replace("rock Q", "O-O-O");
-                    } if (result.contains("rock K")) {
-                        result = result.replace("rock K", "O-O");
-                    } if (result.contains("para")) {
-                        result = result.replace("para", "");
-                    } if (result.contains("hi5")) {
-                        result = result.replace("hi5", "h5");
+        if (requestCode == RESULT_SPEECH) {
+            if (resultCode == RESULT_OK && data != null) {
+                ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                String result = text.get(0);
+                result = result.toLowerCase();
+                String[] moves = new String[]{"para", "um", "dois", "tres", "quatro", "cinco", "seis", "sete", "oito", "rainha", "dama", "dame", "dá-me", "rei", "ruca", "hey", "rock Q", "rock K",
+                        "bispo", "cavalo", "torre", "pião", "peao", "come", "captura", "rock", "é", "s", "gt", "ver", "de", "há", "vê", "v", "cenas", "se", "sê",
+                        "serie", "cr7", "de", "dia", "gp", "guê", "gt", "jean", "gta", "já", "set", "je", "gê", "hahaha", "noite", "quarto", "guia", "h2o"};
+                String[] movesReplace = new String[]{"", "1", "2", "3", "4", "5", "6", "7", "8", "Q", "Q", "Q", "Q", "K", "K", "K", "O-O-O", "O-O",
+                        "B", "N", "R", "", "", "", "", "O-O", "e", "e", "g", "d", "d", "a", "b", "b", "c2", "c", "c",
+                        "c", "c7", "d", "g", "g ", "g  ", "g", "g1", "g  ", "g ", "7  ", "g ", "g ", "h     ", "8", "4", "g", "h2"};
+                for (int g = 0; g < moves.length; g++) {
+                    if (result.contains(moves[g])) {
+                        result = result.replace(moves[g], movesReplace[g]);
                     }
-
-
-                    result = result.replaceAll("\\s+","");
-                    tvText.setText(result);
-
-                    for(int j = 0; j < pieces.length; j++) {
-
-                        if(result.contains(pieces[j])){
-                            addPlay(result);
-
-                        }
-                    }
-
                 }
-                break;
+                result = result.replaceAll("\\s+", "");
+                tvText.setText(result);
+                for (String piece : pieces) {
+                    if (result.contains(piece)) {
+                        addPlay(result);
+                    }
+                }
+            }
         }
     }
 }

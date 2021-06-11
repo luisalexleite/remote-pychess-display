@@ -8,6 +8,12 @@
     <string name="settings_activateNotifications">Activate Notifications</string>
     <string name="dark_mode" translatable="false">Dark Mode</string>
     <string name="dark_mode_def_value" translatable="false">MODE_NIGHT_FOLLOW_SYSTEM</string>
+    <string name="darkmode">DarkMode</string>
+    <string name="logout">LogOut</string>
+    <string name="language">Language</string>
+    <string name="selectLang">Select a Language...</string>
+    <string name="english">"English"</string>
+    <string name="Portuguese">"Portuguese"</string>
 
     <!-- Login -->
     <string name="email_req">"Email is Required."</string>
@@ -30,6 +36,12 @@
     <string name="create_your_account_with_your_email_and_a_password">Create your account with your email and a password!</string>
     <string name="create_account">Create Account</string>
     <string name="if_you_want_to_become_a_petsitter_create_a_profile">If you want to become a petsitter, create a profile!</string>
+    <string name="emailNotVerified">Email is not verified</string>
+    <string name="sentNewMail">Sent a new Mail!</string>
+    <string name="areYouSure">Are you sure?</string>
+    <string name="leavelog">Leave</string>
+    <string name="cancel">Cancel</string>
+    <string name="emailVerify">Verification email sent!</string>
 
 
     <!-- Profile -->
@@ -37,9 +49,9 @@
 
     <string name="img_desc">image</string>
     <string name="username">Username</string>
-    <string name="name">"Name: "</string>
-    <string name="email_profile">"Email: "</string>
-    <string name="rating">"Rating:"</string>
+    <string name="name">Name</string>
+    <string name="email_profile">Email</string>
+    <string name="rating">Rating</string>
 
     <!-- Profile Edit -->
 
@@ -49,17 +61,44 @@
     <string name="first_name">First Name</string>
     <string name="email">Email</string>
 
+    <!-- Main -->
 
-    <string name="open">Open</string>
-    <string name="close">Close</string>
+    <string name="new_match">New Match</string>
+    <string name="join_match">Join Match</string>
+    <string name="open" translatable="false">open</string>
+    <string name="close" translatable="false">close</string>
+    <string name="SignOut">Sign Out Successful</string>
 
     <color name="white">#FFFFFF</color>
-    <string name="title_activity_game">GameActivity</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
-    <string name="Jogo">Jogo</string>
+
+
+    <!-- Join -->
+    <string name="game">Game</string>
     <string name="find_rating">\???</string>
+    <string name="join">Join</string>
+    <string name="rating2">Rating:</string>
+    <string name="vs">VS</string>
+    <string name="list">List of Games:</string>
+    <string name="join_jogo">Join Game</string>
+    <string name="addplay">Add Play</string>
+
+    <!-- Game -->
+    <string name="blacks">Blacks</string>
+    <string name="whites">Whites</string>
+    <string name="random">Random</string>
+    <string name="come_ar_jogo">Start Game</string>
+    <string name="waiting">Waiting Opponent...</string>
+    <string name="giveup">giveUp</string>
+    <string name="leave">Leave</string>
+    <string name="lost">You Lost!</string>
+    <string name="rating_down">"Rating down from "</string>
+    <string name="won">You Won!</string>
+    <string name="rating_up">"Rating up from "</string>
+    <string name="select">Select</string>
+    <string name="NotSuport">Your device dont support this</string>
+    <string name="invalidPlay">Invalid Play!</string>
+    <string name="GameCreated">Jogo criado com sucesso!</string>
+
+
+
 </resources>

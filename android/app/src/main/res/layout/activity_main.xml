@@ -52,25 +52,21 @@
 
         <Button
             android:id="@+id/button_match"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:paddingStart="80dp"
-            android:paddingEnd="80dp"
             android:layout_gravity="center"
             android:background="@drawable/roundedbutton"
-            android:text="New Match" />
+            android:text="@string/new_match" />
 
         <Button
             android:id="@+id/button_join"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:paddingStart="80dp"
-            android:paddingEnd="80dp"
             android:layout_gravity="center"
             android:background="@drawable/roundedbutton"
-            android:text="Join Match" />
+            android:text="@string/join_match" />
 
     </LinearLayout>
 
@@ -81,7 +77,8 @@
         android:background="@color/colorPrimaryDark"
         app:itemTextColor="@color/white"
         android:layout_gravity="left"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="RtlHardcoded">
 
     </com.google.android.material.navigation.NavigationView>
 

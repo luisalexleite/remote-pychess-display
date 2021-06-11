@@ -3,53 +3,92 @@
     <string name="app_name">RPyChess</string>
 
     <!--Settings-->
-    <string name="settings">Settings</string>
+    <string name="settings">Definições</string>
     <string name="settings_notifications">Notifications</string>
-    <string name="settings_appearance">Appearance</string>
+    <string name="settings_appearance">Aparência</string>
     <string name="settings_activateNotifications">Activate Notifications</string>
-    <string name="dark_mode" translatable="false">Dark Mode</string>
-    <string name="dark_mode_def_value" translatable="false">MODE_NIGHT_FOLLOW_SYSTEM</string>
+    <string name="darkmode">Modo Escuro</string>
+    <string name="logout">Sair</string>
+    <string name="language">Linguagem</string>
+    <string name="selectLang">Seleciona uma Linguagem...</string>
+    <string name="english">Inglês</string>
+    <string name="Portuguese">Português</string>
+    <string name="select">Seleciona</string>
 
     <!-- Login -->
-    <string name="email_req">"Email is Required."</string>
-    <string name="pass_req">"Password is Required."</string>
-    <string name="pass_longer">"Your password is surely longer than 6 characters!"</string>
-    <string name="log_success">"Login Successful"</string>
-    <string name="email_sent">"Email was sent with success!"</string>
-    <string name="acc_create">"Account Creation Successful"</string>
-    <string name="acc_fail">"Account creation failed."</string>
+    <string name="email_req">"Email é obrigatório."</string>
+    <string name="pass_req">"Password é obrigatório."</string>
+    <string name="pass_longer">"A tua password é maior do que 6 caracteres!"</string>
+    <string name="log_success">"Login com Sucesso"</string>
+    <string name="email_sent">"Email foi mandado com sucesso!"</string>
+    <string name="acc_create">"Conta criado com sucesso!"</string>
+    <string name="acc_fail">"Criação de conta falhou."</string>
     <string name="login">Login</string>
-    <string name="sign_in_with_your_account">Sign in with your account</string>
+    <string name="sign_in_with_your_account">Entra com a tua conta</string>
     <string name="password">Password</string>
-    <string name="don_t_have_acc">Don\'t have an account? Create it here!</string>
-    <string name="reset_it_here">Forgot your password? Reset it here!</string>
-    <string name="error">Error!</string>
-    <string name="reset_password">Reset Password</string>
-    <string name="recive_mail">You will receive an email with a recovery link</string>
-    <string name="send_email">Send Email</string>
-    <string name="registration">Registration</string>
-    <string name="create_your_account_with_your_email_and_a_password">Create your account with your email and a password!</string>
-    <string name="create_account">Create Account</string>
-    <string name="if_you_want_to_become_a_petsitter_create_a_profile">If you want to become a petsitter, create a profile!</string>
+    <string name="don_t_have_acc">Não tens conta? Cria aqui!</string>
+    <string name="reset_it_here">Esqueceste-te da pass?</string>
+    <string name="error">Erro!</string>
+    <string name="reset_password">Resetar Password</string>
+    <string name="recive_mail">Vais receber um email!</string>
+    <string name="send_email">Enviar</string>
+    <string name="registration">Registo</string>
+    <string name="create_your_account_with_your_email_and_a_password">Cria a conta com email e password!</string>
+    <string name="create_account">Criar Conta</string>
+    <string name="emailNotVerified">Email não está verificado</string>
+    <string name="sentNewMail">Foi enviado um novo Email!</string>
+    <string name="areYouSure">Tem a certeza?</string>
+    <string name="leavelog">Sair</string>
+    <string name="cancel">Cancelar</string>
+    <string name="emailVerify">O Email de Verificação foi enviado!</string>
 
 
     <!-- Profile -->
-    <string name="profile">Profile</string>
-
-    <string name="img_desc">image</string>
-    <string name="username">Username</string>
-    <string name="name">"Name: "</string>
-    <string name="email_profile">"Email: "</string>
-    <string name="rating">"Rating:"</string>
+    <string name="profile">Perfil</string>
+    <string name="img_desc">imagem</string>
+    <string name="username">Utilizador</string>
+    <string name="name">Nome</string>
+    <string name="email_profile">Email</string>
+    <string name="rating">Pontos</string>
 
     <!-- Profile Edit -->
 
-    <string name="profile_edit_title">Edit Profile</string>
-    <string name="profile_Image">Profile Image</string>
-    <string name="last_name">Last Name</string>
-    <string name="first_name">First Name</string>
+    <string name="profile_edit_title">Editar Perfil</string>
+    <string name="profile_Image">Imagem de Perfil</string>
+    <string name="first_name">Nome</string>
+    <string name="last_name">Sobrenome</string>
     <string name="email">Email</string>
 
+    <!-- Main -->
+    <string name="new_match">Nova Partida</string>
+    <string name="join_match">Entrar Partida</string>
+    <string name="SignOut">Saiu com sucesso!</string>
+
+    <!-- Join -->
+    <string name="game">Jogo</string>
+    <string name="find_rating">\???</string>
+    <string name="join">Entrar</string>
+    <string name="rating2">Pontos:</string>
+    <string name="vs">VS</string>
+    <string name="list">Lista de Jogos:</string>
+    <string name="join_jogo">Entrar Jogo</string>
+    <string name="addplay">Add Jogada</string>
+
+    <!-- Game -->
+    <string name="blacks">Pretas</string>
+    <string name="whites">Brancas</string>
+    <string name="random">Aleatorio</string>
+    <string name="come_ar_jogo">Começar Jogo</string>
+    <string name="waiting">À espera de um adversário...</string>
+    <string name="giveup">Desistir</string>
+    <string name="leave">Sair</string>
+    <string name="lost">Perdeste!</string>
+    <string name="rating_down">"Pontos Desceram de "</string>
+    <string name="won">Ganhaste!</string>
+    <string name="rating_up">"Pontos Subiram de "</string>
+    <string name="NotSuport">O Teu Dispositivo não suporta isto!</string>
+    <string name="invalidPlay">Jogada Inválida!</string>
+    <string name="GameCreated">Jogo Criado!</string>
 
 
     <color name="white">#FFFFFF</color>

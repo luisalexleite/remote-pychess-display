@@ -1,28 +1,20 @@
 package com.example.chess.login;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.chess.MainActivity;
 import com.example.chess.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
@@ -55,26 +47,19 @@ public class LoginActivity extends AppCompatActivity {
         passIn.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
 
-        exitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                builder.setMessage("Tem a certeza?")
-                        .setTitle("Sair")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                finish();
-                                System.exit(0);
+        exitBtn.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+            builder.setMessage(R.string.areYouSure)
+                    .setTitle(R.string.leavelog)
+                    .setPositiveButton("Ok", (dialog, id) -> {
+                        finish();
+                        System.exit(0);
 
-                            }
-                        })
-                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                    })
+                    .setNegativeButton(R.string.cancel, (dialog, id) -> {
 
-                            }
-                        });
-                builder.create().show();
-            }
+                    });
+            builder.create().show();
         });
         //login button onClickListener
         btnIn.setOnClickListener(v -> {
@@ -109,17 +94,9 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 finish();
                             } else {
-                                Toast.makeText(LoginActivity.this, "Email não está verificado", Toast.LENGTH_LONG).show();
-                                user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(LoginActivity.this, "Foi enviado um novo Email!", Toast.LENGTH_SHORT).show();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(LoginActivity.this, R.string.emailNotVerified, Toast.LENGTH_LONG).show();
+                                user.sendEmailVerification().addOnSuccessListener(aVoid -> Toast.makeText(LoginActivity.this, R.string.sentNewMail, Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> {
 
-                                    }
                                 });
                             }
                         } else {

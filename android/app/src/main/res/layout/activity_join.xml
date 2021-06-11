@@ -38,10 +38,10 @@
             android:layout_gravity="center"
             android:paddingTop="6dp"
             android:layout_marginLeft="-50dp"
-            android:text="Join"
+            android:text="@string/join"
             android:padding="4dp"
             android:textAlignment="center"
-            android:textColor="#de6262"
+            android:textColor="@color/colorAccent"
             android:textSize="30sp" />
 
 
@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:gravity="center"
-                    android:text="Rating:"
+                    android:text="@string/rating2"
                     />
 
                 <TextView
@@ -119,7 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="VS"
+                android:text="@string/vs"
                 android:padding="30dp"
                 android:textSize="40sp" />
 
@@ -188,8 +188,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:textSize="20sp"
-            android:textColor="@color/white"
-            android:text="Lista de Jogos:" />
+            android:text="@string/list" />
 
         <Button
             android:id="@+id/joinGame2"
@@ -200,7 +199,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/roundedbutton2"
             android:padding="10dp"
-            android:text="Join Jogo" />
+            android:text="@string/join" />
 
         <TextView
             android:id="@+id/tvText2"
@@ -231,7 +230,7 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/roundedbutton2"
             android:padding="10dp"
-            android:text="Adicionar jogada" />
+            android:text="@string/addplay" />
 
         <Button
             android:id="@+id/giveUp2"
@@ -243,7 +242,7 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/roundedbutton2"
             android:padding="10dp"
-            android:text="Desistir" />
+            android:text="@string/giveup" />
 
         <TextView
             android:id="@+id/movesText2"
@@ -289,7 +288,7 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/roundedbutton2"
             android:padding="10dp"
-            android:text="Sair" />
+            android:text="@string/leave" />
 
 
 

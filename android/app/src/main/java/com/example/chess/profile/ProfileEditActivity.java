@@ -4,36 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.chess.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,15 +24,10 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     //EditProfileValues
 
-    EditText usernameText, emailText, fNameText, lNameText;
-    ImageView profileImg;
+    private EditText usernameText, emailText, fNameText, lNameText;
+    private ImageView profileImg;
 
     //FireStore instance
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final CollectionReference petsitterRef = db.collection("Petsitter");
-    private String TAG = "ProfileEditActivity";
-    private View view;
-    private Uri imageUri;
     private String imageLink = "";
 
     FirebaseAuth fAuth;
@@ -75,12 +53,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         userID = fAuth.getCurrentUser().getUid();
 
         StorageReference profileRef = fStorage.child(userID + ".jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(profileImg);
-            }
-        });
+        profileRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profileImg));
 
         //back button
         ImageButton back = findViewById(R.id.backBtnProfileEdit);
@@ -88,14 +61,11 @@ public class ProfileEditActivity extends AppCompatActivity {
         back.setOnClickListener(v -> onBackPressed());
 
         DocumentReference dR = fStore.collection("profile").document(userID);
-        dR.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot dR, @Nullable FirebaseFirestoreException error) {
-                emailText.setText(dR.getString("email"));
-                usernameText.setText(dR.getString("username"));
-                fNameText.setText(dR.getString("fName"));
-                lNameText.setText(dR.getString("lName"));
-            }
+        dR.addSnapshotListener(this, (dR1, error) -> {
+            emailText.setText(dR1.getString("email"));
+            usernameText.setText(dR1.getString("username"));
+            fNameText.setText(dR1.getString("fName"));
+            lNameText.setText(dR1.getString("lName"));
         });
 
         profileImg.setOnClickListener(v -> {
@@ -113,7 +83,6 @@ public class ProfileEditActivity extends AppCompatActivity {
                 String fName = fNameText.getText().toString();
                 String lName = lNameText.getText().toString();
 
-                FirebaseUser user = fAuth.getCurrentUser();
                 userID = fAuth.getCurrentUser().getUid();
                 DocumentReference documentReference = fStore.collection("profile").document(userID);
                 if((!email.equals("")) || (!username.equals("")) || (!fName.equals("")) || (!lName.equals(""))){
@@ -148,7 +117,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1000){
             if(resultCode == Activity.RESULT_OK && data!=null && data.getData()!=null){
-                imageUri = data.getData();
+                Uri imageUri = data.getData();
                 profileImg.setImageURI(imageUri);
                 uploadImageToFirebase(imageUri);
 
@@ -161,10 +130,6 @@ public class ProfileEditActivity extends AppCompatActivity {
         userID = fAuth.getCurrentUser().getUid();
         StorageReference fileRef = fStorage.child(userID + ".jpg");
         fileRef.putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot -> {
-                fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    imageLink = uri.toString();
-                });
-        });
+                .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl().addOnSuccessListener(uri -> imageLink = uri.toString()));
     }
 }

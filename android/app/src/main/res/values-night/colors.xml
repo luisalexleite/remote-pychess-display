@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#242526</color>
     <color name="colorAccent">#de6262</color>
 
-    <!-- for Normal/Light Mode -->
+    <!-- for Dark Mode -->
     <color name="background">#000000</color>
     <color name="textColor">#FFFFFF</color>
 
