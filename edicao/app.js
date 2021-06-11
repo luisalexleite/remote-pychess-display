@@ -23,18 +23,9 @@
 
   var ref = database.ref('games');
 
-  document.getElementById("gravar").addEventListener("click", function () {
-    firebase.database().ref('games/' + "bitchboy").set({
-      blacks: "2ZZ9Ozfg4UXEd1dl2wzDI5SAnsg2",
-      method: 0,
-      result: 0,
-      state: 0,
-      type: 0,
-      whites: "K3aelVv7aVSrAChLLfkqxd7pG412",
-    })
-  })
-  
   ref.on('child_added', (data) => {
+    setTimeout(dados, 8000);
+    function dados() {
        var val = data.val();
        var state = val['state'];
        if (state == 0) {
@@ -49,47 +40,49 @@
         $(".loader").fadeOut(2000);
         alterarmenu();
 
-        fswhites = firestore.collection('profile').doc(val['whites']);
-        fsblacks = firestore.collection('profile').doc(val['blacks']);
 
-        fswhites.get().then((doc) => {
-          if (doc.exists) {
-            var array = doc.data()
-            document.getElementById("brancas").innerText = array['username'];
-            document.getElementById("imgbrancas").src = array['image'];
-            document.getElementById("ratingbrancas").innerText = "Elo: " + array['rating'];
-          } else {
-            console.log("Im gay!");
+          fswhites = firestore.collection('profile').doc(val['whites']);
+          fsblacks = firestore.collection('profile').doc(val['blacks']);
+
+          fswhites.get().then((doc) => {
+            if (doc.exists) {
+              var array = doc.data()
+              document.getElementById("brancas").innerText = array['username'];
+              document.getElementById("imgbrancas").src = array['image'];
+              document.getElementById("ratingbrancas").innerText = "Elo: " + array['rating'];
+            } else {
+              console.log("Uff!");
+            }
+          }).catch((error) => {
+            console.log("Erro:", error);
+          })
+
+          fsblacks.get().then((doc) => {
+            if (doc.exists) {
+              var array = doc.data()
+              document.getElementById("pretas").innerText = array['username'];
+              document.getElementById("imgpretas").src = array['image'];
+              document.getElementById("ratingpretas").innerText = "Elo: " + array['rating'];
+            } else {
+              console.log("Im gay!");
+            }
+          }).catch((error) => {
+            console.log("Erro:", error);
+          })
+
+
+          if (val['type'] == 0) {
+            document.getElementById("tipojogo").innerText = "Blitz";
+            document.getElementById("timer").innerText = "5 : 00";
+          } else if (val['type'] == 1) {
+            document.getElementById("tipojogo").innerText = "Rápido";
+            document.getElementById("timer").innerText = "10 : 00";
+          } else if (val['type'] == 2) {
+            document.getElementById("tipojogo").innerText = "Normal";
+            document.getElementById("timer").innerText = "20 : 00";
           }
-        }).catch((error) => {
-          console.log("Erro:", error);
-        })
-
-        fsblacks.get().then((doc) => {
-          if (doc.exists) {
-            var array = doc.data()
-            document.getElementById("pretas").innerText = array['username'];
-            document.getElementById("imgpretas").src = array['image'];
-            document.getElementById("ratingpretas").innerText = "Elo: " + array['rating'];
-          } else {
-            console.log("Im gay!");
-          }
-        }).catch((error) => {
-          console.log("Erro:", error);
-        })
-
-
-        if (val['type'] == 0) {
-          document.getElementById("tipojogo").innerText = "Blitz";
-          document.getElementById("timer").innerText = "3 : 00";
-        } else if (val['type'] == 1) {
-          document.getElementById("tipojogo").innerText = "Rápido";
-          document.getElementById("timer").innerText = "10 : 00";
-        } else if (val['type'] == 2) {
-          document.getElementById("tipojogo").innerText = "Normal";
-          document.getElementById("timer").innerText = "20 : 00";
         }
-        
+
         //firebase.database().ref('inline/' + Date.now()) .set({
           //game : key
         //});
@@ -97,5 +90,5 @@
        }
   });
 
-  //alterarEcra();
+  alterarEcra();
 });
