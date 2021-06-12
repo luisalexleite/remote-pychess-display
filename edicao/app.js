@@ -63,6 +63,8 @@
               document.getElementById("pretas").innerText = array['username'];
               document.getElementById("imgpretas").src = array['image'];
               document.getElementById("ratingpretas").innerText = "Elo: " + array['rating'];
+            } else {
+              console.log("Im gay!");
             }
           }).catch((error) => {
             console.log("Erro:", error);
@@ -74,10 +76,10 @@
             document.getElementById("timer").innerText = "5 : 00";
           } else if (val['type'] == 1) {
             document.getElementById("tipojogo").innerText = "Rápido";
-            document.getElementById("timer").innerText = "15 : 00";
+            document.getElementById("timer").innerText = "10 : 00";
           } else if (val['type'] == 2) {
             document.getElementById("tipojogo").innerText = "Normal";
-            document.getElementById("timer").innerText = "30 : 00";
+            document.getElementById("timer").innerText = "20 : 00";
           }
         }
 
