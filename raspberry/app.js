@@ -27,10 +27,7 @@
        var state = val['state'];
        if (state == 0) {
           aparecerjogo(val, app);
-          function link () {
-            window.location = 'http://localhost:8000/startgame.php?id=' + key;
-          }
-          setTimeout(link, 10000);
+          window.location = 'http://localhost:8000/startgame.php?id=' + key;
        }
   });
 
