@@ -14,7 +14,7 @@
   };
   
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  var app = firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 
   var database = firebase.database();
@@ -26,7 +26,11 @@
        var val = data.val();
        var state = val['state'];
        if (state == 0) {
-          window.location = 'http://localhost:8000/startgame.php?id=' + key;
+          aparecerjogo(val, app);
+          function link () {
+            window.location = 'http://localhost:8000/startgame.php?id=' + key;
+          }
+          setTimeout(link, 10000);
        }
   });
 
