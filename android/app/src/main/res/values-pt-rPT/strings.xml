@@ -58,6 +58,7 @@
     <string name="first_name">Nome</string>
     <string name="last_name">Sobrenome</string>
     <string name="email">Email</string>
+    <string name="username_long">Utilizador não pode ter mais do que 20 caracteres.</string>
 
     <!-- Main -->
     <string name="new_match">Nova Partida</string>
@@ -89,6 +90,7 @@
     <string name="NotSuport">O Teu Dispositivo não suporta isto!</string>
     <string name="invalidPlay">Jogada Inválida!</string>
     <string name="GameCreated">Jogo Criado!</string>
+    <string name="waiting_game"><![CDATA[À espera de um jogo…]]></string>
 
 
     <color name="white">#FFFFFF</color>

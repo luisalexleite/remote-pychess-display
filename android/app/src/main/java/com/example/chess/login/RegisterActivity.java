@@ -30,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseFirestore fStore;
     String userID;
+    String imageLink = "https://firebasestorage.googleapis.com/v0/b/remote-pychess.appspot.com/o/demo_player.png?alt=media&token=7daf752c-3070-4646-bcb3-d8c8e7751d96";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
                             profile.put("username", username);
                             profile.put("rating", 800);
                             profile.put("userUID", userID);
+                            profile.put("image", imageLink);
                             documentReference.set(profile).addOnSuccessListener(aVoid -> Log.d(TAG, "onSuccess: user profile is created for " + userID));
                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 
@@ -120,7 +122,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         });
     }
-
 
 
 

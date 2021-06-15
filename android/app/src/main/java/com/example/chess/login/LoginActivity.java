@@ -48,12 +48,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
         exitBtn.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.AlertDialogStyle);
             builder.setMessage(R.string.areYouSure)
                     .setTitle(R.string.leavelog)
                     .setPositiveButton("Ok", (dialog, id) -> {
-                        finish();
-                        System.exit(0);
+                        this.finishAffinity();
 
                     })
                     .setNegativeButton(R.string.cancel, (dialog, id) -> {
