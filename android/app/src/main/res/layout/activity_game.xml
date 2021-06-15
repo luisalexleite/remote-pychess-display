@@ -7,7 +7,9 @@
     android:background="@color/colorPrimary"
     tools:context=".GameActivity">
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,9 +29,9 @@
                 android:contentDescription="@string/img_desc"
                 android:scaleType="fitXY"
                 android:layout_marginStart="3dp"
-                android:tint="@color/colorAccent"
                 android:padding="10dp"
-                app:srcCompat="@drawable/back_button" />
+                app:srcCompat="@drawable/back_button"
+                app:tint="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -52,15 +54,15 @@
         <LinearLayout
             android:id="@+id/layout_vs1"
             android:layout_width="wrap_content"
-            android:layout_height="240dp"
+            android:layout_height="290dp"
             android:layout_marginTop="10dp"
             android:visibility="gone"
             android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="top"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -69,9 +71,9 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
+                    android:visibility="invisible"
                     android:contentDescription="@string/img_desc"
                     android:scaleType="centerCrop"
-                    android:visibility="invisible"
                     app:srcCompat="@drawable/cavalo_white" />
 
                 <ImageView
@@ -80,10 +82,10 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="-50dp"
+                    android:visibility="invisible"
                     android:layout_marginBottom="15dp"
                     android:contentDescription="@string/img_desc"
                     android:scaleType="centerCrop"
-                    android:visibility="invisible"
                     app:srcCompat="@drawable/cavalo_black" />
 
                 <ImageView
@@ -97,23 +99,23 @@
 
                 <TextView
                     android:id="@+id/rating_game11"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:padding="5dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:ellipsize="none"
                     android:text="@string/rating2"
-                    />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/rating_game12"
-                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:layout_weight="1"
-                    android:padding="5dp"
-                    android:gravity="center"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content" />
+                    android:gravity="bottom"
+                    android:paddingBottom="10dp"
+                    android:layout_gravity="center"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -121,12 +123,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/vs"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="70dp"
                 android:padding="30dp"
                 android:textSize="40sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -134,9 +136,9 @@
                     android:id="@+id/cavalo_brancas2"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:visibility="invisible"
                     android:layout_gravity="center"
                     android:contentDescription="@string/img_desc"
+                    android:visibility="invisible"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/cavalo_white" />
 
@@ -145,8 +147,8 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:visibility="invisible"
                     android:layout_marginTop="-50dp"
+                    android:visibility="invisible"
                     android:layout_marginBottom="15dp"
                     android:contentDescription="@string/img_desc"
                     android:scaleType="centerCrop"
@@ -163,70 +165,29 @@
 
                 <TextView
                     android:id="@+id/rating_game21"
-                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:textSize="18sp"
-                    android:padding="5dp"
                     android:text="@string/find_rating"
                     />
 
                 <TextView
                     android:id="@+id/rating_game22"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:padding="5dp"
                     android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:paddingBottom="10dp"
+                    android:layout_gravity="center"
                     android:textSize="18sp" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-            <RadioButton
-                android:id="@+id/checkBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textColor="@color/textColor"
-                android:text="@string/blacks" />
-
-            <RadioButton
-                android:id="@+id/checkWhite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textColor="@color/textColor"
-                android:text="@string/whites"  />
-
-            <RadioButton
-                android:id="@+id/checkRandom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textColor="@color/textColor"
-                android:text="@string/random" />
-        </RadioGroup>
-
-
-        <Button
-            android:id="@+id/createGame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:padding="10dp"
-            android:background="@drawable/roundedbutton2"
-            android:text="@string/come_ar_jogo" />
         <TextView
             android:id="@+id/tvText"
             android:layout_width="wrap_content"
@@ -243,7 +204,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:visibility="gone"
             android:layout_marginBottom="40dp"
             android:text="@string/waiting"
             android:textSize="24sp"  />
@@ -263,7 +223,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:layout_marginTop="40dp"
             android:background="@drawable/roundedbutton2"
 
@@ -330,5 +290,6 @@
 
 
     </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

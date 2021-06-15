@@ -36,6 +36,7 @@ public class GameActivity extends AppCompatActivity {
     //Initialization
     private static final int RESULT_SPEECH = 1;
     private String userID, randomString, gameID, blacks, color2="", ratingFinal, ratingIni;
+    String cbChecked;
     private int i = 0, h = 0, m = 0, m2 = 0, state, moveCount;
 
     //FireBase
@@ -101,7 +102,10 @@ public class GameActivity extends AppCompatActivity {
         cavaloPretas1 = findViewById(R.id.cavalo_pretas);
         cavaloPretas2 = findViewById(R.id.cavalo_pretas2);
 
+
         randomString = randomString();
+        Intent intent = getIntent();
+        cbChecked = intent.getStringExtra("checked");
         createGame();
         listener();
         speak();
@@ -131,8 +135,6 @@ public class GameActivity extends AppCompatActivity {
 
                         if(blacks != null){
                             System.out.println("GameActivity: "+ blacks);
-                            StorageReference profileRef = fStorage.child(blacks + ".jpg");
-                            profileRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profileImageGame2));
                             if(color2.equals("whites")){
                                 cavaloPretas1.setVisibility(View.VISIBLE);
                                 cavaloBrancas2.setVisibility(View.VISIBLE);
@@ -140,13 +142,8 @@ public class GameActivity extends AppCompatActivity {
                             if(color2.equals("blacks")){
                                 cavaloBrancas1.setVisibility(View.VISIBLE);
                                 cavaloPretas2.setVisibility(View.VISIBLE);
-                                addJogada.setVisibility(View.VISIBLE);
                             }
-                            rating2();
-                            vs.setVisibility(View.VISIBLE);
-                            btnSpeak.setVisibility(View.VISIBLE);
-                            giveup.setVisibility(View.VISIBLE);
-                            espera.setVisibility(View.GONE);
+
                         }
                     }
 
@@ -163,6 +160,32 @@ public class GameActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) { }
         });
 
+        reference = FirebaseDatabase.getInstance().getReference().child("games").child(randomString);
+        reference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                StorageReference profileRef = fStorage.child(blacks + ".jpg");
+                profileRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profileImageGame2));
+                rating2();
+
+                btnSpeak.setVisibility(View.VISIBLE);
+                giveup.setVisibility(View.VISIBLE);
+                espera.setVisibility(View.GONE);
+                if(color2.equals("blacks")) {
+                    addJogada.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) { }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
 
         StorageReference profileRef = fStorage.child(userID + ".jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profileImageGame));
@@ -185,22 +208,23 @@ public class GameActivity extends AppCompatActivity {
 
     }
     private void rating2(){
-        DocumentReference documentReference = fStore.collection("profile").document(blacks);
-        documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
+            DocumentReference documentReference = fStore.collection("profile").document(blacks);
+            documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
 
-            assert documentSnapshot != null;
-            username2.setText(documentSnapshot.getString("username"));
-            long rating3 = documentSnapshot.getLong("rating");
-            String s = String.valueOf(rating3);
-            rating2.setText(s);
-            //}
-        });
+                assert documentSnapshot != null;
+                username2.setText(documentSnapshot.getString("username"));
+                long rating3 = documentSnapshot.getLong("rating");
+                String s = String.valueOf(rating3);
+                rating2.setText(s);
+                //}
+            });
 
     }
     private void back(){
         ImageButton back = findViewById(R.id.backBtnProfile);
         back.setOnClickListener(v -> {
             Intent intent = new Intent(this, MainActivity.class);
+            finish();
             startActivity(intent);
 
         });
@@ -226,40 +250,31 @@ public class GameActivity extends AppCompatActivity {
     //Chess Methods
     private void createGame(){
 
-        createGame = findViewById(R.id.createGame);
-        createGame.setOnClickListener(v -> {
+
             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
             //Create Game
-            if(cbwhite.isChecked()){
+            if(cbChecked.equals("cbWhite")){
                 mDatabase.child("game_waiting").child(randomString).child("whites").setValue(userID);
                 mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
                 Toast.makeText(GameActivity.this, R.string.GameCreated, Toast.LENGTH_SHORT).show();
                 color2 = "blacks";
-                cbwhite.setVisibility(View.GONE);
-                cbblack.setVisibility(View.GONE);
-                cbrandom.setVisibility(View.GONE);
-                createGame.setVisibility(View.GONE);
                 espera.setVisibility(View.VISIBLE);
                 vs.setVisibility(View.VISIBLE);
                 addJogada.setVisibility(View.GONE);
             }
 
-            if(cbblack.isChecked()){
+            if(cbChecked.equals("cbBlack")){
                 mDatabase.child("game_waiting").child(randomString).child("blacks").setValue(userID);
                 mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
                 Toast.makeText(GameActivity.this, R.string.GameCreated, Toast.LENGTH_SHORT).show();
                 color2 = "whites";
-                cbwhite.setVisibility(View.GONE);
-                cbblack.setVisibility(View.GONE);
-                cbrandom.setVisibility(View.GONE);
-                createGame.setVisibility(View.GONE);
                 espera.setVisibility(View.VISIBLE);
                 vs.setVisibility(View.VISIBLE);
                 addJogada.setVisibility(View.GONE);
             }
 
-            if(cbrandom.isChecked()){
+            if(cbChecked.equals("cbRandom")){
                 Toast.makeText(GameActivity.this, R.string.GameCreated, Toast.LENGTH_SHORT).show();
                 Random cor = new Random();
                 int rnd = cor.nextInt(2);
@@ -272,16 +287,12 @@ public class GameActivity extends AppCompatActivity {
                 }
                 mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
                 addJogada.setVisibility(View.GONE);
-                cbwhite.setVisibility(View.GONE);
-                cbblack.setVisibility(View.GONE);
-                cbrandom.setVisibility(View.GONE);
-                createGame.setVisibility(View.GONE);
                 espera.setVisibility(View.VISIBLE);
                 vs.setVisibility(View.VISIBLE);
             }
 
 
-        });
+
     }
     private void giveUp() {
         giveup = findViewById(R.id.giveUp);

@@ -49,7 +49,7 @@ public class JoinActivity extends AppCompatActivity {
     //Views
     private Button joinGame2, addJogada2, giveup2, leave;
     private ImageButton btnSpeak2;
-    private TextView tvText2, rating1, rating2, ratingJoin1, ratingJoin2, moves2, lista_jogos, lost, win;
+    private TextView tvText2, rating1, rating2, ratingJoin1, ratingJoin2, moves2, lista_jogos, lost, win, waitingGame;
     private ImageView profileImageGame, profileImageGame2, cavaloBrancas1, cavaloBrancas2, cavaloPretas1, cavaloPretas2;
     private LinearLayout vs;
 
@@ -88,6 +88,7 @@ public class JoinActivity extends AppCompatActivity {
         rating1 = findViewById(R.id.rating_game);
         rating2 = findViewById(R.id.rating_game2);
         tvText2 = findViewById(R.id.tvText2);
+        waitingGame = findViewById(R.id.waiting_game);
         lost = findViewById(R.id.lost);
         win = findViewById(R.id.win);
         vs = findViewById(R.id.layout_v2);
@@ -105,7 +106,6 @@ public class JoinActivity extends AppCompatActivity {
         giveUp();
         //Go Back Method
         back();
-        rating();
         //Method Listeners
         listener();
         leave();
@@ -125,6 +125,8 @@ public class JoinActivity extends AppCompatActivity {
                     movements();
                     j++;
                     joinGame2.setVisibility(View.VISIBLE);
+                    vs.setVisibility(View.VISIBLE);
+                    waitingGame.setVisibility(View.GONE);
                 }
             }
             @Override
@@ -137,8 +139,7 @@ public class JoinActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        StorageReference profileRef = fStorage.child(userID + ".jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profileImageGame));
+
 
     }
     private void movements(){
@@ -186,6 +187,29 @@ public class JoinActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
+    private  void oppRatingImage() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("game_waiting").child(gameID).child("state").setValue(0);
+        mDatabase.child("game_waiting").child(gameID).child(color).setValue(userID);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference getid = ref.child("game_waiting").child(gameID).child(color2);
+        getid.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                blacks = dataSnapshot.getValue(String.class);
+                if(blacks != null) {
+
+                    StorageReference profileRef2 = fStorage.child(blacks + ".jpg");
+                    profileRef2.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profileImageGame2));
+                    rating2();
+                    vs.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
     private void joinGame(){
         DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference();
         DatabaseReference getid2 = ref2.child("game_waiting").child(gameID);
@@ -197,11 +221,14 @@ public class JoinActivity extends AppCompatActivity {
                         color = "blacks";
                         color2 ="whites";
                         endGame();
+                        oppRatingImage();
+
                     }
                     if(Objects.equals(a.getKey(), "blacks")){
                         color = "whites";
                         color2 = "blacks";
                         endGame();
+                        oppRatingImage();
                     }
                 }
             }
@@ -209,14 +236,20 @@ public class JoinActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
         joinGame2.setOnClickListener(v -> {
             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-            mDatabase.child("game_waiting").child(gameID).child("state").setValue(0);
-            mDatabase.child("game_waiting").child(gameID).child(color).setValue(userID);
             joinGame2.setVisibility(View.GONE);
             btnSpeak2.setVisibility(View.VISIBLE);
             giveup2.setVisibility(View.VISIBLE);
             lista_jogos.setVisibility(View.GONE);
+            StorageReference profileRef = fStorage.child(userID + ".jpg");
+            profileRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profileImageGame));
+            mDatabase.child("games").child(gameID).child("state").setValue(0);
+            mDatabase.child("games").child(gameID).child("type").setValue(0);
+            mDatabase.child("games").child(gameID).child(color2).setValue(blacks);
+            mDatabase.child("games").child(gameID).child(color).setValue(userID);
+            rating();
             if(color2.equals("whites")){
                 addJogada2.setVisibility(View.INVISIBLE);
                 cavaloPretas1.setVisibility(View.VISIBLE);
@@ -228,29 +261,6 @@ public class JoinActivity extends AppCompatActivity {
                 cavaloBrancas1.setVisibility(View.VISIBLE);
                 cavaloPretas2.setVisibility(View.VISIBLE);
             }
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-            DatabaseReference getid = ref.child("game_waiting").child(gameID).child(color2);
-            getid.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    blacks = dataSnapshot.getValue(String.class);
-                    if(blacks != null) {
-
-                        StorageReference profileRef2 = fStorage.child(blacks + ".jpg");
-                        profileRef2.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profileImageGame2));
-                        mDatabase.child("games").child(gameID).child("state").setValue(0);
-                        mDatabase.child("games").child(gameID).child("type").setValue(0);
-                        mDatabase.child("games").child(gameID).child(color2).setValue(blacks);
-                        mDatabase.child("games").child(gameID).child(color).setValue(userID);
-
-                        rating2();
-                        vs.setVisibility(View.VISIBLE);
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
         });
     }
     private void addPlay (String result){
@@ -310,6 +320,7 @@ public class JoinActivity extends AppCompatActivity {
         ImageButton back = findViewById(R.id.backBtnProfile);
         back.setOnClickListener(v -> {
             Intent intent = new Intent(this, MainActivity.class);
+            finish();
             startActivity(intent);
         });
     }

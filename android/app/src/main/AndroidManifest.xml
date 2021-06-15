@@ -23,6 +23,7 @@
             android:name="com.google.android.wearable"
             android:required="false" />
 
+
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
@@ -32,12 +33,13 @@
             android:value="true" />
 
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.RegisterActivity" />
         <activity android:name=".login.ActivityPasswordReset" />
-        <activity android:name=".GameActivity" />
-        <activity android:name=".JoinActivity" />
+        <activity android:name=".GameActivity" android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <activity android:name=".GameOptionsActivity" android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <activity android:name=".JoinActivity" android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".profile.ProfileEditActivity" />
         <activity android:name=".profile.SettingsActivity" />

@@ -17,15 +17,34 @@ import com.example.chess.profile.ProfileActivity;
 import com.example.chess.profile.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        fAuth = FirebaseAuth.getInstance();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        menu();
+        startGame();
+        joinGame();
+
+    }
+
+    public void menu () {
         //Menu
         Toolbar toolbar = findViewById(R.id.menu_toolbar);
         setSupportActionBar(toolbar);
@@ -43,12 +62,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+    }
+    public void startGame() {
         //Game Start
         Button button_match = findViewById(R.id.button_match);
         button_match.setOnClickListener(v -> {
-            Intent game = new Intent(this, GameActivity.class);
+            Intent game = new Intent(this, GameOptionsActivity.class);
             startActivity(game);
         });
+    }
+    public void joinGame() {
         //Join Start
         Button joinGame = findViewById(R.id.button_join);
         joinGame.setOnClickListener(v -> {
@@ -56,13 +79,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(join);
         });
     }
-
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         int id = item.getItemId();
-
         switch (id){
             case R.id.menu_profile:
                 Intent intent = new Intent(this, ProfileActivity.class);
@@ -79,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             default:
                 break;
-
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;

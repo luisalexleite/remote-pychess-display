@@ -8,6 +8,9 @@ import android.provider.MediaStore;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.chess.R;
@@ -24,8 +27,9 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     //EditProfileValues
 
-    private EditText usernameText, emailText, fNameText, lNameText;
+    private EditText usernameText, fNameText, lNameText;
     private ImageView profileImg;
+    private TextView emailText;
 
     //FireStore instance
     private String imageLink = "";
@@ -62,6 +66,7 @@ public class ProfileEditActivity extends AppCompatActivity {
 
         DocumentReference dR = fStore.collection("profile").document(userID);
         dR.addSnapshotListener(this, (dR1, error) -> {
+            assert dR1 != null;
             emailText.setText(dR1.getString("email"));
             usernameText.setText(dR1.getString("username"));
             fNameText.setText(dR1.getString("fName"));
@@ -90,8 +95,10 @@ public class ProfileEditActivity extends AppCompatActivity {
                     if(!email.equals("")) {
                         profile.put("email", email);
                     }
-                    if(!username.equals("")) {
+                    if(!username.equals("") && username.length() <20) {
                         profile.put("username", username);
+                    } else {
+                        Toast.makeText(this, R.string.username_long, Toast.LENGTH_SHORT).show();
                     }
                     if(!fName.equals("")) {
                         profile.put("fName", fName);
@@ -102,11 +109,16 @@ public class ProfileEditActivity extends AppCompatActivity {
                     if(!imageLink.equals("")) {
                         profile.put("image", imageLink);
                     }
-                    documentReference.update(profile);
+                    if( username.length() <20) {
+                        documentReference.update(profile);
+                    }
+
                 }
 
-                Intent intent = new Intent(this, ProfileActivity.class);
-                startActivity(intent);
+                if( username.length() <20) {
+                    Intent intent = new Intent(this, ProfileActivity.class);
+                    startActivity(intent);
+                }
             });
 
 
@@ -125,9 +137,9 @@ public class ProfileEditActivity extends AppCompatActivity {
         }
     }
 
+    //Fire base storage
     private void uploadImageToFirebase(Uri imageUri) {
         // upload image to firebase storage
-        userID = fAuth.getCurrentUser().getUid();
         StorageReference fileRef = fStorage.child(userID + ".jpg");
         fileRef.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl().addOnSuccessListener(uri -> imageLink = uri.toString()));

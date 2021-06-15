@@ -7,6 +7,10 @@
     android:background="@color/colorPrimary"
     tools:context=".JoinActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,9 +30,9 @@
             android:contentDescription="@string/img_desc"
             android:scaleType="fitXY"
             android:layout_marginStart="3dp"
-            android:tint="@color/colorAccent"
             android:padding="10dp"
-            app:srcCompat="@drawable/back_button" />
+            app:srcCompat="@drawable/back_button"
+            app:tint="@color/colorAccent" />
 
         <TextView
             android:id="@+id/textView5"
@@ -48,10 +52,28 @@
 
     </LinearLayout>
 
+        <TextView
+            android:id="@+id/lista_jogos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:textSize="20sp"
+            android:text="@string/list" />
+
+        <TextView
+            android:id="@+id/waiting_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:textSize="20sp"
+            android:text="@string/waiting_game" />
+
         <LinearLayout
             android:id="@+id/layout_v2"
             android:layout_width="wrap_content"
-            android:layout_height="240dp"
+            android:layout_height="290dp"
             android:visibility="gone"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
@@ -59,7 +81,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -78,8 +100,8 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:visibility="invisible"
                     android:layout_marginTop="-50dp"
+                    android:visibility="invisible"
                     android:layout_marginBottom="15dp"
                     android:contentDescription="@string/img_desc"
                     android:scaleType="centerCrop"
@@ -97,19 +119,22 @@
 
                 <TextView
                     android:id="@+id/rating_join"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="@string/rating2"
+                    android:text="@string/find_rating"
                     />
 
                 <TextView
                     android:id="@+id/rating_game"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:gravity="bottom"
+                    android:paddingBottom="10dp"
                     android:textSize="18sp"
                     android:layout_height="wrap_content" />
 
@@ -118,13 +143,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="top"
+                android:layout_marginTop="70dp"
                 android:text="@string/vs"
                 android:padding="30dp"
                 android:textSize="40sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -133,8 +159,8 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:visibility="invisible"
                     android:contentDescription="@string/img_desc"
+                    android:visibility="invisible"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/cavalo_white" />
 
@@ -145,9 +171,9 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="-50dp"
                     android:layout_marginBottom="15dp"
+                    android:visibility="invisible"
                     android:contentDescription="@string/img_desc"
                     android:scaleType="centerCrop"
-                    android:visibility="invisible"
                     app:srcCompat="@drawable/cavalo_black" />
 
                 <ImageView
@@ -161,9 +187,10 @@
 
                 <TextView
                     android:id="@+id/rating_join2"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:gravity="center"
                     android:textSize="18sp"
                     android:text="@string/find_rating"
@@ -171,9 +198,11 @@
 
                 <TextView
                     android:id="@+id/rating_game2"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:gravity="bottom"
+                    android:paddingBottom="10dp"
                     android:layout_height="wrap_content"
                     android:textSize="18sp" />
 
@@ -181,21 +210,13 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/lista_jogos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:textSize="20sp"
-            android:text="@string/list" />
 
         <Button
             android:id="@+id/joinGame2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:layout_marginTop="30dp"
             android:background="@drawable/roundedbutton2"
             android:padding="10dp"
@@ -216,7 +237,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleX="3"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:scaleY="3"
             android:layout_gravity="center"
             android:background="@drawable/ic_settings"/>
@@ -237,7 +258,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="40dp"
             android:background="@drawable/roundedbutton2"
@@ -294,4 +315,5 @@
 
 
     </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

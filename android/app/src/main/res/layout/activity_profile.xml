@@ -28,9 +28,9 @@
             android:contentDescription="@string/img_desc"
             android:scaleType="fitXY"
             android:layout_marginStart="3dp"
-            android:tint="@color/colorAccent"
             android:padding="10dp"
-            app:srcCompat="@drawable/back_button" />
+            app:srcCompat="@drawable/back_button"
+            app:tint="@color/colorAccent" />
 
         <TextView
             android:id="@+id/textView5"

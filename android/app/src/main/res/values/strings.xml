@@ -35,7 +35,6 @@
     <string name="registration">Registration</string>
     <string name="create_your_account_with_your_email_and_a_password">Create your account with your email and a password!</string>
     <string name="create_account">Create Account</string>
-    <string name="if_you_want_to_become_a_petsitter_create_a_profile">If you want to become a petsitter, create a profile!</string>
     <string name="emailNotVerified">Email is not verified</string>
     <string name="sentNewMail">Sent a new Mail!</string>
     <string name="areYouSure">Are you sure?</string>
@@ -60,6 +59,7 @@
     <string name="last_name">Last Name</string>
     <string name="first_name">First Name</string>
     <string name="email">Email</string>
+    <string name="username_long">Username can´t be longer than 20 characters.</string>
 
     <!-- Main -->
 
@@ -98,6 +98,7 @@
     <string name="NotSuport">Your device dont support this</string>
     <string name="invalidPlay">Invalid Play!</string>
     <string name="GameCreated">Jogo criado com sucesso!</string>
+    <string name="waiting_game"><![CDATA[Waiting for a game…]]></string>
 
 
 
