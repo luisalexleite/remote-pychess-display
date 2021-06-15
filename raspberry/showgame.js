@@ -34,7 +34,7 @@ function showgame(key, app) {
                         document.getElementById("imgbrancas").src = array['image'];
                         document.getElementById("ratingbrancas").innerText = "Elo: " + array['rating'];
                     } else {
-                        console.log("Uff!");
+                        console.log("Sem Informação");
                     }
                 }).catch((error) => {
                     console.log("Erro:", error);
