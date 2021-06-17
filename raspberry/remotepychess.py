@@ -107,19 +107,19 @@ def getPieces(fen):
     pointswhite = 0
     pointsblack = 0
 
-    k = fen.count('k')
+    q = fen.count('q')
     r = 2 - fen.count('r')
     n = 2 - fen.count('n')
     b = 2 - fen.count('b')
     p = 8 - fen.count('p')
 
-    K = fen.count('K')
+    Q = fen.count('Q')
     R = 2 - fen.count('R')
     N = 2 - fen.count('N')
     B = 2 - fen.count('B')
     P = 8 - fen.count('P')
 
-    if k == 0:
+    if q == 0:
         piecesblack += '\u265b'
         pointswhite += 9
 
@@ -139,7 +139,7 @@ def getPieces(fen):
         piecesblack += p * '\u265f'
         pointswhite += p * 1
 
-    if K == 0:
+    if Q == 0:
         pieceswhite += '\u2655'
         pointsblack += 9
 
