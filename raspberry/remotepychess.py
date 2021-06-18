@@ -331,7 +331,6 @@ class Ui_Janela(object):
         self.timer.start()
 
     # estado do jogo
-
     def jogo(self):
         check = makeMove(gameid)[0]
         gamesvg = makeMove(gameid)[1]
@@ -414,12 +413,10 @@ class Ui_Janela(object):
             self.game.setObjectName("game")
 
     # sair da aplicação
-
     def close(self):
         sys.exit()
 
     # Interface de Utilizador
-
     def setupUi(self):
         global pieceswhite, piecesblack, pointswhite, pointsblack
         pieceswhite, piecesblack, pointswhite, pointsblack = getPieces(
@@ -550,7 +547,6 @@ class Ui_Janela(object):
         checktime(whites, firstmovewhite, firstmoveblack)
 
     # conversão de HTML
-
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         Janela.setWindowTitle(_translate("Janela", "Remote PyChess"))
