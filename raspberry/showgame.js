@@ -1,29 +1,41 @@
 function showgame(key, app) {
 
+    //Firestore
     var firestore = firebase.firestore(app);
 
+    //Mostrar o proximo jogo após 2 segundos
     setTimeout(mostrarjogo, 2000);
+
+    //Começar o proximo jogo após 10 segundos
     setTimeout(startgame, 10000);
 
-
+    //Mostrar o proximo jogo
     function mostrarjogo() {
+
+        //localização da chave recebida pela função
         var ref = firebase.database().ref("games/" + key);
+
+        //Quando obter dados
         ref.once("value")
             .then(function(snapshot) {
                 val = snapshot.val();
 
+                //Retirar Ecrã Inicial
                 function alterarmenu() {
                     $(".wrapper").slideUp(3000);
                     setTimeout(menujogadores, 3200);
                 }
 
+                //Aparecer Próximo Jogo
                 function menujogadores() {
                     $(".jogadores").show().animate({ opacity: '1' }, 2500);
                 }
-                $(".loader").fadeOut(2000);
+
+                //Retirar Ecrã Inicial
                 alterarmenu();
 
 
+                //Dados dos Jogadores
                 fswhites = firestore.collection('profile').doc(val['whites']);
                 fsblacks = firestore.collection('profile').doc(val['blacks']);
 
@@ -51,7 +63,7 @@ function showgame(key, app) {
                     console.log("Erro:", error);
                 })
 
-
+                //Tipo de Jogo
                 if (val['type'] == 0) {
                     document.getElementById("tipojogo").innerText = "Blitz";
                     document.getElementById("timer").innerText = "5 : 00";
@@ -65,6 +77,7 @@ function showgame(key, app) {
             });
     }
 
+    //Começar o Jogo
     function startgame() {
         window.location = 'http://localhost:8000/startgame.php?id=' + key
     }

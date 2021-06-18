@@ -1,3 +1,4 @@
+//Dados das Aberturas
 var hints = {
     "1": {
         "title": "Defesa Siciliana",
