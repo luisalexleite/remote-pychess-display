@@ -11,6 +11,7 @@ async function alterarEcra () {
         document.getElementById("title").innerText = hints[hint]['title'];
         document.getElementById("peqtext").innerText = hints[hint]['text'];
         document.getElementById("board").src = hints[hint]['img'];
+        document.getElementById("movimentos").innerText = hints[hint]['moves'];
         hint = Math.floor(Math.random() * parseInt(Object.keys(hints).length)) + 1;
         await sleep(parseInt(hints[hint]['time'] + "000"))
         }

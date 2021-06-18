@@ -177,6 +177,7 @@
                               info
                          </span> <span id="title">Defesa Siciliana</span></h4>
                     <p id="peqtext" style="text-align:left">A defesa siciliana é uma das principais respostas para e4. As pretas assumem o controle da quadrado d4 com um peão lateral, assim ele desequilibra a posição e evita dar às brancas um alvo central.
+                    <p id="movimentos" style="text-align:left">1.e4 c5
                </span>
                </p>
           </div>
