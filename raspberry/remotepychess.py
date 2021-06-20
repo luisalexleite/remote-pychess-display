@@ -1,14 +1,14 @@
-from PyQt5 import QtCore, QtGui, QtWidgets, QtSvg
-import pyautogui
-import subprocess
+# bibilotecas internas
 import time
-import tkinter
+import math
+import sys
+
+# bibliotecas externas
+from PyQt5 import QtCore, QtGui, QtWidgets, QtSvg
 import chess
 import chess.svg
 import chess.pgn
 import firebase_admin
-import math
-import sys
 from firebase_admin import credentials
 from firebase_admin import firestore
 from firebase_admin import db
@@ -21,9 +21,18 @@ cred = credentials.Certificate('./cred/remote-pychess-f8ba9c6e343c.json')
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://remote-pychess-default-rtdb.europe-west1.firebasedatabase.app/remote-pychess-default-rtdb/'
 })
+
+
+# Firestore
 firedb = firestore.client()
+
+# id do jogo
 gameid = sys.argv[1]
+
+# código FEN inicial
 board = chess.Board().fen()
+
+# variveis
 whites = False
 moveCount = 1
 state = 0
@@ -40,14 +49,17 @@ exists = True
 lastmove = None
 
 
+# mudar estado do jogo para Iniciado
 def changestate(gameid):
     db.reference(f'games/{gameid}').update({'state': 1})
 
 
+# segundos para minutos
 def convert(seconds):
     return time.strftime("%M:%S", time.gmtime(seconds))
 
 
+# tipo de jogo
 def getType(gameid):
     typ = db.reference(f'games/{gameid}/type').get()
     return typ
@@ -61,6 +73,7 @@ else:
     secondswhite = secondsblack = 2400
 
 
+# obter abertura feita
 def getOpening(move):
     global movearr, exists
     exist = False
@@ -88,9 +101,9 @@ def getOpening(move):
         openingcheck = None
     eco.close()
     return openingcheck, movecheck, exist
-    # return movecheck
 
 
+# Alteração dos dados de abertura
 def refreshOpenings(opening):
     try:
         openingcheck = opening['ECO'] + " " + \
@@ -101,25 +114,26 @@ def refreshOpenings(opening):
     return openingcheck
 
 
+# Obter peças e pountos obtidos
 def getPieces(fen):
     piecesblack = ""
     pieceswhite = ""
     pointswhite = 0
     pointsblack = 0
 
-    k = fen.count('k')
+    q = fen.count('q')
     r = 2 - fen.count('r')
     n = 2 - fen.count('n')
     b = 2 - fen.count('b')
     p = 8 - fen.count('p')
 
-    K = fen.count('K')
+    Q = fen.count('Q')
     R = 2 - fen.count('R')
     N = 2 - fen.count('N')
     B = 2 - fen.count('B')
     P = 8 - fen.count('P')
 
-    if k == 0:
+    if q == 0:
         piecesblack += '\u265b'
         pointswhite += 9
 
@@ -139,7 +153,7 @@ def getPieces(fen):
         piecesblack += p * '\u265f'
         pointswhite += p * 1
 
-    if K == 0:
+    if Q == 0:
         pieceswhite += '\u2655'
         pointsblack += 9
 
@@ -162,6 +176,7 @@ def getPieces(fen):
     return pieceswhite, piecesblack, pointswhite, pointsblack
 
 
+# Dados dos Jogadores
 def getUsers(gameid):
     white = db.reference(f'games/{gameid}/whites').get()
     black = db.reference(f'games/{gameid}/blacks').get()
@@ -173,6 +188,7 @@ def getUsers(gameid):
     return white, black, whiteprof, blackprof
 
 
+# Elo e Elo a perder dos Jogadores
 def getElo(white, black):
     whiteelo = int(white['rating'])
     blackelo = int(black['rating'])
@@ -184,6 +200,7 @@ def getElo(white, black):
     return whiteelodif, blackelodif
 
 
+# Alteração do Elo
 def registElo(whiteelo, blackelo):
     white = firedb.collection(u'profile').document(f'{whiteid}')
     white.update({u'rating': whiteelo})
@@ -191,6 +208,7 @@ def registElo(whiteelo, blackelo):
     black.update({u'rating': blackelo})
 
 
+# Contador
 def checktime(whites, firstmovewhite, firstmoveblack):
     global secondswhite, secondsblack
     if(whites == False and firstmovewhite == False):
@@ -203,6 +221,7 @@ def checktime(whites, firstmovewhite, firstmoveblack):
             secondsblack = 0
 
 
+# Confirmar Movimentos
 def makeMove(gameid):
     global board
     global whites
@@ -302,6 +321,8 @@ def makeMove(gameid):
 
 
 class Ui_Janela(object):
+
+    # configs iniciais da UI
     def __init__(self):
         self.timer = QtCore.QTimer()
         self.timer.setSingleShot(False)
@@ -309,6 +330,7 @@ class Ui_Janela(object):
         self.timer.timeout.connect(self.setupUi)
         self.timer.start()
 
+    # estado do jogo
     def jogo(self):
         check = makeMove(gameid)[0]
         gamesvg = makeMove(gameid)[1]
@@ -390,9 +412,11 @@ class Ui_Janela(object):
             self.game.load(gamesvg.encode("UTF-8"))
             self.game.setObjectName("game")
 
+    # sair da aplicação
     def close(self):
         sys.exit()
 
+    # Interface de Utilizador
     def setupUi(self):
         global pieceswhite, piecesblack, pointswhite, pointsblack
         pieceswhite, piecesblack, pointswhite, pointsblack = getPieces(
@@ -522,6 +546,7 @@ class Ui_Janela(object):
         QtCore.QMetaObject.connectSlotsByName(Janela)
         checktime(whites, firstmovewhite, firstmoveblack)
 
+    # conversão de HTML
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         Janela.setWindowTitle(_translate("Janela", "Remote PyChess"))
@@ -547,6 +572,7 @@ class Ui_Janela(object):
             "Janela", f"<html><head/><body><p>{movehistory}<br></body></html>"))
 
 
+# execução da aplicação
 if __name__ == "__main__":
     import sys
     whiteid, blackid, white, black = getUsers(gameid)

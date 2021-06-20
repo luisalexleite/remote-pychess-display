@@ -13,20 +13,20 @@ while True:
     arraywhite = []
 
     if (state == True):
-        k = board.count('k')
+        q = board.count('q')
         r = 2 - board.count('r')
         n = 2 - board.count('n')
         b = 2 - board.count('b')
         p = 8 - board.count('p')
 
-        K = board.count('K')
+        Q = board.count('q')
         R = 2 - board.count('R')
         N = 2 - board.count('N')
         B = 2 - board.count('B')
         P = 8 - board.count('P')
 
-        if k == 0:
-            arrayblack.append('k')
+        if q == 0:
+            arrayblack.append('q')
 
         if r > 0:
             arrayblack += r * ['r']
@@ -40,8 +40,8 @@ while True:
         if p > 0:
             arrayblack += p * ['p']
 
-        if K == 0:
-            arrayblack.append('K')
+        if Q == 0:
+            arrayblack.append('Q')
 
         if R > 0:
             arrayblack += R * ['R']

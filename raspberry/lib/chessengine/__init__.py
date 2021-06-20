@@ -1,6 +1,8 @@
+# python-chess
 import chess
 
 
+# verificar estado de um movimento
 def checkMove(board, move, lastmove):
     board = chess.Board(board)
     try:
@@ -17,6 +19,7 @@ def checkMove(board, move, lastmove):
     return True, checkmate, stalemate, nomaterial, claim, repetition, board.fen(), lastmove
 
 
+# jogo no terminal (Exemplo)
 def playExample():
     checkmate = False
     stalemate = False

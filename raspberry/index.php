@@ -1,19 +1,25 @@
+<!-- MaterializeCSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-firestore.js"></script>
 
+<!-- JQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<!-- Estilos -->
 <style>
+     /* Fonte Aleo - Google Fonts */
      @import url('https://fonts.googleapis.com/css2?family=Aleo&display=swap');
 
+     /*Ecrã inicial*/
      .loader {
           background-color: #2d2f30;
           position: fixed;
@@ -23,17 +29,6 @@
           display: flex;
           align-items: center;
           justify-content: center;
-     }
-
-     .img {
-          height: 250px;
-          width: 250px;
-     }
-
-     .jogadores {
-          text-align: center;
-          display: none;
-          opacity: 0;
      }
 
      #board {
@@ -74,78 +69,55 @@
           font-size: 20px;
      }
 
+     /*Animação - Três Pontos (Ecrã Inicial)*/
      @keyframes blink {
 
-          /**
-     * At the start of the animation the dot
-     * has an opacity of .2
-     */
           0% {
                opacity: .2;
           }
 
-          /**
-     * At 20% the dot is fully visible and
-     * then fades out slowly
-     */
           20% {
                opacity: 1;
           }
 
-          /**
-     * Until it reaches an opacity of .2 and
-     * the animation can start again
-     */
           100% {
                opacity: .2;
           }
      }
 
      #mens span {
-          /**
-     * Use the blink animation, which is defined above
-     */
           animation-name: blink;
-          /**
-     * The animation should take 1.4 seconds
-     */
           animation-duration: 1.4s;
-          /**
-     * It will repeat itself forever
-     */
           animation-iteration-count: infinite;
-          /**
-     * This makes sure that the starting style (opacity: .2)
-     * of the animation is applied before the animation starts.
-     * Otherwise we would see a short flash or would have
-     * to set the default styling of the dots to the same
-     * as the animation. Same applies for the ending styles.
-     */
           animation-fill-mode: both;
      }
 
      #mens span:nth-child(2) {
-          /**
-     * Starts the animation of the third dot
-     * with a delay of .2s, otherwise all dots
-     * would animate at the same time
-     */
           animation-delay: .2s;
      }
 
      #mens span:nth-child(3) {
-          /**
-     * Starts the animation of the third dot
-     * with a delay of .4s, otherwise all dots
-     * would animate at the same time
-     */
           animation-delay: .4s;
      }
 
      #mens span {
           font-size: 50px;
      }
+
+     /*Início do Jogo*/
+     .img {
+          height: 250px;
+          width: 250px;
+     }
+
+     .jogadores {
+          text-align: center;
+          display: none;
+          opacity: 0;
+     }
 </style>
+
+<!-- Loader Inicial -->
 <div class="loader">
      <div class="preloader-wrapper big active">
           <div class="spinner-layer spinner-red-only">
@@ -161,6 +133,8 @@
           </div>
      </div>
 </div>
+
+<!-- Ecrã Inicial -->
 <div class="wrapper">
      <img id='logo' src='img/logo.png'>
      <br>
@@ -177,11 +151,14 @@
                               info
                          </span> <span id="title">Defesa Siciliana</span></h4>
                     <p id="peqtext" style="text-align:left">A defesa siciliana é uma das principais respostas para e4. As pretas assumem o controle da quadrado d4 com um peão lateral, assim ele desequilibra a posição e evita dar às brancas um alvo central.
+                    <p id="movimentos" style="text-align:left">1.e4 c5
                </span>
                </p>
           </div>
      </div>
 </div>
+
+<!-- Ecrã Inicio do Jogo -->
 <div class="jogadores">
      <img id='logo' src='img/logo.png'>
      <br>
@@ -228,7 +205,13 @@
           </div>
      </div>
 </div>
+
+<!-- Aberturas -->
 <script src="hints.js"></script>
 <script src="hintsexec.js"></script>
+
+<!-- Iniciar o Jogo -->
 <script src="showgame.js"></script>
-<script src="app.js"></script>
+
+<!-- JS Principal -->
+<script src="main.js"></script>
