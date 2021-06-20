@@ -99,7 +99,9 @@
     <string name="invalidPlay">Invalid Play!</string>
     <string name="GameCreated">Jogo criado com sucesso!</string>
     <string name="waiting_game"><![CDATA[Waiting for a game…]]></string>
-
+    <string name="blitz">Blitz\n(5:00)</string>
+    <string name="rapido">Rapido\n(15:00)</string>
+    <string name="normal">Normal\n(40:00)</string>
 
 
 </resources>

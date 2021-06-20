@@ -36,7 +36,7 @@ public class GameActivity extends AppCompatActivity {
     //Initialization
     private static final int RESULT_SPEECH = 1;
     private String userID, randomString, gameID, blacks, color2="", ratingFinal, ratingIni;
-    String cbChecked;
+    String cbCheckedColor, cbCheckedTime;
     private int i = 0, h = 0, m = 0, m2 = 0, state, moveCount;
 
     //FireBase
@@ -49,7 +49,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView tvText, rating1, rating2, username1, username2, espera, moves, lost, win;
     private Button createGame, addJogada, giveup, leave;
     private ImageView profileImageGame, profileImageGame2, cavaloBrancas1, cavaloBrancas2, cavaloPretas1, cavaloPretas2;
-    private RadioButton cbwhite, cbblack, cbrandom;
+    private RadioButton cbwhite, cbblack, cbrandom, cbblitz, cbnormal, cbrapido;
     private LinearLayout vs;
 
     //Chess Stuff
@@ -83,6 +83,7 @@ public class GameActivity extends AppCompatActivity {
         cbblack = findViewById(R.id.checkBlack);
         cbrandom = findViewById(R.id.checkRandom);
 
+
         //Views
         btnSpeak = findViewById(R.id.btnSpeak);
         addJogada = findViewById(R.id.addJogada);
@@ -105,7 +106,8 @@ public class GameActivity extends AppCompatActivity {
 
         randomString = randomString();
         Intent intent = getIntent();
-        cbChecked = intent.getStringExtra("checked");
+        cbCheckedColor = intent.getStringExtra("checkedColor");
+        cbCheckedTime = intent.getStringExtra("checkedTime");
         createGame();
         listener();
         speak();
@@ -254,27 +256,47 @@ public class GameActivity extends AppCompatActivity {
             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
             //Create Game
-            if(cbChecked.equals("cbWhite")){
+            if(cbCheckedColor.equals("cbWhite")){
                 mDatabase.child("game_waiting").child(randomString).child("whites").setValue(userID);
-                mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
                 Toast.makeText(GameActivity.this, R.string.GameCreated, Toast.LENGTH_SHORT).show();
                 color2 = "blacks";
                 espera.setVisibility(View.VISIBLE);
                 vs.setVisibility(View.VISIBLE);
                 addJogada.setVisibility(View.GONE);
+                if(cbCheckedTime.equals("cbBlitz")) {
+                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
+                }
+
+                if(cbCheckedTime.equals("cbRapido")) {
+                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(1);
+                }
+
+                if(cbCheckedTime.equals("cbNormal")) {
+                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(2);
+                }
             }
 
-            if(cbChecked.equals("cbBlack")){
+            if(cbCheckedColor.equals("cbBlack")){
                 mDatabase.child("game_waiting").child(randomString).child("blacks").setValue(userID);
-                mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
                 Toast.makeText(GameActivity.this, R.string.GameCreated, Toast.LENGTH_SHORT).show();
                 color2 = "whites";
                 espera.setVisibility(View.VISIBLE);
                 vs.setVisibility(View.VISIBLE);
                 addJogada.setVisibility(View.GONE);
+                if(cbCheckedTime.equals("cbBlitz")) {
+                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
+                }
+
+                if(cbCheckedTime.equals("cbRapido")) {
+                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(1);
+                }
+
+                if(cbCheckedTime.equals("cbNormal")) {
+                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(2);
+                }
             }
 
-            if(cbChecked.equals("cbRandom")){
+            if(cbCheckedColor.equals("cbRandom")){
                 Toast.makeText(GameActivity.this, R.string.GameCreated, Toast.LENGTH_SHORT).show();
                 Random cor = new Random();
                 int rnd = cor.nextInt(2);
@@ -285,12 +307,22 @@ public class GameActivity extends AppCompatActivity {
                     color2 = "blacks";
                     mDatabase.child("game_waiting").child(randomString).child("whites").setValue(userID);
                 }
-                mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
+                if(cbCheckedTime.equals("cbBlitz")) {
+                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(0);
+                }
+
+                if(cbCheckedTime.equals("cbRapido")) {
+                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(1);
+                }
+
+                if(cbCheckedTime.equals("cbNormal")) {
+                    mDatabase.child("game_waiting").child(randomString).child("type").setValue(2);
+                }
                 addJogada.setVisibility(View.GONE);
                 espera.setVisibility(View.VISIBLE);
                 vs.setVisibility(View.VISIBLE);
             }
-
+        System.out.println("time:---------- " + cbCheckedTime);
 
 
     }
@@ -325,41 +357,50 @@ public class GameActivity extends AppCompatActivity {
         });
     }
     private void endGame() {
-        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference().child("games").child(randomString);
-        reference1.addChildEventListener(new ChildEventListener() {
+        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("games").child(randomString);
+        ref2.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String prevChildKey) {
-                if (!color2.equals("") && dataSnapshot.getValue() != null) {
-
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot a : dataSnapshot.getChildren()){
                     if (color2.equals("blacks")) {
-                        if (dataSnapshot.getValue().toString().equals("3")) {
-                            endGameRating(getString(R.string.rating_down), getString(R.string.lost));
+                        if (Objects.equals(a.getKey(), "result")) {
+                            if(a.getValue().toString().equals("1")) {
+                                System.out.println(a.getKey());
+                                System.out.println("damn" + a.getValue());
+                                endGameRating(getString(R.string.rating_up), getString(R.string.won));
+                            }
                         }
-                        if (dataSnapshot.getValue().toString().equals("1")) {
-                            endGameRating(getString(R.string.rating_up), getString(R.string.won));
+                        if (Objects.equals(a.getKey(), "result")) {
+                            if(a.getValue().toString().equals("3")) {
+                                System.out.println(a.getKey());
+                                System.out.println("damn" + a.getValue());
+                                endGameRating(getString(R.string.rating_down), getString(R.string.lost));
+                            }
                         }
+
                     }
                     if (color2.equals("whites")) {
-                        if (dataSnapshot.getValue().toString().equals("1")) {
-                            endGameRating(getString(R.string.rating_down), getString(R.string.lost));
-
+                        if (Objects.equals(a.getKey(), "result")) {
+                            if(a.getValue().toString().equals("3")) {
+                                System.out.println("key " +a.getKey());
+                                System.out.println("damn " + a.getValue());
+                                endGameRating(getString(R.string.rating_up), getString(R.string.won));
+                            }
                         }
-                        if (dataSnapshot.getValue().toString().equals("3")) {
-                            endGameRating(getString(R.string.rating_up), getString(R.string.won));
+
+                        if (Objects.equals(a.getKey(), "result")) {
+                            if(a.getValue().toString().equals("1")) {
+                                System.out.println(a.getKey());
+                                System.out.println("damn" + a.getValue());
+                                endGameRating(getString(R.string.rating_down), getString(R.string.lost));
+                            }
                         }
                     }
                 }
             }
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String prevChildKey) {}
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String prevChildKey) {}
-            @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
-
     }
     private void endGameRating(String rating, String won) {
         win.setText(won);

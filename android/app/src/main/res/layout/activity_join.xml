@@ -74,7 +74,6 @@
             android:id="@+id/layout_v2"
             android:layout_width="wrap_content"
             android:layout_height="290dp"
-            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:gravity="center"
@@ -139,7 +138,20 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/clock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="-35dp"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:textSize="20sp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -148,6 +160,7 @@
                 android:text="@string/vs"
                 android:padding="30dp"
                 android:textSize="40sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="110dp"

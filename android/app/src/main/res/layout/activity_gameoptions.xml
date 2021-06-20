@@ -49,34 +49,96 @@
 
 
         <RadioGroup
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_margin="30dp"
             android:layout_gravity="center"
             android:orientation="horizontal">
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/checkBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textColor="@color/textColor"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:checked="true"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:button="@android:color/transparent"
+                android:textColor="@color/textColor2"
+                android:background="@drawable/radio_button_left_selector"
                 android:text="@string/blacks" />
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/checkWhite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textColor="@color/textColor"
-                android:text="@string/whites"  />
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:checked="false"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:button="@android:color/transparent"
+                android:textColor="@color/textColor2"
+                android:background="@drawable/radio_button_mid_selector"
+                android:text="@string/whites" />
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/checkRandom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textColor="@color/textColor"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:checked="false"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:button="@android:color/transparent"
+                android:textColor="@color/textColor2"
+                android:background="@drawable/radio_button_right_selector"
                 android:text="@string/random" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/checkBlitz"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:checked="true"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:button="@android:color/transparent"
+                android:textColor="@color/textColor2"
+                android:background="@drawable/radio_button_left_selector"
+                android:text="@string/blitz" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/checkRapido"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textSize="18sp"
+                android:checked="false"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:button="@android:color/transparent"
+                android:textColor="@color/textColor2"
+                android:background="@drawable/radio_button_mid_selector"
+                android:text="@string/rapido" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/checkNormal"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:checked="false"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:button="@android:color/transparent"
+                android:textColor="@color/textColor2"
+                android:background="@drawable/radio_button_right_selector"
+                android:text="@string/normal" />
         </RadioGroup>
 
 

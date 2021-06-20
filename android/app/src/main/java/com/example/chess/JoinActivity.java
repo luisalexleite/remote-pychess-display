@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 public class JoinActivity extends AppCompatActivity {
 
     //Initialization
-    private int i = 0, moveCount, j = 0, h = 0, m = 0, m2 = 0, state;
+    private int i = 0, moveCount, j = 0, h = 0, m = 0, m2 = 0, state, type;
     private String userID, gameID = "", blacks, color, color2 = "", ratingIni, ratingFinal;
     private static final int RESULT_SPEECH = 1;
 
@@ -49,7 +49,7 @@ public class JoinActivity extends AppCompatActivity {
     //Views
     private Button joinGame2, addJogada2, giveup2, leave;
     private ImageButton btnSpeak2;
-    private TextView tvText2, rating1, rating2, ratingJoin1, ratingJoin2, moves2, lista_jogos, lost, win, waitingGame;
+    private TextView tvText2, rating1, rating2, ratingJoin1, ratingJoin2, moves2, lista_jogos, lost, win, waitingGame, time;
     private ImageView profileImageGame, profileImageGame2, cavaloBrancas1, cavaloBrancas2, cavaloPretas1, cavaloPretas2;
     private LinearLayout vs;
 
@@ -92,6 +92,7 @@ public class JoinActivity extends AppCompatActivity {
         lost = findViewById(R.id.lost);
         win = findViewById(R.id.win);
         vs = findViewById(R.id.layout_v2);
+        time = findViewById(R.id.clock);
         leave = findViewById(R.id.leave);
         moves2 = findViewById(R.id.movesText2);
         cavaloBrancas1 = findViewById(R.id.cavalo_brancas);
@@ -209,6 +210,31 @@ public class JoinActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+        DatabaseReference getid2 = ref.child("game_waiting").child(gameID);
+        getid2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot a : dataSnapshot.getChildren()) {
+                        time.setVisibility(View.VISIBLE);
+                        System.out.println(a.getKey());
+                        if (Objects.equals(a.getKey(), "type")) {
+                            if (a.getValue().toString().equals("0")) {
+                                time.setText("5:00");
+                            }
+                            if (a.getValue().toString().equals("1")) {
+                                time.setText("15:00");
+                            }
+                            if (a.getValue().toString().equals("2")) {
+                                time.setText("40:00");
+                            }
+                        }
+                    }
+                }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
     private void joinGame(){
         DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference();
@@ -222,6 +248,12 @@ public class JoinActivity extends AppCompatActivity {
                         color2 ="whites";
                         endGame();
                         oppRatingImage();
+
+                    }
+
+                    if(Objects.equals(a.getKey(), "type")){
+                        type = Integer.parseInt(a.getValue().toString());
+                        System.out.println(type);
 
                     }
                     if(Objects.equals(a.getKey(), "blacks")){
@@ -243,10 +275,11 @@ public class JoinActivity extends AppCompatActivity {
             btnSpeak2.setVisibility(View.VISIBLE);
             giveup2.setVisibility(View.VISIBLE);
             lista_jogos.setVisibility(View.GONE);
+            time.setVisibility(View.GONE);
             StorageReference profileRef = fStorage.child(userID + ".jpg");
             profileRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profileImageGame));
             mDatabase.child("games").child(gameID).child("state").setValue(0);
-            mDatabase.child("games").child(gameID).child("type").setValue(0);
+            mDatabase.child("games").child(gameID).child("type").setValue(type);
             mDatabase.child("games").child(gameID).child(color2).setValue(blacks);
             mDatabase.child("games").child(gameID).child(color).setValue(userID);
             rating();
@@ -362,39 +395,52 @@ public class JoinActivity extends AppCompatActivity {
         });
     }
     private void endGame() {
-        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference().child("games").child(gameID);
-        reference1.addChildEventListener(new ChildEventListener() {
+
+        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("games").child(gameID);
+        ref2.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String prevChildKey) {
-                if (!color2.equals("") && dataSnapshot.getValue() != null) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot a : dataSnapshot.getChildren()){
                     if (color2.equals("blacks")) {
-                        if (dataSnapshot.getValue().toString().equals("3")) {
-                            endGameRating(getString(R.string.rating_down), getString(R.string.lost));
+                        if (Objects.equals(a.getKey(), "result")) {
+                            if(a.getValue().toString().equals("1")) {
+                                System.out.println(a.getKey());
+                                System.out.println("damn" + a.getValue());
+                                endGameRating(getString(R.string.rating_up), getString(R.string.won));
+                            }
                         }
-                        if (dataSnapshot.getValue().toString().equals("1")) {
-                            endGameRating(getString(R.string.rating_up), getString(R.string.won));
+                        if (Objects.equals(a.getKey(), "result")) {
+                            if(a.getValue().toString().equals("3")) {
+                                System.out.println(a.getKey());
+                                System.out.println("damn" + a.getValue());
+                                endGameRating(getString(R.string.rating_down), getString(R.string.lost));
+                            }
                         }
+
                     }
                     if (color2.equals("whites")) {
-                        if (dataSnapshot.getValue().toString().equals("1")) {
-                            endGameRating(getString(R.string.rating_down), getString(R.string.lost));
-
+                        if (Objects.equals(a.getKey(), "result")) {
+                            if(a.getValue().toString().equals("3")) {
+                                System.out.println("key " +a.getKey());
+                                System.out.println("damn " + a.getValue());
+                                endGameRating(getString(R.string.rating_up), getString(R.string.won));
+                            }
                         }
-                        if (dataSnapshot.getValue().toString().equals("3")) {
-                            endGameRating(getString(R.string.rating_up), getString(R.string.won));
+
+                        if (Objects.equals(a.getKey(), "result")) {
+                            if(a.getValue().toString().equals("1")) {
+                                System.out.println(a.getKey());
+                                System.out.println("damn" + a.getValue());
+                                endGameRating(getString(R.string.rating_down), getString(R.string.lost));
+                            }
                         }
                     }
                 }
             }
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String prevChildKey) {}
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String prevChildKey) {}
-            @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
+
     }
     private void endGameRating(String rating, String won) {
             win.setText(won);

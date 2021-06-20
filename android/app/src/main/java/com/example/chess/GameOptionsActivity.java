@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class GameOptionsActivity extends AppCompatActivity {
 
-    String cbCheck = "";
-    RadioButton cbwhite, cbblack, cbrandom;
+    String cbCheckColor = "", cbCheckTime = "";
+    RadioButton cbwhite, cbblack, cbrandom, cbblitz, cbnormal, cbrapido;
     Button createGame;
 
     @Override
@@ -26,32 +26,51 @@ public class GameOptionsActivity extends AppCompatActivity {
         cbwhite = findViewById(R.id.checkWhite);
         cbblack = findViewById(R.id.checkBlack);
         cbrandom = findViewById(R.id.checkRandom);
+
+        cbblitz = findViewById(R.id.checkBlitz);
+        cbrapido = findViewById(R.id.checkRapido);
+        cbnormal = findViewById(R.id.checkNormal);
+
         createGame = findViewById(R.id.createGame);
             createGame.setOnClickListener(v -> {
-                if(cbwhite.isChecked() || cbblack.isChecked() || cbrandom.isChecked()) {
-                    cbCheck = isChecked();
-                    Intent intent = new Intent(this, GameActivity.class);
-                    intent.putExtra("checked", cbCheck);
-                    finish();
-                    startActivity(intent);
-                }
+                cbCheckColor = isCheckedColor();
+                cbCheckTime = isCheckedTime();
+                Intent intent = new Intent(this, GameActivity.class);
+                intent.putExtra("checkedColor", cbCheckColor);
+                intent.putExtra("checkedTime", cbCheckTime);
+                finish();
+                startActivity(intent);
+
             });
         }
 
 
 
 
-    public String isChecked () {
+    public String isCheckedColor () {
         if(cbwhite.isChecked()){
-            cbCheck = "cbWhite";
+            cbCheckColor = "cbWhite";
         }
         if(cbblack.isChecked()){
-            cbCheck = "cbBlack";
+            cbCheckColor = "cbBlack";
         }
         if(cbrandom.isChecked()){
-            cbCheck = "cbRandom";
+            cbCheckColor = "cbRandom";
         }
-        return cbCheck;
+        return cbCheckColor;
+    }
+
+    public String isCheckedTime () {
+        if(cbblitz.isChecked()){
+            cbCheckTime = "cbBlitz";
+        }
+        if(cbnormal.isChecked()){
+            cbCheckTime = "cbNormal";
+        }
+        if(cbrapido.isChecked()){
+            cbCheckTime = "cbRapido";
+        }
+        return cbCheckTime;
     }
     public void back(){
         ImageButton back = findViewById(R.id.backBtnProfile);
