@@ -535,7 +535,7 @@ public class GameActivity extends AppCompatActivity {
                         "serie", "cr7", "de", "dia", "gp", "guê", "gt", "jean", "gta", "já", "set", "je", "gê", "hahaha", "noite", "quarto", "guia", "h2o"};
                 String[] movesReplace = new String[]{"", "1", "2", "3", "4", "5", "6", "7", "8", "Q", "Q", "Q", "Q", "K", "K", "K", "O-O-O", "O-O",
                         "B", "N", "R", "", "", "", "", "O-O", "e", "e", "g", "d", "d", "a", "b", "b", "c2", "c", "c",
-                        "c", "c7", "d", "g", "g ", "g  ", "g", "g1", "g  ", "g ", "7  ", "g ", "g ", "h     ", "8", "4", "g", "h2"};
+                        "c", "c7", "d", "d", "g ", "g  ", "g", "g1", "g  ", "g ", "7  ", "g ", "g ", "h     ", "8", "4", "g", "h2"};
                 for (int g = 0; g < moves.length; g++) {
                     if (result.contains(moves[g])) {
                         result = result.replace(moves[g], movesReplace[g]);
