@@ -332,11 +332,10 @@ class Ui_Janela(object):
 
     # estado do jogo
     def jogo(self):
-        check = makeMove(gameid)[0]
-        gamesvg = makeMove(gameid)[1]
+        check = makeMove(gameid)
 
-        if (check == False):
-            result = makeMove(gameid)[1]
+        if (check[0] == False):
+            result = check[1]
             self.endgame = QtWidgets.QMessageBox()
             self.endgame.setIcon(QtWidgets.QMessageBox.Information)
             self.endgame.setStandardButtons(QtWidgets.QMessageBox.NoButton)
@@ -407,6 +406,7 @@ class Ui_Janela(object):
             self.timer.start()
             self.endgame.show()
         else:
+            gamesvg = check[1]
             self.game = QtSvg.QSvgWidget(self.centralwidget)
             self.game.setGeometry(QtCore.QRect(500, 300, 861, 731))
             self.game.load(gamesvg.encode("UTF-8"))
