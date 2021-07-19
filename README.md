@@ -80,4 +80,4 @@ Features:
 
 * requirements.txt
 
-* instalation client
+* Instalation Client
