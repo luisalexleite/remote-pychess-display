@@ -1,2 +1,2 @@
-## Remote PyChess
-# Display System
+# Remote PyChess
+## Display System
