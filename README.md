@@ -14,7 +14,20 @@ The Game Initializer is the environment that displays before a chess game has st
 
 Features:
 
-* Unordered list can use asterisks
+* Diferent Openings Info
+
+* Next Game Info
 
 ### Game Display
 
+The Game Display is the environment that is displayed when a game is ocurring.
+
+Features:
+
+* Timer
+
+* Live Opening Info and Move History
+
+* Check and Last Movement Markdown
+
+* Game Result Display
