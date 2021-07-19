@@ -55,3 +55,22 @@ Features:
 
 
 ### Instalation Instructions to Debian (>=10) Based Systems
+
+##### Before you start:
+
+* You must have an Firebase project created to host the platform.
+* Game Display has to be configured before Game Initializer
+
+#### Game Initializer
+
+* Change main.js file and input firebase configure settings on file (instrutions on file)
+
+* Start an PHP dedicated server on the root folder of the platform - php -S localhost:port
+
+#### Game Display
+
+* Download all the Python Libraries needed (requirements.txt coming soon)
+
+* Download JSON key (to Firebase access - instrutions on remotepychess.py file) and move it to an folder named "cred" (if doesn't exists, create one) on root folder
+
+* Change remotepychess.py file and input firebase configure settings on file (instrutions on file)
