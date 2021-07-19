@@ -54,4 +54,4 @@ Features:
 |CPU|ARM Cortex-A53|>= Intel Atom Z2580|
 
 
-### Instalations Instructions to Debian (>=10) Based Systems
+### Instalation Instructions to Debian (>=10) Based Systems
