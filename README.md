@@ -35,3 +35,5 @@ Features:
 * Check and Last Movement Markdown
 
 * Game Result Display
+
+#### System Requiments
