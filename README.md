@@ -81,3 +81,5 @@ Features:
 * requirements.txt
 
 * Instalation Client
+
+* Language Conlicts (Portuguese/English)
