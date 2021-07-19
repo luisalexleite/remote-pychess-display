@@ -14,7 +14,7 @@ The Game Initializer is the environment that displays before a chess game has st
 
 Features:
 
-⋅⋅* Unordered sub-list
+* Unordered list can use asterisks
 
 ### Game Display
 
