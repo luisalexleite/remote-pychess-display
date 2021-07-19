@@ -49,5 +49,5 @@ Features:
 
 |  Requirement  |  Minimum  |  Recomended  |
 |:-------------:|:---------:|:------------:|
-|PHP|7.0|>= 8.0|
-|Browser|N/A|Tested on Chrome and Firefox|
+|Python|3.0|>= 3.7|
+|RAM|2GB|>= 4GB|
