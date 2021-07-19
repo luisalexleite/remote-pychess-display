@@ -39,7 +39,5 @@ Features:
 #### System Requiments
 
 | Game Initializer |  Minimum  | Recomended |
-| ---------------- |:---------:| ----------:|
-|        PHP       |  >= 7.0   | >= 8.0   |
-|      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+|:----------------:|:---------:|:----------:|
+|PHP|7.0|>= 8.0|
