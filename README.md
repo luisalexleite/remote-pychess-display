@@ -18,6 +18,10 @@ Features:
 
 * Diferent Openings Info
 
+<p align="center">
+  <img height=200 src="https://github.com/luisalexleite/remote-pychess-display/blob/main/Screenshots/Screen_1.png" />
+</p>
+
 * Next Game Info
 
 
