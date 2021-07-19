@@ -38,8 +38,8 @@ Features:
 
 #### System Requiments
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
+| Game Initializer |  Minimum  | Recomended |
+| ---------------- |:---------:| ----------:|
+|        PHP       |  >= 7.0   |   >= 8.0   |
+|      | centered      |   $12 |
 | zebra stripes | are neat      |    $1 |
