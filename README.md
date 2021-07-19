@@ -68,6 +68,8 @@ Features:
 
 ##### Before you start:
 
+* To play an chess match you have install the [Play System](https://github.com/luisalexleite/remote-pychess-play/)
+
 * You must have an [Firebase](https://console.firebase.google.com/) project created to host the platform.
 
 * Game Display has to be configured before Game Initializer
