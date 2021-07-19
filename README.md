@@ -50,4 +50,4 @@ Features:
 |  Requirement  |  Minimum  |  Recomended  |
 |:-------------:|:---------:|:------------:|
 |Python|3.0|>= 3.7|
-|RAM|2GB|>= 4GB|
+|RAM|2 GB|>= 4 GB|
