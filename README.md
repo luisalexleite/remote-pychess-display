@@ -58,7 +58,7 @@ Features:
 
 ##### Before you start:
 
-* You must have an Firebase project created to host the platform.
+* You must have an [Firebase](https://console.firebase.google.com/) project created to host the platform.
 
 * Game Display has to be configured before Game Initializer
 
