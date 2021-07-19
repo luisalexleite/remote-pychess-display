@@ -88,7 +88,7 @@ Features:
 
 * Change remotepychess.py file and input firebase configure settings on file (instrutions on file)
 
-### To be implemented ❌
+### To be implemented ❌:
 
 * requirements.txt
 
