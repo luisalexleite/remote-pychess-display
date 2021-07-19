@@ -24,7 +24,9 @@ Features:
 
 * Next Game Info
 
-
+<p align="center">
+  <img src="https://github.com/luisalexleite/remote-pychess-display/blob/main/Screenshots/Screen_2.png" />
+</p>
 
 ### Game Display
 
@@ -39,6 +41,10 @@ Features:
 * Check and Last Movement Markdown
 
 * Game Result Display
+
+<p align="center">
+  <img src="https://github.com/luisalexleite/remote-pychess-display/blob/main/Screenshots/Screen_3.png" />
+</p>
 
 ### System Requiments
 
