@@ -9,7 +9,7 @@
 
       //Firebase Config
       var firebaseConfig = {
-          //Get firebase config from - https://console.firebase.google.com/u/0/project/project-name/settings/general/web
+          //Get firebase config from - https://console.firebase.google.com/project/project-name/settings/general/web
       };
 
       //Start Firebase
