@@ -51,3 +51,4 @@ Features:
 |:-------------:|:---------:|:------------:|
 |Python|3.0|>= 3.7|
 |RAM|2 GB|>= 4 GB|
+|CPU|ARM Cortex-A53|>= Intel Atom Z2580|
