@@ -36,13 +36,18 @@ Features:
 
 * Game Result Display
 
-#### System Requiments
+### System Requiments
 
-| Game Initializer |  Minimum  | Recomended |
-|:----------------:|:---------:|:----------:|
+#### Game Initializer
+
+|  Requirement  |  Minimum  |  Recomended  |
+|:-------------:|:---------:|:------------:|
 |PHP|7.0|>= 8.0|
 |Browser|N/A|Tested on Chrome and Firefox|
-| Game Initializer |  Minimum  | Recomended |
-|:----------------:|:---------:|:----------:|
+
+#### Game Display
+
+|  Requirement  |  Minimum  |  Recomended  |
+|:-------------:|:---------:|:------------:|
 |PHP|7.0|>= 8.0|
 |Browser|N/A|Tested on Chrome and Firefox|
