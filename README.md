@@ -59,6 +59,7 @@ Features:
 ##### Before you start:
 
 * You must have an Firebase project created to host the platform.
+
 * Game Display has to be configured before Game Initializer
 
 #### Game Initializer
