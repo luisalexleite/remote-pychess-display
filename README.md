@@ -75,3 +75,9 @@ Features:
 * Download JSON key (to Firebase access - instrutions on remotepychess.py file) and move it to an folder named "cred" (if doesn't exists, create one) on root folder
 
 * Change remotepychess.py file and input firebase configure settings on file (instrutions on file)
+
+### To be implemented ❌
+
+* requirements.txt
+
+* instalation client
