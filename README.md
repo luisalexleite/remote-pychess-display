@@ -94,4 +94,4 @@ Features:
 
 * Instalation Client
 
-* Language Conlicts (Portuguese/English)
+* Language Conflicts (Portuguese/English)
