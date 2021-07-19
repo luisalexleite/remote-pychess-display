@@ -41,3 +41,4 @@ Features:
 | Game Initializer |  Minimum  | Recomended |
 |:----------------:|:---------:|:----------:|
 |PHP|7.0|>= 8.0|
+|Browser|N/A|Tested on Chrome and Firefox|
